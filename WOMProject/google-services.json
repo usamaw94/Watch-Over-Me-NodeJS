@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "501588583760",
+    "firebase_url": "https://womproject-18095.firebaseio.com",
+    "project_id": "womproject-18095",
+    "storage_bucket": "womproject-18095.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501588583760:android:bf461ec24cba09c7",
+        "android_client_info": {
+          "package_name": "com.watchoverme.wom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501588583760-u30af10fpivt37d3h58daq5cbui7tq72.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuqFcuofRk7p6A_P7aabD5XOHawvfr_gs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
