@@ -1,0 +1,463 @@
+<div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom fixed-top">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="E:\Admin LTE Sample\AdminLTE-3.0.0-alpha.2\AdminLTE-3.0.0-alpha.2\index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+    
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="index.html" class="brand-link">
+                <span class="brand-text font-weight-light">Watch Over Me</span>
+            </a>
+    
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <!--<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                  <div class="image">
+                    <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                  </div>
+                  <div class="info">
+                    <a href="#" class="d-block">Alexander Pierce</a>
+                  </div>
+                </div>-->
+    
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                             with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="admin_dashboard.html" class="nav-link">
+                                <i class="nav-icon fa fa-dashboard"></i>
+                                <p>
+                                    Admin Dashboard
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-circle-o-notch"></i>
+                                <p>
+                                    Services
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="add_services.html" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Add services</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="view_services.html" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>View services</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="watches.html" class="nav-link">
+                                <i class="nav-icon fa fa-clock-o"></i>
+                                <p>
+                                    Watches
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-phone"></i>
+                                <p>
+                                    SIMs & Plans
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="sims.html" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>SIMs</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="manage_plans.html" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Plans</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="watches.html" class="nav-link">
+                                <i class="nav-icon fa fa-hospital-o"></i>
+                                <p>
+                                    Pharmacies
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/login.html" class="nav-link">
+                                <i class="nav-icon fa fa-sign-out text-danger"></i>
+                                <p class="text">LOGOUT</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+    
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper main-content">
+            <div class="info-bar">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>Service Logs</h4>
+                            <p>Service Id: 987</p>
+                            <p>Service date: 19-6-2018</p>
+                            <p>WOM Phone number : 0401 345 765</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Service Logs</h1>
+                            <h1><%= data %></h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="E:\Admin LTE Sample\AdminLTE-3.0.0-alpha.2\AdminLTE-3.0.0-alpha.2\index.html">Home</a></li>
+                                <li class="breadcrumb-item active">My Wearers</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+    
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12">
+                            <div class="callout callout-info">
+    
+                                <p>Service Id: 987</p>
+                                <p>Service date: 19-6-2018</p>
+                                <h5>WOM Phone number : 0401 345 765</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 style="float: left" class="card-title">Wearer location</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body table-responsive p-0">
+                                    <input type="hidden" id="latitude" value="51.5" readonly>
+                                    <input type="hidden" id="longitude" value="-0.12" readonly>
+                                    <input type="hidden" id="pac-input" class="form-control">
+                                    <div id="googleMap" style="width: 100%;  ;height:455px;"></div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <div class="col-4">
+                            <div class="card" style="height: 503px; overflow-y: auto">
+                                <div class="card-header">
+                                    <h3 style="float: left" class="card-title">Log list</h3>
+                                    <button title="Apply search filters" data-toggle="modal" data-target="#filter" style="float: right" class="btn btn-default right">
+                                        <i class="fa fa-filter"></i>
+                                    </button>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="log-container callout callout-danger">
+                                        <div class="row">
+                                            <div data-lat="-37.683036" data-long="144.919770" class="log col-8">
+                                                <h5><b>13:00 - 01/06/2017</b></h5>
+                                                <p>Alert log</p>
+                                                <p>Watch battery: 50%</p>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="alert-log-options">
+                                                    <a target="_blank" href="https://www.google.com/maps/dir//-37.683036,144.919770" class="google-map-link" title="Show location on google map">
+                                                        <i class="fa fa-location-arrow fa-2x"></i>
+                                                    </a>
+                                                    <br><br>
+                                                    <i data-toggle="modal" data-target="#alertLogDetails" class="fa fa-info-circle fa-2x log-details" title="View log details"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="log-container callout callout-info">
+                                        <div class="row">
+                                            <div data-lat="-37.672067" data-long="144.931489" class="log col-8">
+                                                <h5><b>15:00 - 02/06/2017</b></h5>
+                                                <p>Hourly log</p>
+                                                <p>Watch battery: 40%</p>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="hourly-log-options">
+                                                    <a target="_blank" href="https://www.google.com/maps/dir//-37.672067,144.931489" class="google-map-link" title="Show location on google map">
+                                                        <i class="fa fa-location-arrow fa-2x"></i>
+                                                    </a>
+                                                    <br><br>
+                                                    <i data-toggle="modal" data-target="#hourlyLogDetails" class="fa fa-info-circle fa-2x log-details" title="View log details"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="log-container callout callout-warning">
+                                        <div class="row">
+                                            <div data-lat="-37.941230" data-long="145.056624" class="log col-8">
+                                                <h5><b>21:00 - 03/06/2017</b></h5>
+                                                <p>User interation</p>
+                                                <p>Watch battery: 80%</p>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="user-log-options">
+                                                    <a target="_blank" href="https://www.google.com/maps/dir//-37.941230,145.056624" class="google-map-link" title="Show location on google map">
+                                                        <i class="fa fa-location-arrow fa-2x"></i>
+                                                    </a>
+                                                    <br><br>
+                                                    <i data-toggle="modal" data-target="#userLogDetails" class="fa fa-info-circle fa-2x log-details" title="View log details"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+                <b>Version</b> 1.0.0. alpha
+            </div>
+            <strong>Copyright &copy; 2018 <a href="#">Watch Over Me</a>.</strong> All rights
+            reserved.
+        </footer>
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <div class="modal fade" id="filter" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Search filters</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label>Log type</label>
+                            <select class="form-control">
+                                <option value="All">All</option>
+                                <option value="alert">Alert log</option>
+                                <option value="hourly">Hourly</option>
+                                <option value="user">User interactions</option>
+                            </select>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" class="form-control" rows="3" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-outline-info">Apply filters</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="alertLogDetails" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Alert log Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Log_ID</th>
+                            <th>Date - Time</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Watch Battey(%)</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>13:00 - 01/06/2017</td>
+                            <td>I need help</td>
+                            <td>Alert Log</td>
+                            <td>50%</td>
+                        </tr>
+                    </table>
+                    <div class="container-fluid">
+                        <h6><b>Alert log responses</b></h6>
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-active table-responsive">
+                                    <tr>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Type</th>
+                                        <th>Send date-time</th>
+                                        <th>Status</th>
+                                        <th>Reply date/time</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Wearer</td>
+                                        <td>Watcher</td>
+                                        <td>SMS</td>
+                                        <td>13:00 - 01/06/2017</td>
+                                        <td>Replied</td>
+                                        <td>13:00 - 01/06/2017</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="hourlyLogDetails" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Hourly log Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Log_ID:</th>
+                            <td>183</td>
+                        </tr>
+                        <tr>
+                            <th>Date-Time:</th>
+                            <td>John Doe</td>
+                        </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td>Log on hourly basis</td>
+                        </tr>
+                        <tr>
+                            <th>Type:</th>
+                            <td>Hourly log</td>
+                        </tr>
+                        <tr>
+                            <th>Watch Battery(%):</th>
+                            <td>60%</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="userLogDetails" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">User interaction log Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Log_ID:</th>
+                            <td>183</td>
+                        </tr>
+                        <tr>
+                            <th>Date-Time:</th>
+                            <td>John Doe</td>
+                        </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td>Log on hourly basis</td>
+                        </tr>
+                        <tr>
+                            <th>Type:</th>
+                            <td>Hourly log</td>
+                        </tr>
+                        <tr>
+                            <th>Watch Battery(%):</th>
+                            <td>60%</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="/plugins/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="/dist/js/demo.js"></script>
+    
+    <script src="/dist/js/custom.js"></script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsaBSLRpDtQYzD5md-bnOYP61GBRN9oac&libraries=places&callback=myMap"></script>

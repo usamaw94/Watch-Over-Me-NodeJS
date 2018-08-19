@@ -1,0 +1,97 @@
+.selection--single, .select2-selection .select2-selection--single {
+    border: 1px solid #d2d6de;
+    padding: 6px 12px;
+    padding-bottom: 26px;
+    height: 34px;
+}
+
+.main-content {
+    margin-top: 55px;
+}
+
+.info-bar {
+    width: 100%;
+    background-color: #117a8b;
+    position: fixed;
+    overflow: hidden;
+    z-index: 100;
+    display: none;
+    color: whitesmoke;
+}
+
+.log-container {
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.log-container:hover {
+    background-color: #e7e6e7;
+}
+
+.alert-log-options{
+    width: inherit;
+    text-align: right;
+}
+
+.hourly-log-options {
+    width: inherit;
+    text-align: right;
+}
+
+.user-log-options {
+    width: inherit;
+    text-align: right;
+}
+
+.alert-log-options .google-map-link {
+    color: black;
+    transition: 0.5s;
+}
+
+.alert-log-options .google-map-link:hover {
+    color: #bd2130;
+}
+
+.hourly-log-options .google-map-link {
+    color: black;
+    transition: 0.5s;
+}
+
+.hourly-log-options .google-map-link:hover {
+    color: #117a8b;
+}
+
+.user-log-options .google-map-link {
+    color: black;
+    transition: 0.5s;
+}
+
+.user-log-options .google-map-link:hover {
+    color: #d39e00;
+}
+
+
+
+.alert-log-options .log-details {
+    transition: 0.5s;
+}
+
+.alert-log-options .log-details:hover {
+    color: #bd2130;
+}
+
+.hourly-log-options .log-details {
+    transition: 0.5s;
+}
+
+.hourly-log-options .log-details:hover {
+    color: #117a8b;
+}
+
+.user-log-options .log-details {
+    transition: 0.5s;
+}
+
+.user-log-options .log-details:hover {
+    color: #d39e00;
+}
