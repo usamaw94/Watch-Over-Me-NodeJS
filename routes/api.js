@@ -11,7 +11,7 @@ admin.initializeApp({
   databaseURL: "https://womproject-18095.firebaseio.com"
 });
 
-var registrationToken;
+
 function sendNotification(notificationTitle ,notificationBody, notificationPriority,regToken){
     var payload = {
         notification: {
@@ -55,7 +55,7 @@ function callingWatchers(watcherCount){
     }
 }
 
-function alertProcesiing(){
+function alertProcesiing(registrationToken){
     sendNotification("Alert Received","We're calling help for you!","High",registrationToken);
     setTimeout(function(){
         callingWatchers(1);
@@ -65,10 +65,10 @@ function alertProcesiing(){
 router.post('/logsprocessing', function(req,res){
     var log = new Log(req.body);
     
-    registrationToken = log['registration_token'];
+    var regToken = log['registration_token'];
 
     log.save().then(function(log){
-        alertProcesiing();
+        alertProcesiing(regToken);
         res.send(log);
     });
 
