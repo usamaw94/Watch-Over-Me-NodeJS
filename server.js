@@ -17,7 +17,7 @@ var mongo = require('mongodb');
 
 
 //set port
-var port = process.env.PORT || 8000
+var port;
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -38,11 +38,12 @@ var usersRouter = require('./routes/users');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api',require('./routes/api'));
 
 // app.get("/", function(req, res){
 //     res.render("index");
 // })
 
-app.listen(port,function() {
+app.listen(process.env.PORT || 8000,function() {
     console.log("app running");
 })
