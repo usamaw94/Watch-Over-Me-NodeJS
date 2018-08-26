@@ -34,23 +34,24 @@ function sendNotification(notificationTitle ,notificationBody, notificationPrior
     });
 }
 
-function callingWatchers(watcherCount){
+function callingWatchers(watcherCount,registrationToken){
 
-    sendNotification("Connecting watcher","Now contacting watcher "+watcherCount,"High",registrationToken);
+    var regToken = registrationToken;
+    sendNotification("Connecting watcher","Now contacting watcher "+watcherCount,"High",regToken);
     if(watcherCount < 5){
         setTimeout(function(){
             setTimeout(function(){
-                sendNotification("Watcher Response","Watcher "+watcherCount+" didn't respond","High",registrationToken);
+                sendNotification("Watcher Response","Watcher "+watcherCount+" didn't respond","High",regToken);
             },15000);
             watcherCount++;
             setTimeout(function(){
-                callingWatchers(watcherCount);
+                callingWatchers(watcherCount,regToken);
             },5000);
         },15000);
     }
     else{
         setTimeout(function(){
-            sendNotification("Watcher Response","Watcher "+watcherCount+" is coming to help you","High",registrationToken);
+            sendNotification("Watcher Response","Watcher "+watcherCount+" is coming to help you","High",regToken);
         },15000);
     }
 }
@@ -58,13 +59,12 @@ function callingWatchers(watcherCount){
 function alertProcesiing(registrationToken){
     sendNotification("Alert Received","We're calling help for you!","High",registrationToken);
     setTimeout(function(){
-        callingWatchers(1);
+        callingWatchers(1,registrationToken);
     },3000);
 }
 
 router.post('/logsprocessing', function(req,res){
     var log = new Log(req.body);
-    
     var regToken = log['registration_token'];
 
     log.save().then(function(log){

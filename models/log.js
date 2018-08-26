@@ -26,6 +26,9 @@ const logSchema = new Schema({
     },
     battery_percentage:{
         type: String
+    },
+    registration_token:{
+        type: String
     }
 });
 
