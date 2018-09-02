@@ -46,7 +46,7 @@ app.use('/api',require('./routes/api'));
 //     res.render("index");
 // })
 
-const server = app.listen(process.env.PORT || 8000,function() {
+const server = app.listen(process.env.PORT || 5000,function() {
     console.log("app running");
 });
 
