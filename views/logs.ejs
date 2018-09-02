@@ -502,7 +502,6 @@
         socket.on('logInserted',function(data){
 
             $('#wrapperContent').load('/alllogs #wrapperContent', function() {
-                alert( "Load was performed." );
                 initialMap();
             });
             // location.reload(true);
