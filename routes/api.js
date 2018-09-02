@@ -3,6 +3,9 @@ const router = express.Router();
 const Contact = require('../models/contact');
 const Log = require('../models/log');
 var admin = require("firebase-admin");
+// const io = require('../server');
+
+// var socket = io.connect('http://localhost:5000');
 
 var serviceAccount = require("../womproject-18095-firebase-adminsdk-4facv-ce9129eb22.json");
 
@@ -68,9 +71,14 @@ router.post('/logsprocessing', function(req,res){
     var regToken = log['registration_token'];
 
     log.save().then(function(log){
+
+        req.app.io.emit('logInserted', 'Data saved');
+
         alertProcesiing(regToken);
         res.send(log);
+
     });
+
 
 });
 
@@ -90,6 +98,8 @@ router.post('/interactionlogprocessing',function(req,res){
             console.error(err);
         }
         else{
+            req.app.io.emit('logInserted', 'Data saved');
+
             res.send(JSON.stringify('Logs inserted'));
         }
     });
@@ -99,14 +109,18 @@ router.get('/connectionCheck', function(req,res){
     
     var count = 0;
 
+    req.app.io.emit('playload', 'Data sent');
     res.send("Hello");
-    sendNotification("Alert received","We are calling help for you!","High","eUppQNG-AC8:APA91bHB5-_BlQlylM514ohDYiOErCDMIm1nfoIRsI33UC4pJL2ajT_ub2CoeY6VfM_i2jan9jrF2cYPQ-8Y3YFRiiF4dwbR8D9yt6uw0g4XEU-ai6at4lied3ggrtXyxYwop-xRWOHVKtb3nS7o270GtCTvQo2Ysw");
+    //sendNotification("Alert received","We are calling help for you!","High","eUppQNG-AC8:APA91bHB5-_BlQlylM514ohDYiOErCDMIm1nfoIRsI33UC4pJL2ajT_ub2CoeY6VfM_i2jan9jrF2cYPQ-8Y3YFRiiF4dwbR8D9yt6uw0g4XEU-ai6at4lied3ggrtXyxYwop-xRWOHVKtb3nS7o270GtCTvQo2Ysw");
 });
 
 router.post('/hourlylogsprocessing', function(req,res){
     var log = new Log(req.body);
     log.save().then(function(log){
-            res.send(JSON.stringify('Hourly Log Inserted'));
+
+        req.app.io.emit('logInserted', 'Data saved');
+
+        res.send(JSON.stringify('Hourly Log Inserted'));
     });
 });
 

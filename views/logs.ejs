@@ -164,6 +164,10 @@
                             <p>Service Id: 987</p>
                             <p>Service date: 19-6-2018</p>
                             <h5>WOM Phone number : 0401 345 765</h5>
+
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#trackWearer">
+                                Track Wearer
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -453,6 +457,27 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="trackWearer" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Wearer location</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                    <div id="googleMap" style="width: 100%;  ;height:455px;"></div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- jQuery -->
 <script src="/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -469,3 +494,14 @@
 <script src="/dist/js/custom.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsaBSLRpDtQYzD5md-bnOYP61GBRN9oac&libraries=places&callback=myMap"></script><h1>{{ data }}</h1>
+
+<script>
+    jQuery(function($){
+        var socket = io.connect();
+
+        socket.on('logInserted',function(data){
+            // $('#wrapper').load('index.ejs');
+            location.reload(true);
+        });
+    });
+</script>

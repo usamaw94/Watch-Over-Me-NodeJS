@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongodb = require('mongodb');
 const Log = require('../models/log');
+const io = require('../server');
 
 router.get("/", function(req, res){
     res.render("index", { title: 'Express', data : 'some text' });

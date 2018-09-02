@@ -144,6 +144,7 @@
                         <div class="col-sm-6">
                             <h1>Service Logs</h1>
                             <h1><%= data %></h1>
+                            <div id="chat"></div>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -267,11 +268,6 @@
             <strong>Copyright &copy; 2018 <a href="#">Watch Over Me</a>.</strong> All rights
             reserved.
         </footer>
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
     <div class="modal fade" id="filter" role="dialog">
@@ -461,3 +457,14 @@
     <script src="/dist/js/custom.js"></script>
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsaBSLRpDtQYzD5md-bnOYP61GBRN9oac&libraries=places&callback=myMap"></script>
+
+    <script>
+        jQuery(function($){
+            var socket = io.connect();
+
+            socket.on('playload',function(data){
+                // $('#wrapper').load('index.ejs');
+                // location.reload(true);
+            });
+        });
+    </script>
