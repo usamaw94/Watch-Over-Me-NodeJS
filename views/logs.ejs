@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" id="wrapperContent">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom fixed-top">
         <!-- Left navbar links -->
@@ -500,7 +500,11 @@
         var socket = io.connect();
 
         socket.on('logInserted',function(data){
-            $('#wrapper').load('/index.ejs #wrapper');
+
+            $('#wrapperContent').load('/alllogs #wrapperContent', function() {
+                alert( "Load was performed." );
+                initialMap();
+            });
             // location.reload(true);
         });
     });
