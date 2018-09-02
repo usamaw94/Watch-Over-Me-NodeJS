@@ -500,8 +500,8 @@
         var socket = io.connect();
 
         socket.on('logInserted',function(data){
-            // $('#wrapper').load('index.ejs');
-            location.reload(true);
+            $('#wrapper').load('index.ejs');
+            // location.reload(true);
         });
     });
 </script>
