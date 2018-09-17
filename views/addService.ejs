@@ -1,0 +1,821 @@
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+        </li>
+        <!--<li class="nav-item d-none d-sm-inline-block">-->
+          <!--<a href="E:\Admin LTE Sample\AdminLTE-3.0.0-alpha.2\AdminLTE-3.0.0-alpha.2\index.html" class="nav-link">Home</a>-->
+        <!--</li>-->
+        <!--<li class="nav-item d-none d-sm-inline-block">-->
+          <!--<a href="#" class="nav-link">Contact</a>-->
+        <!--</li>-->
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+  
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="admin_dashboard.html" class="brand-link">
+        <span class="brand-text font-weight-light">Watch Over Me</span>
+      </a>
+  
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="dist/img/user.png" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">Admin</a>
+          </div>
+        </div>
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="admin_dashboard.html" class="nav-link">
+                <i class="nav-icon fa fa-dashboard"></i>
+                <p>
+                  Admin Dashboard
+                </p>
+              </a>
+            </li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-circle-o-notch"></i>
+                <p>
+                  Services
+                  <i class="right fa fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="add_services.html" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Add services</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="view_services.html" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>View services</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="watches.html" class="nav-link">
+                <i class="nav-icon fa fa-clock-o"></i>
+                <p>
+                  Watches
+                </p>
+              </a>
+            </li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-phone"></i>
+                <p>
+                  SIMs & Plans
+                  <i class="right fa fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="sims.html" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>SIMs</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="manage_plans.html" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Plans</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="watches.html" class="nav-link">
+                <i class="nav-icon fa fa-hospital-o"></i>
+                <p>
+                  Pharmacies
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="pages/examples/login.html" class="nav-link">
+                <i class="nav-icon fa fa-sign-out text-danger"></i>
+                <p class="text">LOGOUT</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+  
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Application form for ther service</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="admin_dashboard.html">Home</a></li>
+                <li class="breadcrumb-item active">Add service</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+      <br>
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <!-- Stepper -->
+          <div class="steps-form-2">
+            <div class="steps-row-2 setup-panel-2 d-flex justify-content-between">
+              <div class="steps-step-2" data-toggle="tooltip" data-placement="top" title="Add Wearer">
+                <a href="#step-1" style="pointer-events: none" class="btn btn-amber waves-effect ml-0 wearer active-tab"><i class="fa fa-user" aria-hidden="true"></i></a>
+              </div>
+              <div class="steps-step-2" data-toggle="tooltip" data-placement="top" title="Add Watchers">
+                <a href="#step-2" style="pointer-events: none" class="btn btn-blue-grey btn-circle-2 watcher waves-effect"><i class="fa fa-users" aria-hidden="true"></i></a>
+              </div>
+              <div class="steps-step-2" data-toggle="tooltip" data-placement="top" title="Add Pharmacy">
+                <a href="#step-3" style="pointer-events: none" class="btn btn-blue-grey btn-circle-2 pharmacy waves-effect"><i class="fa fa-hospital-o" aria-hidden="true"></i></a>
+              </div>
+              <div class="steps-step-2" data-toggle="tooltip" data-placement="top" title="Add Customer">
+                <a href="#step-4" style="pointer-events: none" class="btn btn-blue-grey btn-circle-2 customer waves-effect"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+              </div>
+              <div class="steps-step-2" data-toggle="tooltip" data-placement="top" title="Confirmation">
+                <a href="#step-5" style="pointer-events: none" class="btn btn-blue-grey btn-circle-2 confirmation waves-effect mr-0"><i class="fa fa-check" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </div>
+  
+          <br>
+          <!-- First Step -->
+          <form role="form" action="" method="post">
+  
+            <div class="row setup-content-2" id="step-1">
+              <div class="col-md-12">
+                <div class="card card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">Wearer Information</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <!-- text input -->
+                    <div class="container-fluid">
+  
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label>Add phone Number</label>
+                          </div>
+                          <div class="col-md-7">
+                            <input type="text" name="phone" id="phone" class="form-control">
+                          </div>
+                          <div class="col-md-3">
+                            <div id="checkPhone" class="btn btn-info btn-block">Check</div>
+                          </div>
+                        </div>
+                      </div>
+  
+                      <input type="hidden" name="exist" id="exist">
+  
+                      <div id="wearerForm">
+  
+                        <div class="form-group">
+  
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Name</label>
+                            </div>
+                            <div class="col-md-5">
+                              <input type="text" class="form-control" placeholder="First name">
+                            </div>
+                            <div class="col-md-5">
+                              <input type="text" class="form-control" placeholder="Last name">
+                            </div>
+                          </div>
+                        </div>
+  
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Email</label>
+                            </div>
+                            <div class="col-md-10">
+                              <input type="email" class="form-control" placeholder="Enter ...">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div id="wearerExist">
+                        <h6 style="color: green">User already exist</h6>
+  
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Name</label>
+                            </div>
+                            <div class="col-md-5">
+                              <input type="text" class="form-control" placeholder="First name" readonly>
+                            </div>
+                            <div class="col-md-5">
+                              <input type="text" class="form-control" placeholder="Last name" readonly>
+                            </div>
+                          </div>
+                        </div>
+  
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Gender</label>
+                            </div>
+                            <div class="col-3">
+                              <div class="form-check">
+                                <input class="form-check-input" name="gender" type="radio" value="Male" disabled>
+                                <label class="form-check-label">Male</label>
+                              </div>
+                            </div>
+                            <div class="col-3">
+                              <div class="form-check">
+                                <input class="form-check-input" name="gender" type="radio" value="Female" disabled>
+                                <label class="form-check-label">Female</label>
+                              </div>
+                            </div>
+                            <div class="col-3">
+                              <div class="form-check">
+                                <input class="form-check-input" name="gender" type="radio" value="Other" disabled>
+                                <label class="form-check-label">Other</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+  
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Email</label>
+                            </div>
+                            <div class="col-md-10">
+                              <input type="email" class="form-control" placeholder="Enter ..." disabled>
+                            </div>
+                          </div>
+                        </div>
+  
+                      </div>
+  
+                      <div id="wearerAlreadyWearer">
+                        <h6 style="color: green">User is already a wearer</h6>
+  
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Name</label>
+                            </div>
+                            <div class="col-md-5">
+                              <input type="text" class="form-control" placeholder="First name" disabled>
+                            </div>
+                            <div class="col-md-5">
+                              <input type="text" class="form-control" placeholder="Last name" disabled>
+                            </div>
+                          </div>
+                        </div>
+  
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Email</label>
+                            </div>
+                            <div class="col-md-10">
+                              <input type="email" class="form-control" placeholder="Enter ..." disabled>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <button id="nextToWatchers" style="display: none" class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button">Next</button>
+              </div>
+            </div>
+  
+            <!-- Second Step -->
+            <div class="row setup-content-2" id="step-2">
+              <div class="col-md-12">
+                <div class="card card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">Watcher Information</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <!-- text input -->
+                    <div class="container-fluid">
+  
+                      <div id="watcher1">
+                        <h4>Watcher# 1</h4>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Add phone Number</label>
+                            </div>
+                            <div class="col-md-7">
+                              <input type="text" name="watcher1Phone" id="watcher1Phone" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                              <div id="checkWatcher1Phone" class="btn btn-info btn-block">Check</div>
+                            </div>
+                          </div>
+                        </div>
+  
+                        <div id="watcher1Form">
+                        <div class="form-group">
+  
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Name</label>
+                            </div>
+                            <div class="col-md-5">
+                              <input id="w1FName" type="text" class="form-control" placeholder="First name">
+                            </div>
+                            <div class="col-md-5">
+                              <input id="w1LName" type="text" class="form-control" placeholder="Last name">
+                            </div>
+                          </div>
+                        </div>
+  
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Email</label>
+                            </div>
+                            <div class="col-md-10">
+                              <input id="w1Email" type="email" class="form-control" placeholder="Enter ...">
+                            </div>
+                          </div>
+                        </div>
+  
+                        <div id="addWatcher2" class="btn btn-info">
+                          Add another watcher
+                        </div>
+  
+                        <hr>
+                      </div>
+                      </div>
+  
+                      <div id="watcher2">
+                        <h4>Watcher# 2</h4>
+                        <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label>Add phone Number</label>
+                          </div>
+                          <div class="col-md-7">
+                            <input type="text" name="watcher1Phone" id="watcher2Phone" class="form-control">
+                          </div>
+                          <div class="col-md-3">
+                            <div id="checkWatcher2Phone" class="btn btn-info btn-block">Check</div>
+                          </div>
+                        </div>
+                        </div>
+  
+                        <div id="watcher2Form">
+                          <div class="form-group">
+  
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label>Name</label>
+                              </div>
+                              <div class="col-md-5">
+                                <input id="w2FName" type="text" class="form-control" placeholder="First name">
+                              </div>
+                              <div class="col-md-5">
+                                <input id="w2LName" type="text" class="form-control" placeholder="Last name">
+                              </div>
+                            </div>
+                          </div>
+  
+                          <div class="form-group">
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label>Email</label>
+                              </div>
+                              <div class="col-md-10">
+                                <input id="w2Email" type="email" class="form-control" placeholder="Enter ...">
+                              </div>
+                            </div>
+                          </div>
+  
+                          <hr>
+                        </div>
+                      </div>
+  
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <button id="prevToWearer" class="btn btn-mdb-color btn-rounded prevBtn-2 float-left" type="button">Previous</button>
+                <button id="nextToPharmacy" class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button">Next</button>
+              </div>
+            </div>
+  
+            <!-- Third Step -->
+            <div class="row setup-content-2" id="step-3">
+              <div class="col-md-12">
+                <div class="card card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">Pharmacy Information</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <!-- text input -->
+                    <div class="container-fluid">
+  
+                      <div class="form-group">
+                        <label>Select pharmacy</label>
+                        <select class="form-control select2" style="width: 100%;">
+                          <option selected="selected">Alabama</option>
+                          <option>Alaska</option>
+                          <option>California</option>
+                          <option>Delaware</option>
+                          <option>Tennessee</option>
+                          <option>Texas</option>
+                          <option>Washington</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <button id="prevToWatcher" class="btn btn-mdb-color btn-rounded prevBtn-2 float-left" type="button">Previous</button>
+                <button id="nextToCustomer" class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button">Next</button>
+              </div>
+            </div>
+  
+            <!-- Fourth Step -->
+            <div class="row setup-content-2" id="step-4">
+              <div class="col-md-12">
+                <div class="card card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">Customer Information</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <!-- text input -->
+                    <div class="container-fluid">
+  
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label>Customer will be</label>
+                          </div>
+                          <div class="col-3">
+                            <div class="form-check">
+                              <input id="selectWearer" class="form-check-input" name="customer" type="radio" value="wearer">
+                              <label class="form-check-label">Wearer</label>
+                            </div>
+                          </div>
+                          <div class="col-3">
+                            <div class="form-check">
+                              <input id="selectWacther" class="form-check-input" name="customer" type="radio" value="watcher">
+                              <label class="form-check-label">Watcher</label>
+                            </div>
+                          </div>
+                          <div class="col-3">
+                            <div class="form-check">
+                              <input id="selectNew" class="form-check-input" name="customer" type="radio" value="Other">
+                              <label class="form-check-label">Other</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div id="wearer-customer">
+                        <h4>Wearer will be the customer</h4>
+                      </div>
+  
+                      <div id="watcher-customer">
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label>Select watcher</label>
+                          </div>
+                          <div class="col-md-10">
+                            <select class="form-control" name="wathcher">
+                              <option value="watcher1">Watcher1</option>
+                              <option value="watcher1">Watcher2</option>
+                              <option value="watcher1">Watcher3</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div id="new-customer">
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label>Add phone Number</label>
+                            </div>
+                            <div class="col-md-7">
+                              <input type="text" name="phone" id="customerPhone" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                              <div id="checkCustomerPhone" class="btn btn-info btn-block">Check</div>
+                            </div>
+                          </div>
+                        </div>
+  
+                        <div id="customerForm">
+                          <div class="form-group">
+  
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label>Name</label>
+                              </div>
+                              <div class="col-md-5">
+                                <input type="text" class="form-control" placeholder="First name">
+                              </div>
+                              <div class="col-md-5">
+                                <input type="text" class="form-control" placeholder="Last name">
+                              </div>
+                            </div>
+                          </div>
+  
+                          <div class="form-group">
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label>Email</label>
+                              </div>
+                              <div class="col-md-10">
+                                <input type="email" class="form-control" placeholder="Enter ...">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+  
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <button id="prevToPharmacy" class="btn btn-mdb-color btn-rounded prevBtn-2 float-left" type="button">Previous</button>
+                <button id="nextToConfirmation" class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button">Next</button>
+              </div>
+            </div>
+  
+            <!-- Fifth Step -->
+            <div class="row setup-content-2" id="step-5">
+              <div class="col-md-12">
+                <div class="card card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">Summary</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <!-- text input -->
+                    <div class="container-fluid">
+                      <h4>Wearer Information</h4>
+                      <table class="table table-bordered">
+                        <tr>
+                          <th>Name :</th>
+                          <td>Usama Waheed</td>
+                        </tr>
+                        <tr>
+                          <th>Phone Number</th>
+                          <td>0403887321</td>
+                        </tr>
+                        <tr>
+                          <th>Email</th>
+                          <td>usamaw94@gmail.com</td>
+                        </tr>
+                      </table>
+                      <hr>
+  
+                      <h4>Watchers Information</h4>
+                      <table class="table table-bordered">
+                        <tr>
+                          <th colspan="2" style="text-align: center">
+                            Watcher# 1
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>Name</th>
+                          <td>Waqas Waheed</td>
+                        </tr>
+                        <tr>
+                          <th>Phone Number</th>
+                          <td>043553452</td>
+                        </tr>
+                        <tr>
+                          <th>Email</th>
+                          <td>waqax94@gmail.com</td>
+                        </tr>
+                      </table>
+                      <table class="table table-bordered">
+                        <tr>
+                          <th colspan="2" style="text-align: center">
+                            Watcher# 2
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>Name</th>
+                          <td>Waqas Waheed</td>
+                        </tr>
+                        <tr>
+                          <th>Phone Number</th>
+                          <td>043553452</td>
+                        </tr>
+                        <tr>
+                          <th>Email</th>
+                          <td>waqax94@gmail.com</td>
+                        </tr>
+                      </table>
+  
+                      <hr>
+                      <h4>Pharmacy Information</h4>
+                      <table class="table table-bordered">
+                        <tr>
+                          <th>Name</th>
+                          <td>My chemist</td>
+                        </tr>
+                      </table>
+  
+                      <hr>
+                      <h4>Customer Information</h4>
+                      <table class="table table-bordered">
+                        <tr>
+                          <th>Name</th>
+                          <td>Usama Waheed</td>
+                        </tr>
+                        <tr>
+                          <th>Phone Number</th>
+                          <td>0403887321</td>
+                        </tr>
+                        <tr>
+                          <th>Email</th>
+                          <td>usamaw94@gmail.com</td>
+                        </tr>
+                      </table>
+  
+                      <h5>Customer wil be Wearer</h5>
+                      <h5>Customer will be watcher# 1</h5>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+  
+                <button id="prevToCustomer" class="btn btn-mdb-color btn-rounded prevBtn-2 float-left" type="button">Previous</button>
+                <button class="btn btn-success btn-rounded float-right" type="submit">Submit</button>
+              </div>
+            </div>
+          </form>
+  
+        </div>
+      </section>
+      <br>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <b>Version</b> 1.0.0. alpha
+      </div>
+      <strong>Copyright &copy; 2018 <a href="#">Watch Over Me</a>.</strong> All rights
+      reserved.
+    </footer>
+  
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Morris.js charts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="plugins/morris/morris.min.js"></script>
+<!-- Sparkline -->
+<script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- jvectormap -->
+<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="plugins/knob/jquery.knob.js"></script>
+<!-- daterangepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="plugins/daterangepicker/daterangepicker.js"></script>
+<!-- datepicker -->
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- Select2 -->
+<script src="plugins/select2/select2.full.min.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Slimscroll -->
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="dist/js/pages/dashboard.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+
+<script src="dist/js/custom.js"></script>
+
+<script src="dist/js/stepByStepForm.js"></script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker         : true,
+      timePickerIncrement: 30,
+      format             : 'MM/DD/YYYY h:mm A'
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+            {
+              ranges   : {
+                'Today'       : [moment(), moment()],
+                'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+                'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+              },
+              startDate: moment().subtract(29, 'days'),
+              endDate  : moment()
+            },
+            function (start, end) {
+              $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            }
+    )
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>

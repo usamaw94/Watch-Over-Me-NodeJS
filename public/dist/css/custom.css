@@ -95,3 +95,43 @@
 .user-log-options .log-details:hover {
     color: #d39e00;
 }
+
+#wearerForm {
+    display: none;
+}
+
+#wearerExist {
+    display: none;
+}
+
+#wearerAlreadyWearer {
+    display: none;
+}
+
+#watcher1Form {
+    display: none;
+}
+
+#watcher2 {
+    display: none;
+}
+
+#watcher2Form {
+    display: none;
+}
+
+#wearer-customer{
+    display: none;
+}
+
+#watcher-customer{
+    display: none;
+}
+
+#new-customer {
+    display: none;
+}
+
+#customerForm {
+    display: none;
+}

@@ -16,4 +16,8 @@ router.get('/alllogs', function(req,res){
     });
 })
 
+router.get("/addService", function(req, res){
+    res.render("addService");
+})
+
 module.exports = router;
