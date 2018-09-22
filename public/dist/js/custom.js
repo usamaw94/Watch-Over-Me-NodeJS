@@ -60,14 +60,27 @@ $("#checkPhone").on("click", function(){
 
     if(check == 'true'){
         $("#wearerForm").slideDown();
-        $("#exist").val("no");
+        $("#wearerExistValue").val("no");
+        $("#textWearerAlreadyWearer").fadeOut('slow');
+        $("#textWearerAlreadyExist").fadeOut('slow');
         $("#nextToWatchers").fadeIn('slow');
     } else if(check == 'wearer') {
+        $("#wearerForm").slideDown();
         $("#nextToWatchers").fadeOut('slow');
-        $("#wearerAlreadyWearer").slideDown();
+        $("#textWearerAlreadyWearer").fadeIn('slow');
+        $("#textWearerAlreadyExist").fadeOut('slow');
+        $("#wearerFName").prop('readonly', true);
+        $("#wearerLName").prop('readonly', true);
+        $("#wearerEmail").prop('readonly', true);
+        $("#nextToWatchers").fadeOut('slow');
     } else {
-        $("#exist").val("yes");
-        $("#wearerExist").slideDown();
+        $("#wearerExistValue").val("yes");
+        $("#wearerForm").slideDown();
+        $("#textWearerAlreadyWearer").fadeOut('slow');
+        $("#textWearerAlreadyExist").fadeIn('slow');
+        $("#wearerFName").prop('readonly', true);
+        $("#wearerLName").prop('readonly', true);
+        $("#wearerEmail").prop('readonly', true);
         $("#nextToWatchers").fadeIn('slow');
     }
 });
@@ -153,6 +166,7 @@ $("#selectWearer").on("click", function(){
     $("#wearer-customer").slideDown();
     $("#watcher-customer").slideUp();
     $("#new-customer").slideUp();
+    $("#customerCheckValue").val('wearer');
 });
 
 //----------------------------------------------
@@ -162,6 +176,7 @@ $("#selectWacther").on("click", function(){
     $("#watcher-customer").slideDown();
     $("#wearer-customer").slideUp();
     $("#new-customer").slideUp();
+    $("#customerCheckValue").val('watcher');
 
 });
 
@@ -172,6 +187,34 @@ $("#selectNew").on("click", function(){
     $("#new-customer").slideUp();
     $("#watcher-customer").slideUp();
     $("#new-customer").slideDown();
-
+    $("#customerCheckValue").val('new');
 });
 
+//----------------------------------------------
+
+$("#nextToConfirmation").on("click", function(){
+
+    alert('confirmed');
+    
+    $("#cnfrmWearerFName").text($('#wearerFName').val());
+    $("#cnfrmWearerLName").text($('#wearerLName').val());
+    $("#cnfrmWearerPhone").text($('#wearerPhone').val());
+    $("#cnfrmWearerEmail").text($('#wearerEmail').val());
+    
+    $("#cnfrmWatcher1FName").text($('#w1FName').val());
+    $("#cnfrmWatcher1LName").text($('#w1LName').val());
+    $("#cnfrmWatcher1Phone").text($('#watcher1Phone').val());
+    $("#cnfrmWatcher1Email").text($('#w1Email').val());
+    
+    $("#cnfrmWatcher2FName").text($('#w2FName').val());
+    $("#cnfrmWatcher2LName").text($('#w2LName').val());
+    $("#cnfrmWatcher2Phone").text($('#watcher2Phone').val());
+    $("#cnfrmWatcher2Email").text($('#w2Email').val());
+    
+    $("#cnfrmPharmacyName").text($('#pharmacy').val());
+    
+    $("#cnfrmCustomerFName").text($('#customerFName').val());
+    $("#cnfrmCustomerLName").text($('#customerLName').val());
+    $("#cnfrmCustomerPhone").text($('#customerPhone').val());
+    $("#cnfrmCustomerEmail").text($('#customerEmail').val());
+});

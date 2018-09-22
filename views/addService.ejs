@@ -168,7 +168,7 @@
   
           <br>
           <!-- First Step -->
-          <form role="form" action="" method="post">
+          <form role="form" action="/addServiceProcessing" method="post">
   
             <div class="row setup-content-2" id="step-1">
               <div class="col-md-12">
@@ -187,7 +187,7 @@
                             <label>Add phone Number</label>
                           </div>
                           <div class="col-md-7">
-                            <input type="text" name="phone" id="phone" class="form-control">
+                            <input type="text" name="wearerPhone" id="wearerPhone" class="form-control">
                           </div>
                           <div class="col-md-3">
                             <div id="checkPhone" class="btn btn-info btn-block">Check</div>
@@ -195,21 +195,25 @@
                         </div>
                       </div>
   
-                      <input type="hidden" name="exist" id="exist">
+                      <input type="hidden" name="exist" id="wearerExistValue">
   
                       <div id="wearerForm">
   
                         <div class="form-group">
   
+                          <h6 id="textWearerAlreadyWearer" style="color: green; display: none">User is already a wearer</h6>
+
+                          <h6 id="textWearerAlreadyExist" style="color: green; display: none">User already exist</h6>
+
                           <div class="row">
                             <div class="col-md-2">
                               <label>Name</label>
                             </div>
                             <div class="col-md-5">
-                              <input type="text" class="form-control" placeholder="First name">
+                              <input id="wearerFName" name="wearerFName" type="text" class="form-control" placeholder="First name">
                             </div>
                             <div class="col-md-5">
-                              <input type="text" class="form-control" placeholder="Last name">
+                              <input id="wearerLName" name="wearerLName" type="text" class="form-control" placeholder="Last name">
                             </div>
                           </div>
                         </div>
@@ -220,92 +224,7 @@
                               <label>Email</label>
                             </div>
                             <div class="col-md-10">
-                              <input type="email" class="form-control" placeholder="Enter ...">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-  
-                      <div id="wearerExist">
-                        <h6 style="color: green">User already exist</h6>
-  
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-md-2">
-                              <label>Name</label>
-                            </div>
-                            <div class="col-md-5">
-                              <input type="text" class="form-control" placeholder="First name" readonly>
-                            </div>
-                            <div class="col-md-5">
-                              <input type="text" class="form-control" placeholder="Last name" readonly>
-                            </div>
-                          </div>
-                        </div>
-  
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-md-2">
-                              <label>Gender</label>
-                            </div>
-                            <div class="col-3">
-                              <div class="form-check">
-                                <input class="form-check-input" name="gender" type="radio" value="Male" disabled>
-                                <label class="form-check-label">Male</label>
-                              </div>
-                            </div>
-                            <div class="col-3">
-                              <div class="form-check">
-                                <input class="form-check-input" name="gender" type="radio" value="Female" disabled>
-                                <label class="form-check-label">Female</label>
-                              </div>
-                            </div>
-                            <div class="col-3">
-                              <div class="form-check">
-                                <input class="form-check-input" name="gender" type="radio" value="Other" disabled>
-                                <label class="form-check-label">Other</label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-  
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-md-2">
-                              <label>Email</label>
-                            </div>
-                            <div class="col-md-10">
-                              <input type="email" class="form-control" placeholder="Enter ..." disabled>
-                            </div>
-                          </div>
-                        </div>
-  
-                      </div>
-  
-                      <div id="wearerAlreadyWearer">
-                        <h6 style="color: green">User is already a wearer</h6>
-  
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-md-2">
-                              <label>Name</label>
-                            </div>
-                            <div class="col-md-5">
-                              <input type="text" class="form-control" placeholder="First name" disabled>
-                            </div>
-                            <div class="col-md-5">
-                              <input type="text" class="form-control" placeholder="Last name" disabled>
-                            </div>
-                          </div>
-                        </div>
-  
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-md-2">
-                              <label>Email</label>
-                            </div>
-                            <div class="col-md-10">
-                              <input type="email" class="form-control" placeholder="Enter ..." disabled>
+                              <input id="wearerEmail" name="wearerEmail" type="email" class="form-control" placeholder="Enter ...">
                             </div>
                           </div>
                         </div>
@@ -354,10 +273,10 @@
                               <label>Name</label>
                             </div>
                             <div class="col-md-5">
-                              <input id="w1FName" type="text" class="form-control" placeholder="First name">
+                              <input name="watcher1FName" id="w1FName" type="text" class="form-control" placeholder="First name">
                             </div>
                             <div class="col-md-5">
-                              <input id="w1LName" type="text" class="form-control" placeholder="Last name">
+                              <input name="watcher1LName" id="w1LName" type="text" class="form-control" placeholder="Last name">
                             </div>
                           </div>
                         </div>
@@ -368,7 +287,7 @@
                               <label>Email</label>
                             </div>
                             <div class="col-md-10">
-                              <input id="w1Email" type="email" class="form-control" placeholder="Enter ...">
+                              <input name="watcher1Email" id="w1Email" type="email" class="form-control" placeholder="Enter ...">
                             </div>
                           </div>
                         </div>
@@ -389,7 +308,7 @@
                             <label>Add phone Number</label>
                           </div>
                           <div class="col-md-7">
-                            <input type="text" name="watcher1Phone" id="watcher2Phone" class="form-control">
+                            <input type="text" name="watcher2Phone" id="watcher2Phone" class="form-control">
                           </div>
                           <div class="col-md-3">
                             <div id="checkWatcher2Phone" class="btn btn-info btn-block">Check</div>
@@ -405,10 +324,10 @@
                                 <label>Name</label>
                               </div>
                               <div class="col-md-5">
-                                <input id="w2FName" type="text" class="form-control" placeholder="First name">
+                                <input name="watcher2FName" id="w2FName" type="text" class="form-control" placeholder="First name">
                               </div>
                               <div class="col-md-5">
-                                <input id="w2LName" type="text" class="form-control" placeholder="Last name">
+                                <input name="watcher2LName" id="w2LName" type="text" class="form-control" placeholder="Last name">
                               </div>
                             </div>
                           </div>
@@ -419,7 +338,7 @@
                                 <label>Email</label>
                               </div>
                               <div class="col-md-10">
-                                <input id="w2Email" type="email" class="form-control" placeholder="Enter ...">
+                                <input name="watcher2Email" id="w2Email" type="email" class="form-control" placeholder="Enter ...">
                               </div>
                             </div>
                           </div>
@@ -451,14 +370,11 @@
   
                       <div class="form-group">
                         <label>Select pharmacy</label>
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
+                        <select id="pharmacy" name="pharmacy" class="form-control select2" style="width: 100%;">
+                          <option selected="selected">myChemist</option>
+                          <option>Pharmacist</option>
+                          <option>Bulk Biller</option>
+                          <option>Gourmet pharmacy</option>
                         </select>
                       </div>
                     </div>
@@ -505,6 +421,8 @@
                               <label class="form-check-label">Other</label>
                             </div>
                           </div>
+
+                          <input type="hidden" class="form-control" id="customerCheckValue" name="customerCheckValue">
                         </div>
                       </div>
   
@@ -521,7 +439,6 @@
                             <select class="form-control" name="wathcher">
                               <option value="watcher1">Watcher1</option>
                               <option value="watcher1">Watcher2</option>
-                              <option value="watcher1">Watcher3</option>
                             </select>
                           </div>
                         </div>
@@ -534,7 +451,7 @@
                               <label>Add phone Number</label>
                             </div>
                             <div class="col-md-7">
-                              <input type="text" name="phone" id="customerPhone" class="form-control">
+                              <input type="text" name="customerPhone" id="customerPhone" class="form-control">
                             </div>
                             <div class="col-md-3">
                               <div id="checkCustomerPhone" class="btn btn-info btn-block">Check</div>
@@ -550,10 +467,10 @@
                                 <label>Name</label>
                               </div>
                               <div class="col-md-5">
-                                <input type="text" class="form-control" placeholder="First name">
+                                <input id="customerFName" name="customerFName" type="text" class="form-control" placeholder="First name">
                               </div>
                               <div class="col-md-5">
-                                <input type="text" class="form-control" placeholder="Last name">
+                                <input id="customerLName" name="customerLName" type="text" class="form-control" placeholder="Last name">
                               </div>
                             </div>
                           </div>
@@ -564,7 +481,7 @@
                                 <label>Email</label>
                               </div>
                               <div class="col-md-10">
-                                <input type="email" class="form-control" placeholder="Enter ...">
+                                <input id="customerEmail" name="customerEmail" type="email" class="form-control" placeholder="Enter ...">
                               </div>
                             </div>
                           </div>
@@ -595,15 +512,16 @@
                       <table class="table table-bordered">
                         <tr>
                           <th>Name :</th>
-                          <td>Usama Waheed</td>
+                          <td><span id="cnfrmWearerFName"></span> <span id="cnfrmWearerLName"></span>
+                        </td>
                         </tr>
                         <tr>
                           <th>Phone Number</th>
-                          <td>0403887321</td>
+                          <td><span id="cnfrmWearerPhone"></span></td>
                         </tr>
                         <tr>
                           <th>Email</th>
-                          <td>usamaw94@gmail.com</td>
+                          <td><span id="cnfrmWearerEmail"></span></td>
                         </tr>
                       </table>
                       <hr>
@@ -617,15 +535,15 @@
                         </tr>
                         <tr>
                           <th>Name</th>
-                          <td>Waqas Waheed</td>
+                          <td><span id="cnfrmWatcher1FName"></span> <span id="cnfrmWatcher1LName"></span></td>
                         </tr>
                         <tr>
                           <th>Phone Number</th>
-                          <td>043553452</td>
+                          <td><span id="cnfrmWatcher1Phone"></span></td>
                         </tr>
                         <tr>
                           <th>Email</th>
-                          <td>waqax94@gmail.com</td>
+                          <td><span id="cnfrmWatcher1Email"></span></td>
                         </tr>
                       </table>
                       <table class="table table-bordered">
@@ -636,15 +554,15 @@
                         </tr>
                         <tr>
                           <th>Name</th>
-                          <td>Waqas Waheed</td>
+                          <td><span id="cnfrmWatcher2FName"></span> <span id="cnfrmWatcher2LName"></span></td>
                         </tr>
                         <tr>
                           <th>Phone Number</th>
-                          <td>043553452</td>
+                          <td><span id="cnfrmWatcher2Phone"></span></td>
                         </tr>
                         <tr>
                           <th>Email</th>
-                          <td>waqax94@gmail.com</td>
+                          <td><span id="cnfrmWatcher2Email"></span></td>
                         </tr>
                       </table>
   
@@ -653,29 +571,32 @@
                       <table class="table table-bordered">
                         <tr>
                           <th>Name</th>
-                          <td>My chemist</td>
+                          <td><span id="cnfrmPharmacyName"></span></td>
                         </tr>
                       </table>
   
                       <hr>
                       <h4>Customer Information</h4>
-                      <table class="table table-bordered">
+                      <table id="cnfrmNewCustomer" class="table table-bordered">
                         <tr>
                           <th>Name</th>
-                          <td>Usama Waheed</td>
+                          <td><span id="cnfrmCustomerFName"> <span id="cnfrmCustomerLName"></span></td>
                         </tr>
                         <tr>
                           <th>Phone Number</th>
-                          <td>0403887321</td>
+                          <td><span id="cnfrmCustomerPhone"></span></td>
                         </tr>
                         <tr>
                           <th>Email</th>
-                          <td>usamaw94@gmail.com</td>
+                          <td>
+                            <span id="cnfrmCustomerEmail">
+                            </span>
+                          </td>
                         </tr>
                       </table>
   
-                      <h5>Customer wil be Wearer</h5>
-                      <h5>Customer will be watcher# 1</h5>
+                      <h5 id="cnfrmTextCustomer">Wearer wil be the customer</h5>
+                      <h5 id="cnfrmTextWatcher">Watcher# 1 will be the customer</h5>
                     </div>
                   </div>
                   <!-- /.card-body -->
