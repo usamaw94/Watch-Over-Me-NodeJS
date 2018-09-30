@@ -76,6 +76,24 @@ router.get('/services',function(req,res){
     }
 })
 
+router.get('/checkWearerPhoneNumber/:phone',function(req,res){
+    console.log(req.params.phone);
+    var query = personDetail.findOne({phone_number: req.params.phone});
+    query.exec(function(err,personData){
+        if(err){
+            console.log(err);
+        }
+        else{
+            if(personData != null){
+                res.send("Person data exist");
+            }
+            else{
+                res.send("Person data not exists");
+            }
+        }
+    });
+})
+
 router.get('/logout',function(req,res){
     req.session.destroy(function(err){
         res.redirect('/');

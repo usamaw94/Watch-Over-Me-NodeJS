@@ -67,6 +67,22 @@ $('#addServiceForm').on('keyup keypress', function(e) {
 $("#checkPhone").on("click", function(){
 
     if($("#wearerPhone").val() != ''){
+
+        var wearerPhoneValue =  $("#wearerPhone").val();
+
+        var url="checkWearerPhoneNumber/"+ wearerPhoneValue;
+    
+        $.ajax({
+            url:url,
+            data:{wearerPhoneValue},
+            datatype:"json",
+            method:"GET",
+            success:function(data){
+                
+                alert(data);
+            }
+        });
+
         var check = 'true';
 
         if(check == 'true'){
