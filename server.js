@@ -4,6 +4,8 @@ var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var expressLayouts = require('express-ejs-layouts');
+var expressSession = require('express-session');
+
 var app = express();
 
 var logger = require('morgan');
@@ -15,7 +17,6 @@ mongoose.Promise = global.Promise;
 
 var mongo = require('mongodb');
 
-
 //set port
 var port;
 
@@ -23,11 +24,16 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(bodyparser());
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: false}));
 app.use(cors());
 app.use(expressLayouts);
+app.use(expressSession({
+    secret: 'max',
+    saveUninitialized: true,
+    resave: false
+}));
 app.use(express.static(__dirname + "/public"));
-
 
 app.set('layout', 'layouts/layout');
 app.set('view engine', 'ejs');
@@ -40,11 +46,12 @@ var usersRouter = require('./routes/users');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api',require('./routes/api'));
- 
 
 // app.get("/", function(req, res){
 //     res.render("index");
 // })
+
+
 
 const server = app.listen(process.env.PORT || 5000,function() {
     console.log("app running");

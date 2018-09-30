@@ -54,35 +54,50 @@ $(document).on("click", ".log", function(){
 
 //----------------------------------------------
 
+$('#addServiceForm').on('keyup keypress', function(e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) { 
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  //----------------------------------------------
+
 $("#checkPhone").on("click", function(){
 
-    var check = 'true';
+    if($("#wearerPhone").val() != ''){
+        var check = 'true';
 
-    if(check == 'true'){
-        $("#wearerForm").slideDown();
-        $("#wearerExistValue").val("no");
-        $("#textWearerAlreadyWearer").fadeOut('slow');
-        $("#textWearerAlreadyExist").fadeOut('slow');
-        $("#nextToWatchers").fadeIn('slow');
-    } else if(check == 'wearer') {
-        $("#wearerForm").slideDown();
-        $("#nextToWatchers").fadeOut('slow');
-        $("#textWearerAlreadyWearer").fadeIn('slow');
-        $("#textWearerAlreadyExist").fadeOut('slow');
-        $("#wearerFName").prop('readonly', true);
-        $("#wearerLName").prop('readonly', true);
-        $("#wearerEmail").prop('readonly', true);
-        $("#nextToWatchers").fadeOut('slow');
+        if(check == 'true'){
+            $("#wearerForm").slideDown();
+            $("#wearerExistValue").val("no");
+            $("#textWearerAlreadyWearer").fadeOut('slow');
+            $("#textWearerAlreadyExist").fadeOut('slow');
+            $("#nextToWatchers").fadeIn('slow');
+        } else if(check == 'wearer') {
+            $("#wearerForm").slideDown();
+            $("#nextToWatchers").fadeOut('slow');
+            $("#textWearerAlreadyWearer").fadeIn('slow');
+            $("#textWearerAlreadyExist").fadeOut('slow');
+            $("#wearerFName").prop('readonly', true);
+            $("#wearerLName").prop('readonly', true);
+            $("#wearerEmail").prop('readonly', true);
+            $("#nextToWatchers").fadeOut('slow');
+        } else {
+            $("#wearerExistValue").val("yes");
+            $("#wearerForm").slideDown();
+            $("#textWearerAlreadyWearer").fadeOut('slow');
+            $("#textWearerAlreadyExist").fadeIn('slow');
+            $("#wearerFName").prop('readonly', true);
+            $("#wearerLName").prop('readonly', true);
+            $("#wearerEmail").prop('readonly', true);
+            $("#nextToWatchers").fadeIn('slow');
+        }
     } else {
-        $("#wearerExistValue").val("yes");
-        $("#wearerForm").slideDown();
-        $("#textWearerAlreadyWearer").fadeOut('slow');
-        $("#textWearerAlreadyExist").fadeIn('slow');
-        $("#wearerFName").prop('readonly', true);
-        $("#wearerLName").prop('readonly', true);
-        $("#wearerEmail").prop('readonly', true);
-        $("#nextToWatchers").fadeIn('slow');
+        alert("Enter phone number");
     }
+    
 });
 
 
@@ -90,16 +105,19 @@ $("#checkPhone").on("click", function(){
 
 $("#checkWatcher1Phone").on("click", function(){
 
-    var check = '';
-
-    if(check == 'true'){
-        $("#watcher1Form").slideDown();
-        $("#w1FName").prop('readonly', true);
-        $("#w1LName").prop('readonly', true);
-        $("#w1Email").prop('readonly', true);
-        //$("#nextToWatchers").fadeIn('slow');
+    if($("#watcher1Phone").val() != ''){
+        var check = '';
+        if(check == 'true'){
+            $("#watcher1Form").slideDown();
+            $("#w1FName").prop('readonly', true);
+            $("#w1LName").prop('readonly', true);
+            $("#w1Email").prop('readonly', true);
+            //$("#nextToWatchers").fadeIn('slow');
+        } else {
+            $("#watcher1Form").slideDown();
+        }
     } else {
-        $("#watcher1Form").slideDown();
+        alert("Enter watcher1 phone");
     }
 });
 
@@ -109,21 +127,41 @@ $("#checkWatcher1Phone").on("click", function(){
 $("#addWatcher2").on("click", function(){
 
     $("#watcher2").slideDown();
+    $("#addWatcher2").fadeOut('slow');
+    $("#removeWatcher2").fadeIn('slow');
+
+});
+
+$("#removeWatcher2").on("click", function(){
+
+    $("#watcher2").slideUp();
+    $("#watcher2Phone").val('');
+    $("#watcher2FName").val('');
+    $("#watcher2LName").val('');
+    $("#watcher2Email").val('');
+
+    $("#addWatcher2").fadeIn('slow');
+    $("#removeWatcher2").fadeOut('slow');
 
 });
 
 $("#checkWatcher2Phone").on("click", function(){
 
-    var check = '';
+    if($("#watcher2Phone").val() != ''){
 
-    if(check == 'true'){
-        $("#watcher2Form").slideDown();
-        $("#w2FName").prop('readonly', true);
-        $("#w2LName").prop('readonly', true);
-        $("#w2Email").prop('readonly', true);
-        //$("#nextToWatchers").fadeIn('slow');
+        var check = '';
+
+        if(check == 'true'){
+            $("#watcher2Form").slideDown();
+            $("#w2FName").prop('readonly', true);
+            $("#w2LName").prop('readonly', true);
+            $("#w2Email").prop('readonly', true);
+            //$("#nextToWatchers").fadeIn('slow');
+        } else {
+            $("#watcher2Form").slideDown();
+        }
     } else {
-        $("#watcher2Form").slideDown();
+        alert("Enter watcher2 phone");
     }
 });
 
