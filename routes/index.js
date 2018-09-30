@@ -84,7 +84,7 @@ router.post("/addServiceProcessing",async function(req,res){
     });
 
     var watcherTwoPhone = req.body.watcher2Phone;
-    var watcherTwoFullName = req.body.w2FName + " " + req.body.w2LName;
+    var watcherTwoFullName = req.body.watcher2FName + " " + req.body.watcher2LName;
     var watcherTwoEmail = req.body.watcher2Email;
 
     var watcherTwoId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
