@@ -13,7 +13,15 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://usamaw94:uw123456@ds127342.mlab.com:27342/womdb', {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 
-var mongo = require('mongodb');
+var mongo = require('mongodb').MongoClient;
+mongo.connect("mongodb://usamaw94:uw123456@ds127342.mlab.com:27342/womdb", {useNewUrlParser: true},function(err,db){
+    if(err){
+        throw err;
+    }
+    else{
+        console.log("DB connected");
+    }
+})
 
 
 //set port
