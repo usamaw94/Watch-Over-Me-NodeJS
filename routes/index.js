@@ -51,14 +51,17 @@ router.post("/loginProcessing", function(req, res, next){
     query.exec(function(err,loginData){
         if(err){
             console.log(err);
-            // res.redirect('/');
+            res.redirect('/');
         } else {
             //var admin = new Admin(JSON.stringify(loginData));
-            console.log(loginData.admin_email);
-            req.session.adminEmail = loginData.admin_email;
-            req.session.adminName = loginData.admin_name;
-            res.redirect('/adminHome');
-            // res.send(loginData);
+            if(loginData!=null){
+                console.log(loginData.admin_email);
+                req.session.adminEmail = loginData.admin_email;
+                req.session.adminName = loginData.admin_name;
+                res.redirect('/adminHome');
+            } else {
+                res.redirect('/');
+            }
         }
     });
 })
