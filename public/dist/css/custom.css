@@ -112,6 +112,10 @@
     display: none;
 }
 
+#customerForm {
+    display: none;
+}
+
 #watcher2 {
     display: none;
 }
@@ -121,7 +125,7 @@
 }
 
 #wearer-customer{
-    display: none;
+    display: block;
 }
 
 #watcher-customer{

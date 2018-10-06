@@ -64,6 +64,16 @@ $('#addServiceForm').on('keyup keypress', function(e) {
 
   //----------------------------------------------
 
+$(document).ready(function(){
+    $("#wearerPhone").keyup(function(){
+        $("#wearerFName").val('');
+        $("#wearerLName").val('');
+        $("#wearerEmail").val('');
+        $("#wearerForm").slideUp();
+    });
+});  
+
+
 $("#checkPhone").on("click", function(){
 
     if($("#wearerPhone").val() != ''){
@@ -78,7 +88,12 @@ $("#checkPhone").on("click", function(){
             datatype:"json",
             method:"GET",
             success:function(data){
-                if(data.existStatus == 'yes'){
+                
+                var watcher1PhoneValue =  $("#watcher1Phone").val();
+
+                if(wearerPhoneValue == watcher1PhoneValue) {
+                    alert('You already entered this number for a watcher \nWatcher cannot become wearer');
+                } else if(data.existStatus == 'yes'){
                     $("#wearerExistStatus").val(data.existStatus);
                     $("#wearerExistId").val(data.id);
 
@@ -87,9 +102,9 @@ $("#checkPhone").on("click", function(){
                     $("#textWearerAlreadyWearer").fadeOut('slow');
                     $("#textWearerAlreadyExist").fadeIn('slow');
                     $("#wearerFName").prop('readonly', true);
-                    $("#wearerFName").val(data.name);
+                    $("#wearerFName").val(data.fname);
                     $("#wearerLName").prop('readonly', true);
-                    $("#wearerFName").val(data.lname);
+                    $("#wearerLName").val(data.lname);
                     $("#wearerEmail").prop('readonly', true);
                     $("#wearerEmail").val(data.email);
                     $("#nextToWatchers").fadeIn('slow');
@@ -105,7 +120,7 @@ $("#checkPhone").on("click", function(){
                     $("#wearerFName").prop('readonly', true);
                     $("#wearerFName").val(data.fname);
                     $("#wearerLName").prop('readonly', true);
-                    $("#wearerFName").val(data.lname);
+                    $("#wearerLName").val(data.lname);
                     $("#wearerEmail").prop('readonly', true);
                     $("#wearerEmail").val(data.email);
                     $("#nextToWatchers").fadeOut('slow');
@@ -138,19 +153,59 @@ $("#checkPhone").on("click", function(){
 
 //----------------------------------------------
 
+$(document).ready(function(){
+    $("#watcher1Phone").keyup(function(){
+        $("#w1FName").val('');
+        $("#w1LName").val('');
+        $("#w1Email").val('');
+        $("#watcher1Form").slideUp();
+    });
+});
+
 $("#checkWatcher1Phone").on("click", function(){
 
     if($("#watcher1Phone").val() != ''){
-        var check = '';
-        if(check == 'true'){
-            $("#watcher1Form").slideDown();
-            $("#w1FName").prop('readonly', true);
-            $("#w1LName").prop('readonly', true);
-            $("#w1Email").prop('readonly', true);
-            //$("#nextToWatchers").fadeIn('slow');
-        } else {
-            $("#watcher1Form").slideDown();
-        }
+
+        var watcher1PhoneValue =  $("#watcher1Phone").val();
+
+        var url="checkWatcherPhoneNumber/"+ watcher1PhoneValue;
+    
+        $.ajax({
+            url:url,
+            data:{watcher1PhoneValue},
+            datatype:"json",
+            method:"GET",
+            success:function(data){
+                var wearerPhone = $("#wearerPhone").val()
+                
+                if(watcher1PhoneValue == wearerPhone) {
+                    alert('You already entered this number for wearer \nWearer cannot become watcher');
+                } else if(data.existStatus == 'yes'){
+
+                    $('#watcherExistStatus').val(data.existStatus);
+                    $('#watcherId').val(data.id);
+
+                    $("#watcher1Form").slideDown();
+                    $("#w1FName").prop('readonly', true);
+                    $("#w1FName").val(data.fname);
+                    $("#w1LName").prop('readonly', true);
+                    $("#w1LName").val(data.lname);
+                    $("#w1Email").prop('readonly', true);
+                    $("#w1Email").val(data.email);
+                } else {
+
+                    $('watcherExistStatus').val(data.existStatus);
+
+                    $("#w1FName").prop('readonly', false);
+                    $("#w1FName").val('');
+                    $("#w1LName").prop('readonly', false);
+                    $("#w1LName").val('');
+                    $("#w1Email").prop('readonly', false);
+                    $("#w1Email").val('');
+                    $("#watcher1Form").slideDown();
+                }
+            }
+        });
     } else {
         alert("Enter watcher1 phone");
     }
@@ -202,14 +257,6 @@ $("#checkWatcher2Phone").on("click", function(){
 
 //----------------------------------------------
 
-$("#customerPhone").on("click", function(){
-
-    $("#customerForm").slideDown();
-
-});
-
-//----------------------------------------------
-
 $("#selectWearer").on("click", function(){
 
     $("#customerForm").slideDown();
@@ -256,18 +303,75 @@ $("#selectWacther").on("click", function(){
 //----------------------------------------------
 
 $("#selectNew").on("click", function(){
-
     $("#new-customer").slideUp();
     $("#watcher-customer").slideUp();
     $("#new-customer").slideDown();
+    $("#customerForm").slideUp();
     $("#customerCheckValue").val('new');
 });
 
 //----------------------------------------------
 
-$("#nextToConfirmation").on("click", function(){
+$("#customerPhone").on("keyup",function(){
+    $("#customerFName").val('');
+    $("#customerLName").val('');
+    $("#customerEmail").val('');
+    $("#customerForm").slideUp();
+});
 
-    alert('confirmed');
+$("#checkCustomerPhone").on("click", function(){
+
+    if($("#customerPhone").val() != ''){
+
+        var customerPhoneValue =  $("#customerPhone").val();
+
+        var url="checkCustomerPhoneNumber/"+ customerPhoneValue;
+    
+        $.ajax({
+            url:url,
+            data:{customerPhoneValue},
+            datatype:"json",
+            method:"GET",
+            success:function(data){
+                var wearerPhone = $("#wearerPhone").val()
+                
+                var watcher1PhoneValue =  $("#watcher1Phone").val();
+
+                if(customerPhoneValue == watcher1PhoneValue) {
+                    alert('You already entered this number for a watcher \nSelect the watcher option to make choose watcher as a customer for the service');
+                } else if(customerPhoneValue == wearerPhone) {
+                    alert('You already entered this number for wearer \nSelect the watcher option to make choose watcher as a customer for the service');
+                } else if(data.existStatus == 'yes'){
+
+                    $('#customerExistStatus').val(data.existStatus);
+                    $('#customerId').val(data.id);
+
+                    $("#customerForm").slideDown();
+                    $("#customerFName").prop('readonly', true);
+                    $("#customerFName").val(data.fname);
+                    $("#customerLName").prop('readonly', true);
+                    $("#customerLName").val(data.lname);
+                    $("#customerEmail").prop('readonly', true);
+                    $("#customerEmail").val(data.email);
+                } else {
+                    $("#customerFName").prop('readonly', false);
+                    $("#customerFName").val('');
+                    $("#customerLName").prop('readonly', false);
+                    $("#customerLName").val('');
+                    $("#customerEmail").prop('readonly', false);
+                    $("#customerEmail").val('');
+                    $("#customerForm").slideDown();
+                }
+            }
+        });
+    } else {
+        alert("Enter customer phone");
+    }
+});
+
+//----------------------------------------------
+
+$("#nextToConfirmation").on("click", function(){
     
     $("#cnfrmWearerFName").text($('#wearerFName').val());
     $("#cnfrmWearerLName").text($('#wearerLName').val());
@@ -285,9 +389,23 @@ $("#nextToConfirmation").on("click", function(){
     $("#cnfrmWatcher2Email").text($('#w2Email').val());
     
     $("#cnfrmPharmacyName").text($('#pharmacy').val());
-    
+
     $("#cnfrmCustomerFName").text($('#customerFName').val());
     $("#cnfrmCustomerLName").text($('#customerLName').val());
     $("#cnfrmCustomerPhone").text($('#customerPhone').val());
     $("#cnfrmCustomerEmail").text($('#customerEmail').val());
+
+    if($('#selectNew').is(':checked')){
+        $('#cnfrmNewCustomer').show();
+        $('#cnfrmTextCustomer').hide();
+        $('#cnfrmTextWatcher').hide();
+    } else if($('#selectWacther').is(':checked')) {
+        $('#cnfrmNewCustomer').hide();
+        $('#cnfrmTextCustomer').hide();
+        $('#cnfrmTextWatcher').show();
+    } else {
+        $('#cnfrmNewCustomer').hide();
+        $('#cnfrmTextCustomer').show();
+        $('#cnfrmTextWatcher').hide();
+    }
 });

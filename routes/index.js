@@ -116,6 +116,58 @@ router.get('/checkWearerPhoneNumber/:phone',function(req,res){
     });
 })
 
+router.get('/checkWatcherPhoneNumber/:phone',function(req,res){
+    console.log(req.params.phone);
+    var query = Person.findOne({phone_number: req.params.phone});
+    query.exec(function(err,personData){
+        if(err){
+            console.log(err);
+        }
+        else{
+            if(personData != null){
+                var id = personData.person_id;
+                var fname = personData.person_first_name;
+                var lname = personData.person_last_name;
+                var phone = personData.phone_number;
+                var email = personData.email;
+
+                existStatus = 'yes';
+                res.send({ existStatus, id, fname, lname, phone, email });
+            }
+            else{
+                existStatus = 'no';
+                res.send({ existStatus });
+            }
+        }
+    });
+})
+
+router.get('/checkCustomerPhoneNumber/:phone',function(req,res){
+    console.log(req.params.phone);
+    var query = Person.findOne({phone_number: req.params.phone});
+    query.exec(function(err,personData){
+        if(err){
+            console.log(err);
+        }
+        else{
+            if(personData != null){
+                var id = personData.person_id;
+                var fname = personData.person_first_name;
+                var lname = personData.person_last_name;
+                var phone = personData.phone_number;
+                var email = personData.email;
+
+                existStatus = 'yes';
+                res.send({ existStatus, id, fname, lname, phone, email });
+            }
+            else{
+                existStatus = 'no';
+                res.send({ existStatus });
+            }
+        }
+    });
+})
+
 router.get('/logout',function(req,res){
     req.session.destroy(function(err){
         res.redirect('/');

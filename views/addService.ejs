@@ -254,6 +254,9 @@
                         <div id="watcher1Form">
                         <div class="form-group">
   
+                          <input type="hidden" name="watcherExistStatus" id="watcherExistStatus">
+                          <input type="hidden" name="watcherId" id="watcherId">
+
                           <div class="row">
                             <div class="col-md-2">
                               <label>Name</label>
@@ -278,19 +281,19 @@
                           </div>
                         </div>
   
-                        <div id="addWatcher2" class="btn btn-info">
+                        <!-- <div id="addWatcher2" class="btn btn-info">
                           Add watcher# 2
-                        </div>
+                        </div> -->
 
-                        <div style="display: none" id="removeWatcher2" class="btn btn-danger">
+                        <!-- <div style="display: none" id="removeWatcher2" class="btn btn-danger">
                           Remove watcher# 2
-                        </div>
+                        </div> -->
   
                         <hr>
                       </div>
                       </div>
   
-                      <div id="watcher2">
+                      <!-- <div id="watcher2">
                         <h4>Watcher# 2</h4>
                         <div class="form-group">
                         <div class="row">
@@ -335,7 +338,7 @@
   
                           <hr>
                         </div>
-                      </div>
+                      </div> -->
   
                     </div>
                   </div>
@@ -395,7 +398,7 @@
                           </div>
                           <div class="col-3">
                             <div class="form-check">
-                              <input id="selectWearer" class="form-check-input" name="customer" type="radio" value="wearer">
+                              <input id="selectWearer" class="form-check-input" name="customer" type="radio" value="wearer" checked>
                               <label class="form-check-label">Wearer</label>
                             </div>
                           </div>
@@ -421,20 +424,10 @@
                       </div>
   
                       <div id="watcher-customer">
-                        <div class="row">
-                          <div class="col-md-2">
-                            <label>Select watcher</label>
-                          </div>
-                          <div class="col-md-10">
-                            <select class="form-control" name="wathcher">
-                              <option value="watcher1">Watcher1</option>
-                              <option value="watcher1">Watcher2</option>
-                            </select>
-                          </div>
-                        </div>
+                          <h4>Watcher will be the customer</h4>
                       </div>
   
-                      <div id="new-customer">
+                      <div id="new-customer" style="display: none">
                         <div class="form-group">
                           <div class="row">
                             <div class="col-md-2">
@@ -452,6 +445,9 @@
                         <div id="customerForm">
                           <div class="form-group">
   
+                            <input type="hidden" name="customerExistStatus" id="customerExistStatus">
+                            <input type="hidden" name="customerId" id="customerId">
+
                             <div class="row">
                               <div class="col-md-2">
                                 <label>Name</label>
@@ -516,13 +512,8 @@
                       </table>
                       <hr>
   
-                      <h4>Watchers Information</h4>
+                      <h4>Watcher Information</h4>
                       <table class="table table-bordered">
-                        <tr>
-                          <th colspan="2" style="text-align: center">
-                            Watcher# 1
-                          </th>
-                        </tr>
                         <tr>
                           <th>Name</th>
                           <td><span id="cnfrmWatcher1FName"></span> <span id="cnfrmWatcher1LName"></span></td>
@@ -536,7 +527,7 @@
                           <td><span id="cnfrmWatcher1Email"></span></td>
                         </tr>
                       </table>
-                      <table class="table table-bordered">
+                      <!-- <table class="table table-bordered">
                         <tr>
                           <th colspan="2" style="text-align: center">
                             Watcher# 2
@@ -554,7 +545,7 @@
                           <th>Email</th>
                           <td><span id="cnfrmWatcher2Email"></span></td>
                         </tr>
-                      </table>
+                      </table> -->
   
                       <hr>
                       <h4>Pharmacy Information</h4>
