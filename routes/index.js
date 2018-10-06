@@ -5,6 +5,7 @@ const Log = require('../models/log');
 const Admin = require('../models/admin');
 
 const Person = require('../models/person');
+const Service = require('../models/service');
 const Counter = require('../models/counter');
 const personDetail = require('../models/personDetail');
 
@@ -78,21 +79,38 @@ router.get('/services',function(req,res){
 
 router.get('/checkWearerPhoneNumber/:phone',function(req,res){
     console.log(req.params.phone);
-    var query = personDetail.findOne({phone_number: req.params.phone});
+    var query = Person.findOne({phone_number: req.params.phone});
     query.exec(function(err,personData){
         if(err){
             console.log(err);
         }
         else{
             if(personData != null){
-                var id = personData.person_id
-                existStatus = 'yes';
+                var id = personData.person_id;
+                var fname = personData.person_first_name;
+                var lname = personData.person_last_name;
+                var phone = personData.phone_number;
+                var email = personData.email;
 
-                res.send({ existStatus, id });
+                var findWearer = Service.findOne({wearer_id: id});
+
+                findWearer.exec(function(err,serviceData){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        if(serviceData != null){
+                            existStatus = 'wearer';
+                            res.send({ existStatus, id, fname, lname, phone, email });
+                        } else {
+                            existStatus = 'yes';
+                            res.send({ existStatus, id, fname, lname, phone, email });
+                        }
+                    }
+                });
             }
             else{
                 existStatus = 'no';
-                res.send({ existStatus, id });
+                res.send({ existStatus });
             }
         }
     });

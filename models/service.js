@@ -2,27 +2,27 @@ const mongoose =  require('mongoose');
 const Schema = mongoose.Schema;
 
 //create person Schema and model
-const personSchema = new Schema({
-    person_id: {
+const serviceSchema = new Schema({
+    service_id: {
         type: String
     },
-    person_first_name:{
+    wearer_id:{
         type: String
     },
-    person_last_name:{
+    customer_id:{
         type: String
     },
-    phone_number:{
+    pharmacy_id:{
         type: String
     },
-    email:{
+    service_reg_date:{
         type: String
     },
-    password:{
+    service_reg_time:{
         type: String
     }
-}, {collection: 'persons'});
+});
 
-const person = mongoose.model('person',personSchema);
+const service = mongoose.model('service',serviceSchema);
 
-module.exports = person;
+module.exports = service;
