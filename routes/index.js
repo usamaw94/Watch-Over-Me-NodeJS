@@ -194,82 +194,105 @@ router.get("/addService", function(req, res){
 
 router.post("/addServiceProcessing",async function(req,res){
 
-    var wearerPhone = req.body.wearerPhone;
-    var wearerExistValue = req.body.wearerExistValue;
-    var wearerFirstName = req.body.wearerFName;
-    var wearerLastName = req.body.wearerLName;
-    var wearerEmail = req.body.wearerEmail;
+
+    var wearerId;
+    var watcherId;
+    var customerId;
+    var serviceId;
+    var organizationId;
     var date = moment().format('DD/MM/YYYY');
     var time = moment().format('h:mm:ss a');
 
-    var wearerId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
+    if(req.body.wearerExistId == ""){
+        var wearerPhone = req.body.wearerPhone;
+        var wearerFirstName = req.body.wearerFName;
+        var wearerLastName = req.body.wearerLName;
+        var wearerEmail = req.body.wearerEmail;
 
-    var wearer = new Person({person_id: wearerId,
-        person_first_name: wearerFirstName,
-        person_last_name: wearerLastName,
-        phone_number: wearerPhone,
-        email: wearerEmail,
-        password: "womperson"});
-    var wearerDetail = new personDetail({person_id: wearerId,
-        phone_number: wearerPhone,
-        email: wearerEmail,
-        update_date: date,
-        update_time: time
-    });
+        wearerId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
 
-    wearer.save().then(function(){
-        wearerDetail.save();
-        
-    });
+        var wearer = new Person({person_id: wearerId,
+            person_first_name: wearerFirstName,
+            person_last_name: wearerLastName,
+            phone_number: wearerPhone,
+            email: wearerEmail,
+            password: "womperson"});
+        var wearerDetail = new personDetail({person_id: wearerId,
+            phone_number: wearerPhone,
+            email: wearerEmail,
+            update_date: date,
+            update_time: time
+        });
 
+        wearer.save().then(function(){
+            wearerDetail.save();
+        });
+    }
+    else{
+        wearerId = req.body.wearerExistId;
+    }
 
-    var watcherOnePhone = req.body.watcher1Phone;
-    var watcherOneEmail = req.body.watcher1Email;
+    if(req.body.watcherId == ""){
 
-    var watcherOneId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
+        var watcherOnePhone = req.body.watcher1Phone;
+        var watcherOneEmail = req.body.watcher1Email;
 
-    var watcherOne = new Person({person_id: watcherOneId,
-        person_first_name: req.body.watcher1FName,
-        person_last_name: req.body.watcher1LName,
-        phone_number: watcherOnePhone,
-        email: watcherOneEmail,
-        password: "womperson"});
-    var watcherOneDetail = new personDetail({person_id: watcherOneId,
-        phone_number: watcherOnePhone,
-        email: watcherOneEmail,
-        update_date: date,
-        update_time: time
-    });
+        watcherId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
 
-    watcherOne.save().then(function(){
-        watcherOneDetail.save();
-        res.render('test',{data: JSON.stringify(watcherOne) + JSON.stringify(watcherOneDetail)});
-    });
+        var watcherOne = new Person({person_id: watcherOneId,
+            person_first_name: req.body.watcher1FName,
+            person_last_name: req.body.watcher1LName,
+            phone_number: watcherOnePhone,
+            email: watcherOneEmail,
+            password: "womperson"});
+        var watcherOneDetail = new personDetail({person_id: watcherOneId,
+            phone_number: watcherOnePhone,
+            email: watcherOneEmail,
+            update_date: date,
+            update_time: time
+        });
 
-    var watcherTwoPhone = req.body.watcher2Phone;
-    var watcherTwoFullName = req.body.watcher2FName + " " + req.body.watcher2LName;
-    var watcherTwoEmail = req.body.watcher2Email;
+        watcherOne.save().then(function(){
+            watcherOneDetail.save();
+            res.render('test',{data: JSON.stringify(watcherOne) + JSON.stringify(watcherOneDetail)});
+        });
+    }
+    else{
+        watcherId = req.body.watcherId;
+    }
 
-    var watcherTwoId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
+    if(req.body.customerId == ""){
 
-    var watcherTwo = new Person({person_id: watcherTwoId,
-        person_first_name: req.body.watcher2FName,
-        person_last_name: req.body.watcher2LName,
-        phone_number: watcherTwoPhone,
-        email: watcherTwoEmail,
-        password: "womperson"
-    });
-    var watcherTwoDetail = new personDetail({person_id: watcherTwoId,
-        phone_number: watcherTwoPhone,
-        email: watcherTwoEmail,
-        update_date: date,
-        update_time: time
-    });
+        var customerPhone = req.body.customerPhone;
+        var customerFirstName = req.body.customerFName;
+        var customerLastName = req.body.customerLName;
+        var customerEmail = req.body.customerEmail;
 
-    watcherTwo.save().then(function(){
-        watcherTwoDetail.save();
-        res.render('test',{data: JSON.stringify(watcherTwo) + JSON.stringify(watcherTwoDetail)});
-    });
+        customerId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
+
+        var customer = new Person({person_id: customerId,
+            person_first_name: customerFirstName,
+            person_last_name: customerLastName,
+            phone_number: customerPhone,
+            email: customerEmail,
+            password: "womperson"});
+        var customerDetail = new personDetail({person_id: customerId,
+            phone_number: customerPhone,
+            email: customerEmail,
+            update_date: date,
+            update_time: time
+        });
+
+        customer.save().then(function(){
+            customerDetail.save();
+        });
+
+    }
+    else{
+        customerId = req.body.customerId;
+    }
+
+    serviceId = "WOMS" + FormatNumberLength(await getNextSequenceValue('Service'),8);
     
 })
 
