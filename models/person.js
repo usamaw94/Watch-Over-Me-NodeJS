@@ -6,7 +6,10 @@ const personSchema = new Schema({
     person_id: {
         type: String
     },
-    person_full_name:{
+    person_first_name:{
+        type: String
+    },
+    person_last_name:{
         type: String
     },
     phone_number:{
