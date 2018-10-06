@@ -147,14 +147,14 @@ router.post("/addServiceProcessing",async function(req,res){
     var wearerFirstName = req.body.wearerFName;
     var wearerLastName = req.body.wearerLName;
     var wearerEmail = req.body.wearerEmail;
-    var wearerFullName = wearerFirstName + " " + wearerLastName;
     var date = moment().format('DD/MM/YYYY');
     var time = moment().format('h:mm:ss a');
 
     var wearerId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
 
     var wearer = new Person({person_id: wearerId,
-        person_full_name: wearerFullName,
+        person_first_name: wearerFirstName,
+        person_last_name: wearerLastName,
         phone_number: wearerPhone,
         email: wearerEmail,
         password: "womperson"});
@@ -172,13 +172,13 @@ router.post("/addServiceProcessing",async function(req,res){
 
 
     var watcherOnePhone = req.body.watcher1Phone;
-    var watcherOneFullName = req.body.watcher1FName + " " + req.body.watcher1LName;
     var watcherOneEmail = req.body.watcher1Email;
 
     var watcherOneId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
 
     var watcherOne = new Person({person_id: watcherOneId,
-        person_full_name: watcherOneFullName,
+        person_first_name: req.body.watcher1FName,
+        person_last_name: req.body.watcher1LName,
         phone_number: watcherOnePhone,
         email: watcherOneEmail,
         password: "womperson"});
@@ -201,7 +201,8 @@ router.post("/addServiceProcessing",async function(req,res){
     var watcherTwoId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
 
     var watcherTwo = new Person({person_id: watcherTwoId,
-        person_full_name: watcherTwoFullName,
+        person_first_name: req.body.watcher2FName,
+        person_last_name: req.body.watcher2LName,
         phone_number: watcherTwoPhone,
         email: watcherTwoEmail,
         password: "womperson"
