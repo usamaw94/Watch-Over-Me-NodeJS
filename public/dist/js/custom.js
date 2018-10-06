@@ -78,8 +78,13 @@ $("#checkPhone").on("click", function(){
             datatype:"json",
             method:"GET",
             success:function(data){
-                
-                alert(data);
+                if(data.existStatus == 'yes'){
+                    $("#wearerExistStatus").val(data.existStatus);
+                    $("#wearerExistId").val(data.id);
+                } else if(data.existStatus == 'no') {
+                    $("#wearerExistStatus").val(data.existStatus);
+                    $("#wearerExistId").val(data.id);
+                }
             }
         });
 

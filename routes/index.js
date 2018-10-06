@@ -85,10 +85,14 @@ router.get('/checkWearerPhoneNumber/:phone',function(req,res){
         }
         else{
             if(personData != null){
-                res.send("Person data exist");
+                var id = personData.person_id
+                existStatus = 'yes';
+
+                res.send({ existStatus, id });
             }
             else{
-                res.send("Person data not exists");
+                existStatus = 'no';
+                res.send({ existStatus, id });
             }
         }
     });
