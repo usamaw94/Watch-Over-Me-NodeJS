@@ -8,6 +8,15 @@ const personSchema = new Schema({
     },
     person_full_name:{
         type: String
+    },
+    phone_number:{
+        type: String
+    },
+    email:{
+        type: String
+    },
+    password:{
+        type: String
     }
 }, {collection: 'persons'});
 
