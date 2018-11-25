@@ -20,6 +20,9 @@ const serviceSchema = new Schema({
     },
     service_reg_time:{
         type: String
+    },
+    status:{
+        type: String
     }
 });
 
