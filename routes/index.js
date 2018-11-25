@@ -300,7 +300,8 @@ router.post("/addServiceProcessing",async function(req,res){
         customer_id: customerId,
         pharmacy_id: "WOMO00000661",
         service_reg_date: date,
-        service_reg_time: time});
+        service_reg_time: time,
+        status: "Pending"});
     
     var relation = new Relation({service_id: serviceId,
         watcher_id: watcherId,
