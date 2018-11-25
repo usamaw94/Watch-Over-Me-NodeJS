@@ -21,7 +21,7 @@ const relationSchema = new Schema({
     updated_time:{
         type: String
     }
-});
+}, {collection: 'relations'});
 
 const relation = mongoose.model('relaion',relationSchema);
 
