@@ -74,7 +74,54 @@ router.get('/services',function(req,res){
         res.redirect('/');
     } else{
         console.log(req.session.adminEmail);
-        res.render("services", { title: 'WOM Services', session: req.session});
+
+        var services_list = [];
+
+       var q = Service.aggregate([
+        {
+            $lookup:
+            {
+                from: 'persons',
+                localField: 'wearer_id',
+                foreignField: 'person_id',
+                as: 'wearerInfo'
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'persons',
+                localField: 'customer_id',
+                foreignField: 'person_id',
+                as: 'customerInfo'
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'relations',
+                localField: 'service_id',
+                foreignField: 'service_id',
+                as: 'relationDetails'
+            }
+        },
+        {
+            $project:
+            {
+                serviceId : '$service_id',
+                serviceStatus : '$status', 
+                wearers: '$wearerInfo',
+                customers: '$customerInfo',
+                relationships : '$relationDetails',
+                numberOfWatchers: {$size: "$relationDetails"},
+            }
+        }
+        ])
+
+        q.exec(function(err,result){
+            console.log(JSON.stringify(result));
+            res.render("services", {title: 'WOM Services', session: req.session, data : result});
+        })
     }
 })
 

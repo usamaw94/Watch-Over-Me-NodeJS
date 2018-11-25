@@ -165,6 +165,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Services List</h3>
+              <h4><%= data %></h4>
             </div>
             <div class="card-body">
               <table style="width: 100%" class="table table-responsive-lg table-striped">
@@ -173,17 +174,22 @@
                   <th>WOM number</th>
                   <th>Wearer Name</th>
                   <th>Customer Name</th>
+                  <th>No. of watchers</th>
                   <th>Status</th>
                   <th></th>
                 </tr>
+
+                <% for(var d of data) {%>
                 <tr>
-                  <td>123</td>
-                  <td>3652762353</td>
-                  <td>Usama Waheed</td>
-                  <td>Waqas Waheed</td>
-                  <td>Pending</td>
+                  <td><%= d.serviceId %></td>
+                  <td>--</td>
+                  <td><%= d.wearers[0].person_first_name %> <%= d.wearers[0].person_last_name %></td>
+                  <td><%= d.customers[0].person_first_name %> <%= d.customers[0].person_last_name %></td>
+                  <td><%= d.numberOfWatchers %></td>
+                  <td><%= d.serviceStatus %></td>
                   <td><button class="btn btn-primary">Details</button></td>
                 </tr>
+                <% } %>
               </table>
             </div>
           </div>
