@@ -8,6 +8,7 @@ const Person = require('../models/person');
 const Service = require('../models/service');
 const Counter = require('../models/counter');
 const personDetail = require('../models/personDetail');
+const Relation = require('../models/relation');
 
 const io = require('../server');
 const moment = require('moment');
@@ -239,13 +240,13 @@ router.post("/addServiceProcessing",async function(req,res){
 
         watcherId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
 
-        var watcherOne = new Person({person_id: watcherOneId,
+        var watcherOne = new Person({person_id: watcherId,
             person_first_name: req.body.watcher1FName,
             person_last_name: req.body.watcher1LName,
             phone_number: watcherOnePhone,
             email: watcherOneEmail,
             password: "womperson"});
-        var watcherOneDetail = new personDetail({person_id: watcherOneId,
+        var watcherOneDetail = new personDetail({person_id: watcherId,
             phone_number: watcherOnePhone,
             email: watcherOneEmail,
             update_date: date,
@@ -293,7 +294,24 @@ router.post("/addServiceProcessing",async function(req,res){
     }
 
     serviceId = "WOMS" + FormatNumberLength(await getNextSequenceValue('Service'),8);
+
+    var service = new Service({service_id: serviceId,
+        wearer_id: wearerId,
+        customer_id: customerId,
+        pharmacy_id: "WOMO00000661",
+        service_reg_date: date,
+        service_reg_time: time});
     
+    var relation = new Relation({service_id: serviceId,
+        watcher_id: watcherId,
+        priority_num: "1",
+        watcher_status: "Responding",
+        updated_date: date,
+        updated_time: time});
+    
+    service.save().then(function(){
+        relation.save();
+    });
 })
 
 
