@@ -372,6 +372,46 @@ router.get("/counterCheck",async function(req,res){
     
 })
 
+router.get('/showWearerDetails/:wearerId',function(req,res){
+    console.log(req.params.wearerId);
+    var query = Person.findOne({person_id: req.params.wearerId});
+    query.exec(function(err,personData){
+        if(err){
+            console.log(err);
+        }
+        else{
+            var id = personData.person_id;
+            var fname = personData.person_first_name;
+            var lname = personData.person_last_name;
+            var phone = personData.phone_number;
+            var email = personData.email;
+
+            res.send(personData);
+        
+        }
+    });
+})
+
+router.get('/showCustomerDetails/:customerId',function(req,res){
+    console.log(req.params.customerId);
+    var query = Person.findOne({person_id: req.params.customerId});
+    query.exec(function(err,personData){
+        if(err){
+            console.log(err);
+        }
+        else{
+            var id = personData.person_id;
+            var fname = personData.person_first_name;
+            var lname = personData.person_last_name;
+            var phone = personData.phone_number;
+            var email = personData.email;
+
+            res.send(personData);
+        
+        }
+    });
+})
+
 async function getNextSequenceValue(sequenceName){
     
     

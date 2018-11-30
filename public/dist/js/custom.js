@@ -416,9 +416,21 @@ $("#showWearerDetails").on("click", function(){
 
     var wearerId=$(this).attr('data-id');
 
-    alert(wearerId);
-
-    $('#wearerDetails').modal('show');
+    var url="showWearerDetails/"+ wearerId;
+    
+        $.ajax({
+            url:url,
+            data:{wearerId},
+            datatype:"json",
+            method:"GET",
+            success:function(data){
+                $('#modalWearerId').text(data.person_id);
+                $('#modalWearerName').text(data.person_first_name + " " + data.person_last_name);
+                $('#modalWearerPhone').text(data.phone_number);
+                $('#modalWearerEmail').text(data.email);
+                $('#wearerDetails').modal('show');
+            }
+        });
 });
 
 //----------------------------------------------
@@ -427,9 +439,21 @@ $("#showCustomerDetails").on("click", function(){
 
     var customerId=$(this).attr('data-id');
 
-    alert(customerId);
-
-    $('#customerDetails').modal('show');
+    var url="showCustomerDetails/"+ customerId;
+    
+        $.ajax({
+            url:url,
+            data:{customerId},
+            datatype:"json",
+            method:"GET",
+            success:function(data){
+                $('#modalCustomerId').text(data.person_id);
+                $('#modalCustomerName').text(data.person_first_name + " " + data.person_last_name);
+                $('#modalCustomerPhone').text(data.phone_number);
+                $('#modalCustomerEmail').text(data.email);
+                $('#customerDetails').modal('show');
+            }
+        });
 });
 
 //----------------------------------------------
