@@ -412,7 +412,7 @@ $("#nextToConfirmation").on("click", function(){
 
 //----------------------------------------------
 
-$("#showWearerDetails").on("click", function(){
+$(".showWearerDetails").on("click", function(){
 
     var wearerId=$(this).attr('data-id');
 
@@ -435,7 +435,7 @@ $("#showWearerDetails").on("click", function(){
 
 //----------------------------------------------
 
-$("#showCustomerDetails").on("click", function(){
+$(".showCustomerDetails").on("click", function(){
 
     var customerId=$(this).attr('data-id');
 
@@ -458,7 +458,7 @@ $("#showCustomerDetails").on("click", function(){
 
 //----------------------------------------------
 
-$("#showWatcherDetails").on("click", function(){
+$(".showWatcherDetails").on("click", function(){
 
 
     var serviceID=$(this).attr('data-id');

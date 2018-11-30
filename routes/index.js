@@ -122,8 +122,9 @@ router.get('/services',function(req,res){
     }
 })
 
-router.get("/serviceDetails/:serviceId", function(req, res){
-    var serviceId = req.params.serviceId;
+router.get("/serviceDetails", function(req, res){
+    var serviceId = req.query.serviceID;
+    console.log(serviceId);
     if(!req.session.adminEmail) {
         res.redirect('/');
     } else{
@@ -214,7 +215,7 @@ router.get("/serviceDetails/:serviceId", function(req, res){
 })
 
 
-router.get('/showWatcherDetails/:serviceId',function(req,res){
+router.get('/showWatcherDetails:serviceId',function(req,res){
 
     console.log(req.params.serviceId);
 

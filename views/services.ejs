@@ -182,11 +182,11 @@
                 <tr>
                   <td><%= d.serviceId %></td>
                   <td><%= d.womNumber %></td>
-                  <td><span data-id="<%= d.wearers[0].person_id %>" id="showWearerDetails" class="show-full-details"><%= d.wearers[0].person_first_name %> <%= d.wearers[0].person_last_name %></span></td>
-                  <td><span data-id="<%= d.customers[0].person_id %>" id="showCustomerDetails" class="show-full-details"><%= d.customers[0].person_first_name %> <%= d.customers[0].person_last_name %></span></td>
-                  <td><span data-id="<%= d.serviceId %>" data-num-watcher="<%= d.numberOfWatchers %>"  id="showWatcherDetails" class="show-full-details"><%= d.numberOfWatchers %></span></td>
+                  <td><span data-id="<%= d.wearers[0].person_id %>" class="showWearerDetails show-full-details"><%= d.wearers[0].person_first_name %> <%= d.wearers[0].person_last_name %></span></td>
+                  <td><span data-id="<%= d.customers[0].person_id %>" class="showCustomerDetails show-full-details"><%= d.customers[0].person_first_name %> <%= d.customers[0].person_last_name %></span></td>
+                  <td><span data-id="<%= d.serviceId %>" data-num-watcher="<%= d.numberOfWatchers %>" class="showWatcherDetails show-full-details"><%= d.numberOfWatchers %></span></td>
                   <td><%= d.serviceStatus %></td>
-                  <td><a href="/serviceDetails/<%= d.serviceId %>" class="btn btn-primary">Details</button></td>
+                  <td><a href="/serviceDetails?serviceID=<%=d.serviceId %>" class="btn btn-primary">Details</button></td>
                 </tr>
                 <% } %>
               </table>
