@@ -344,6 +344,7 @@ router.post("/addServiceProcessing",async function(req,res){
 
     var service = new Service({service_id: serviceId,
         wearer_id: wearerId,
+        wom_num: "Not assigned",
         customer_id: customerId,
         pharmacy_id: "WOMO00000661",
         service_reg_date: date,

@@ -9,6 +9,9 @@ const serviceSchema = new Schema({
     wearer_id:{
         type: String
     },
+    wom_num:{
+        type: String
+    },
     customer_id:{
         type: String
     },
