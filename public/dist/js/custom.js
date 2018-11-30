@@ -409,3 +409,41 @@ $("#nextToConfirmation").on("click", function(){
         $('#cnfrmTextWatcher').hide();
     }
 });
+
+//----------------------------------------------
+
+$("#showWearerDetails").on("click", function(){
+
+    var wearerId=$(this).attr('data-id');
+
+    alert(wearerId);
+
+    $('#wearerDetails').modal('show');
+});
+
+//----------------------------------------------
+
+$("#showCustomerDetails").on("click", function(){
+
+    var customerId=$(this).attr('data-id');
+
+    alert(customerId);
+
+    $('#customerDetails').modal('show');
+});
+
+//----------------------------------------------
+
+$("#showWatcherDetails").on("click", function(){
+
+    var serviceID=$(this).attr('data-id');
+
+    var numWatchers = $(this).attr('data-num-watcher');
+
+    alert(serviceID +"/"+ numWatchers);
+
+    $("#modalTotalWatchers").text(numWatchers);
+
+    $('#watcherDetails').modal('show');
+});
+

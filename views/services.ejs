@@ -183,9 +183,9 @@
                 <tr>
                   <td><%= d.serviceId %></td>
                   <td>--</td>
-                  <td><%= d.wearers[0].person_first_name %> <%= d.wearers[0].person_last_name %></td>
-                  <td><%= d.customers[0].person_first_name %> <%= d.customers[0].person_last_name %></td>
-                  <td><%= d.numberOfWatchers %></td>
+                  <td><span data-id="<%= d.wearers[0].person_id %>" id="showWearerDetails" class="show-full-details"><%= d.wearers[0].person_first_name %> <%= d.wearers[0].person_last_name %></span></td>
+                  <td><span data-id="<%= d.customers[0].person_id %>" id="showCustomerDetails" class="show-full-details"><%= d.customers[0].person_first_name %> <%= d.customers[0].person_last_name %></span></td>
+                  <td><span data-id="<%= d.serviceId %>" data-num-watcher="<%= d.numberOfWatchers %>"  id="showWatcherDetails" class="show-full-details"><%= d.numberOfWatchers %></span></td>
                   <td><%= d.serviceStatus %></td>
                   <td><button class="btn btn-primary">Details</button></td>
                 </tr>
@@ -214,6 +214,109 @@
   </div>
   <!-- ./wrapper -->
   
+
+  <div class="modal fade" id="wearerDetails" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Wearer Details</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped">
+            <tr>
+              <th>Wearer_ID:</th>
+              <td id="modalWearerId">183</td>
+            </tr>
+            <tr>
+              <th>Name:</th>
+              <td id="modalWearerName">John</td>
+            </tr>
+            <tr>
+              <th>Phone Number:</th>
+              <td id="modalWearerPhone">0435897119</td>
+            </tr>
+            <tr>
+              <th>Email:</th>
+              <td id="modalWearerEmail">john@gmail.com</td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="customerDetails" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Customer Details</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped">
+            <tr>
+              <th>Wearer_ID:</th>
+              <td id="modalCustomerId">183</td>
+            </tr>
+            <tr>
+              <th>Name:</th>
+              <td id="modalCustomerName">John</td>
+            </tr>
+            <tr>
+              <th>Phone Number:</th>
+              <td id="modalCustomerPhone">0435897119</td>
+            </tr>
+            <tr>
+              <th>Email:</th>
+              <td id="modalCustomerEmail">john@gmail.com</td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="watcherDetails" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Watcher Details</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h4>Total watchers : <span id="modalTotalWatchers"></span></h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Watcher_ID:</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+  
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
@@ -251,3 +354,5 @@
   <script src="dist/js/pages/dashboard.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="dist/js/demo.js"></script>
+
+  <script src="dist/js/custom.js"></script>

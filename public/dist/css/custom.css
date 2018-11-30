@@ -139,3 +139,13 @@
 #customerForm {
     display: none;
 }
+
+.show-full-details {
+    transition: 0.5s;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.show-full-details:hover {
+    color: #17a2b8;
+}
