@@ -460,14 +460,41 @@ $("#showCustomerDetails").on("click", function(){
 
 $("#showWatcherDetails").on("click", function(){
 
+
     var serviceID=$(this).attr('data-id');
 
     var numWatchers = $(this).attr('data-num-watcher');
 
-    alert(serviceID +"/"+ numWatchers);
+    var url="showWatcherDetails/"+ serviceID;
+    
+        $.ajax({
+            url:url,
+            data:{serviceID},
+            datatype:"json",
+            method:"GET",
+            success:function(data){
 
-    $("#modalTotalWatchers").text(numWatchers);
+                $("#watcherDataRows").empty();
 
-    $('#watcherDetails').modal('show');
+                var length = data.length;
+
+                for(i=0; i<data[0].watcherDetails.length; i++){
+                    var personId = data[0].watcherDetails[i].person_id;
+                    var personName = data[0].watcherDetails[i].person_first_name + " " 
+                    + data[0].watcherDetails[i].person_last_name;
+                    var personPhone = data[0].watcherDetails[i].phone_number;
+                    var personEmail = data[0].watcherDetails[i].email;
+
+                    var row = "<tr><td>"+ personId +"</td><td>" + personName + "</td><td>" + personPhone + "</td><td>" + personEmail + "</td></tr>";
+                    $("#watcherDataRows").append(row);
+                }
+
+                $("#modalTotalWatchers").text(numWatchers);
+            
+
+
+                $('#watcherDetails').modal('show');
+            }
+        });
 });
 

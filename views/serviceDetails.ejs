@@ -1,0 +1,588 @@
+<div class="wrapper">
+
+<!-- Navbar -->
+<nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+      </li>
+      <!--<li class="nav-item d-none d-sm-inline-block">-->
+        <!--<a href="E:\Admin LTE Sample\AdminLTE-3.0.0-alpha.2\AdminLTE-3.0.0-alpha.2\index.html" class="nav-link">Home</a>-->
+      <!--</li>-->
+      <!--<li class="nav-item d-none d-sm-inline-block">-->
+        <!--<a href="#" class="nav-link">Contact</a>-->
+      <!--</li>-->
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      <span class="brand-text font-weight-light">Watch Over Me</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="dist/img/user.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block"><%= session.adminName %></a>
+        </div>
+      </div>
+      <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="/adminHome" class="nav-link">
+                <i class="nav-icon fa fa-dashboard"></i>
+                <p>
+                  Admin Dashboard
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/services" class="nav-link active">
+                <i class="nav-icon fa fa-circle-o-notch"></i>
+                <p>
+                  Services
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="watches.html" class="nav-link">
+                <i class="nav-icon fa fa-clock-o"></i>
+                <p>
+                  Watches
+                </p>
+              </a>
+            </li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-phone"></i>
+                <p>
+                  SIMs & Plans
+                  <i class="right fa fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="sims.html" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>SIMs</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="manage_plans.html" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Plans</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="pharmacies.html" class="nav-link">
+                <i class="nav-icon fa fa-hospital-o"></i>
+                <p>
+                  Pharmacies
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/logout" class="nav-link">
+                <i class="nav-icon fa fa-sign-out text-danger"></i>
+                <p class="text">LOGOUT</p>
+              </a>
+            </li>
+          </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper main-content">
+    <!-- Content Header (Page header) -->
+    <div class="info-bar">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <h4>Service Details</h4>
+            <p>Service Id: 987</p>
+            <p>Service date: 19-6-2018</p>
+            <p>WOM Phone number : 0401 345 765</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Service details</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6 fa">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="admin_dashboard.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="view_services.html">View deals</a></li>
+              <li class="breadcrumb-item active">Deal details</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+
+        <div class="row">
+          <div class="col-lg-12 col-12">
+            <div class="callout callout-info">
+
+              <p>Service Id: 987</p>
+              <p>Service date: 19-6-2018</p>
+              <h5>WOM Phone number : 0401 345 765</h5>
+              <a href="service_logs.html" class="btn btn-info" style="text-decoration: none"> &nbsp;<b>View logs</b></a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-12">
+            <div class="row">
+              <div class="col-12">
+                <!-- Custom Tabs -->
+                <div class="card">
+                  <div class="card-header p-0">
+                    <ul class="nav nav-pills ml-auto p-2">
+                      <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Customer Info</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Wearer Info</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Watchers</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Watch</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab">SIM</a></li>
+                    </ul>
+                  </div><!-- /.card-header -->
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_1">
+                        <div class="card-body table-responsive p-0">
+                          <table class="table table-hover">
+                            <tr>
+                              <th>Customer Id</th>
+                              <td>123</td>
+                            </tr>
+                            <tr>
+                              <th>Name</th>
+                              <td>Aleks</td>
+                            </tr>
+                            <tr>
+                              <th>Gender</th>
+                              <td>Male</td>
+                            </tr>
+                            <tr>
+                              <th>Date of Birth</th>
+                              <td>21-11-789</td>
+                            </tr>
+                            <tr>
+                              <th>Phone number</th>
+                              <td>0432 123 456</td>
+                            </tr>
+                            <tr>
+                              <th>Email</th>
+                              <td>aleks@gmail.com</td>
+                            </tr>
+                            <tr>
+                              <th>Address</th>
+                              <td>Victoria, Australia</td>
+                            </tr>
+                            <tr>
+                              <th>Relation to wearer</th>
+                              <td>Brother</td>
+                            </tr>
+                            <tr>
+                              <th>Credit card number</th>
+                              <td>12212323214441</td>
+                            </tr>
+                            <tr>
+                              <th>Credit card code</th>
+                              <td>323</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <!-- /.tab-pane -->
+                      <div class="tab-pane" id="tab_2">
+                        <div class="card-body table-responsive p-0">
+                          <table class="table table-hover">
+                            <tr>
+                              <th>Wearer Id</th>
+                              <td>345</td>
+                            </tr>
+                            <tr>
+                              <th>Name</th>
+                              <td>Peter</td>
+                            </tr>
+                            <tr>
+                              <th>Gender</th>
+                              <td>Male</td>
+                            </tr>
+                            <tr>
+                              <th>Date of birth</th>
+                              <td>11-01-1967</td>
+                            </tr>
+                            <tr>
+                              <th>Private Number</th>
+                              <td>0435 678 567</td>
+                            </tr>
+                            <tr>
+                              <th>WOM Number</th>
+                              <td>4325 567 432</td>
+                            </tr>
+                            <tr>
+                              <th>Address</th>
+                              <td>Victoria, Australia</td>
+                            </tr>
+                            <tr>
+                              <th>Email</th>
+                              <td>peter@gmail.com</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <!-- /.tab-pane -->
+                      <div class="tab-pane" id="tab_3">
+                        <div class="card-body p-0">
+                          <div class="card card-info" style="border: 1px solid #17a2b8">
+                            <div class="card-header">
+                              <h4 class="card-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                  Add Watcher
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="card-body">
+                                <form>
+                                <div class="form-group">
+                                  <label>Name</label>
+                                  <input type="text" class="form-control" placeholder="Enter ...">
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Age</label>
+                                  <input type="number" class="form-control" placeholder="Enter ...">
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Gender</label>
+                                  <div class="form-check">
+                                    <input class="form-check-input" name="gender" type="radio" value="Male">
+                                    <label class="form-check-label">Male</label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" name="gender" type="radio" value="Female">
+                                    <label class="form-check-label">Female</label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" name="gender" type="radio" value="Other">
+                                    <label class="form-check-label">Other</label>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Phone Number</label>
+                                  <input type="text" class="form-control" placeholder="Enter ...">
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Email</label>
+                                  <input type="email" class="form-control" placeholder="Enter ...">
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Address</label>
+                                  <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Date of birth</label>
+                                  <input type="date" class="form-control" rows="3" placeholder="Enter ...">
+                                </div>
+
+                                <div class="form-group">
+                                  <label>Relation to the wearer</label>
+                                  <input type="text" class="form-control" placeholder="Enter ...">
+                                </div>
+
+                                  <div class="form-group">
+                                    <input type="submit" class="btn btn-block btn-outline-info">
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="card-body table-responsive p-0">
+                            <div class="card card-info card-outline">
+                              <div class="card-header">
+                                <h4 class="card-title">
+                                    Watchers List
+                                </h4>
+                              </div>
+                              <table class="table table-hover">
+                                <tr>
+                                  <th>Watcher_ID</th>
+                                  <th>Name</th>
+                                  <th>Phone Number</th>
+                                  <th>Watcher type</th>
+                                  <th>Detail</th>
+                                </tr>
+                                <tr>
+                                  <td>183</td>
+                                  <td>John Doe</td>
+                                  <td>0435897119</td>
+                                  <td>Responding</td>
+                                  <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">View details</button></td>
+                                </tr>
+                                <tr>
+                                  <td>219</td>
+                                  <td>Alexander Pierce</td>
+                                  <td>0437897119</td>
+                                  <td>Responding</td>
+                                  <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">View details</button></td>
+                                </tr>
+                                <tr>
+                                  <td>657</td>
+                                  <td>Bob Doe</td>
+                                  <td>0435897999</td>
+                                  <td>Responding</td>
+                                  <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">View details</button></td>
+                                </tr>
+                              </table>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                      <!-- /.tab-pane -->
+                      <div class="tab-pane" id="tab_4">
+                        <div class="card-body table-responsive p-0">
+                          <table class="table table-hover">
+                            <tr>
+                              <th>Watch Id</th>
+                              <td>123</td>
+                            </tr>
+                            <tr>
+                              <th>IMEI</th>
+                              <td>123325544545</td>
+                            </tr>
+                            <tr>
+                              <th>Manufacturer</th>
+                              <td>Samasung</td>
+                            </tr>
+                            <tr>
+                              <th>Model</th>
+                              <td>GM-3421</td>
+                            </tr>
+                            <tr>
+                              <th>Year</th>
+                              <td>2017</td>
+                            </tr>
+                            <tr>
+                              <th>Price ($)</th>
+                              <td>100</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <!-- /.tab-pane -->
+                      <div class="tab-pane" id="tab_5">
+                        <div class="card-body table-responsive p-0">
+                          <table class="table table-hover">
+                            <tr>
+                              <th>SIM Id</th>
+                              <td>123</td>
+                            </tr>
+                            <tr>
+                              <th>SIM Number</th>
+                              <td>123325544545</td>
+                            </tr>
+                            <tr>
+                              <th>Provider</th>
+                              <td>Samasung</td>
+                            </tr>
+                            <tr>
+                              <th>Status</th>
+                              <td>GM-3421</td>
+                            </tr>
+                          </table>
+                          <table class="table table-hover">
+                            <tr>
+                              <th>Plan Id</th>
+                              <td>123</td>
+                            </tr>
+                            <tr>
+                              <th>Cost per month ($)</th>
+                              <td>10</td>
+                            </tr>
+                            <tr>
+                              <th>Minutes per month</th>
+                              <td>100</td>
+                            </tr>
+                            <tr>
+                              <th>Data per month (MB)</th>
+                              <td>100</td>
+                            </tr>
+                            <tr>
+                              <th>SMS per month</th>
+                              <td>150</td>
+                            </tr>
+                            <tr>
+                              <th>Type of plan</th>
+                              <td>Monthly plan</td>
+                            </tr>
+                            <tr>
+                              <th>Paln supplier name</th>
+                              <td>Telstra</td>
+                            </tr>
+                            <tr>
+                              <th>Contact person</th>
+                              <td>James</td>
+                            </tr>
+                            <tr>
+                              <th>Phone number</th>
+                              <td>0213122323</td>
+                            </tr>
+                            <tr>
+                              <th>Email</th>
+                              <td>aleks@gmail.com</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                  </div><!-- /.card-body -->
+                </div>
+                <!-- ./card -->
+              </div>
+              <!-- /.col -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Watcher Details</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped">
+            <tr>
+              <th>Watcher_ID:</th>
+              <td>183</td>
+            </tr>
+            <tr>
+              <th>Name:</th>
+              <td>John</td>
+            </tr>
+            <tr>
+              <th>Date of birth:</th>
+              <td>12-11-1984</td>
+            </tr>
+            <tr>
+              <th>Gender:</th>
+              <td>Male</td>
+            </tr>
+            <tr>
+              <th>Phone Number:</th>
+              <td>0435897119</td>
+            </tr>
+            <tr>
+              <th>Email:</th>
+              <td>john@gmail.com</td>
+            </tr>
+            <tr>
+              <th>Address:</th>
+              <td>Victoria, Australia</td>
+            </tr>
+            <tr>
+              <th>Relation to wearer:</th>
+              <td>Son</td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 1.0.0. alpha
+    </div>
+    <strong>Copyright &copy; 2018 <a href="#">Watch Over Me</a>.</strong> All rights
+    reserved.
+  </footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Morris.js charts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="plugins/morris/morris.min.js"></script>
+<!-- Sparkline -->
+<script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- jvectormap -->
+<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="plugins/knob/jquery.knob.js"></script>
+<!-- daterangepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="plugins/daterangepicker/daterangepicker.js"></script>
+<!-- datepicker -->
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Slimscroll -->
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="dist/js/pages/dashboard.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+
+<script src="dist/js/custom.js"></script>

@@ -186,7 +186,7 @@
                   <td><span data-id="<%= d.customers[0].person_id %>" id="showCustomerDetails" class="show-full-details"><%= d.customers[0].person_first_name %> <%= d.customers[0].person_last_name %></span></td>
                   <td><span data-id="<%= d.serviceId %>" data-num-watcher="<%= d.numberOfWatchers %>"  id="showWatcherDetails" class="show-full-details"><%= d.numberOfWatchers %></span></td>
                   <td><%= d.serviceStatus %></td>
-                  <td><button class="btn btn-primary">Details</button></td>
+                  <td><a href="/serviceDetails/<%= d.serviceId %>" class="btn btn-primary">Details</button></td>
                 </tr>
                 <% } %>
               </table>
@@ -285,7 +285,7 @@
   </div>
   
   <div class="modal fade" id="watcherDetails" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -303,7 +303,7 @@
                 <th>Phone</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="watcherDataRows">
   
             </tbody>
           </table>

@@ -70,11 +70,8 @@ router.post("/loginProcessing", function(req, res, next){
 
 router.get('/services',function(req,res){
     if(!req.session.adminEmail) {
-        console.log(req.session.adminEmail);
         res.redirect('/');
     } else{
-        console.log(req.session.adminEmail);
-
         var services_list = [];
 
        var q = Service.aggregate([
@@ -120,10 +117,143 @@ router.get('/services',function(req,res){
         ])
 
         q.exec(function(err,result){
-            console.log(JSON.stringify(result));
             res.render("services", {title: 'WOM Services', session: req.session, data : result});
         })
     }
+})
+
+router.get("/serviceDetails/:serviceId", function(req, res){
+    var serviceId = req.params.serviceId;
+    if(!req.session.adminEmail) {
+        res.redirect('/');
+    } else{
+        var q = Service.aggregate([
+            {
+                $match:
+                {
+                    service_id: serviceId,                
+                }
+    
+            },
+            {
+                $lookup:
+                {
+                    from: 'persons',
+                    localField: 'wearer_id',
+                    foreignField: 'person_id',
+                    as: 'wearerInfo'
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: 'persons',
+                    localField: 'customer_id',
+                    foreignField: 'person_id',
+                    as: 'customerInfo'
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: 'relations',
+                    localField: 'service_id',
+                    foreignField: 'service_id',
+                    as: 'relationDetails'
+                }
+            },
+            {
+                $project:
+                {
+                    serviceId : '$service_id',
+                    womNumber : '$wom_num',
+                    serviceStatus : '$status', 
+                    wearers: '$wearerInfo',
+                    customers: '$customerInfo',
+                    relationships : '$relationDetails',
+                    numberOfWatchers: {$size: "$relationDetails"},
+                }
+            }
+            ])
+    
+            q.exec(function(err,result){
+
+                var w = Relation.aggregate([
+                    {
+                        $match:
+                        {
+                            service_id: serviceId,                
+                        }
+            
+                    },
+                    {
+                        $lookup:
+                        {
+                            from: 'persons',
+                            localField: 'watcher_id',
+                            foreignField: 'person_id',
+                            as: 'watcherInfo'
+                        }
+                    },
+                    {
+                        $project:
+                        {
+                            watcherDetails : '$watcherInfo'
+                        }
+                    }
+                    ])
+            
+                    w.exec(function(err,data){
+                        var resultData = [];
+                        resultData.push({service:result,watchers:data})
+                        console.log(JSON.stringify(resultData));
+                        res.render("serviceDetails", { title: 'ServiceDetails', session: req.session});
+                    })    
+            })
+    }
+})
+
+
+router.get('/showWatcherDetails/:serviceId',function(req,res){
+
+    console.log(req.params.serviceId);
+
+    var serviceID = req.params.serviceId;
+
+    var watcherId;
+    var weareName;
+    var wearerEmail;
+    var wearerPhone;
+
+    var q = Relation.aggregate([
+        {
+            $match:
+            {
+                service_id: serviceID,                
+            }
+
+        },
+        {
+            $lookup:
+            {
+                from: 'persons',
+                localField: 'watcher_id',
+                foreignField: 'person_id',
+                as: 'watcherInfo'
+            }
+        },
+        {
+            $project:
+            {
+                watcherDetails : '$watcherInfo'
+            }
+        }
+        ])
+
+        q.exec(function(err,result){
+            console.log(JSON.stringify(result));
+            res.send(result);
+        })
 })
 
 router.get('/checkWearerPhoneNumber/:phone',function(req,res){
