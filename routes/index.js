@@ -109,6 +109,7 @@ router.get('/services',function(req,res){
             $project:
             {
                 serviceId : '$service_id',
+                womNumber : '$wom_num',
                 serviceStatus : '$status', 
                 wearers: '$wearerInfo',
                 customers: '$customerInfo',
@@ -247,6 +248,7 @@ router.post("/addServiceProcessing",async function(req,res){
     var watcherId;
     var customerId;
     var serviceId;
+    var womNumber;
     var organizationId;
     var date = moment().format('DD/MM/YYYY');
     var time = moment().format('h:mm:ss a');

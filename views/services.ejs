@@ -165,7 +165,6 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Services List</h3>
-              <h4><%= data %></h4>
             </div>
             <div class="card-body">
               <table style="width: 100%" class="table table-responsive-lg table-striped">
@@ -182,7 +181,7 @@
                 <% for(var d of data) {%>
                 <tr>
                   <td><%= d.serviceId %></td>
-                  <td>--</td>
+                  <td><%= d.womNumber %></td>
                   <td><span data-id="<%= d.wearers[0].person_id %>" id="showWearerDetails" class="show-full-details"><%= d.wearers[0].person_first_name %> <%= d.wearers[0].person_last_name %></span></td>
                   <td><span data-id="<%= d.customers[0].person_id %>" id="showCustomerDetails" class="show-full-details"><%= d.customers[0].person_first_name %> <%= d.customers[0].person_last_name %></span></td>
                   <td><span data-id="<%= d.serviceId %>" data-num-watcher="<%= d.numberOfWatchers %>"  id="showWatcherDetails" class="show-full-details"><%= d.numberOfWatchers %></span></td>
@@ -227,19 +226,19 @@
           <table class="table table-striped">
             <tr>
               <th>Wearer_ID:</th>
-              <td id="modalWearerId">183</td>
+              <td id="modalWearerId"></td>
             </tr>
             <tr>
               <th>Name:</th>
-              <td id="modalWearerName">John</td>
+              <td id="modalWearerName"></td>
             </tr>
             <tr>
               <th>Phone Number:</th>
-              <td id="modalWearerPhone">0435897119</td>
+              <td id="modalWearerPhone"></td>
             </tr>
             <tr>
               <th>Email:</th>
-              <td id="modalWearerEmail">john@gmail.com</td>
+              <td id="modalWearerEmail"></td>
             </tr>
           </table>
         </div>
@@ -262,19 +261,19 @@
           <table class="table table-striped">
             <tr>
               <th>Wearer_ID:</th>
-              <td id="modalCustomerId">183</td>
+              <td id="modalCustomerId"></td>
             </tr>
             <tr>
               <th>Name:</th>
-              <td id="modalCustomerName">John</td>
+              <td id="modalCustomerName"></td>
             </tr>
             <tr>
               <th>Phone Number:</th>
-              <td id="modalCustomerPhone">0435897119</td>
+              <td id="modalCustomerPhone"></td>
             </tr>
             <tr>
               <th>Email:</th>
-              <td id="modalCustomerEmail">john@gmail.com</td>
+              <td id="modalCustomerEmail"></td>
             </tr>
           </table>
         </div>
