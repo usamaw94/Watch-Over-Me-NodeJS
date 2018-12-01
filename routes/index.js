@@ -123,7 +123,7 @@ router.get('/services',function(req,res){
 })
 
 router.get("/serviceDetails", function(req, res){
-    var serviceId = req.query.serviceID;
+var serviceId = req.query.serviceID      ;
     console.log(serviceId);
     if(!req.session.adminEmail) {
         res.redirect('/');
@@ -168,7 +168,9 @@ router.get("/serviceDetails", function(req, res){
                 {
                     serviceId : '$service_id',
                     womNumber : '$wom_num',
-                    serviceStatus : '$status', 
+                    serviceStatus : '$status',
+                    serviceDate : '$service_reg_date',
+                    serviceTime : '$service_reg_time',
                     wearers: '$wearerInfo',
                     customers: '$customerInfo',
                     relationships : '$relationDetails',
@@ -199,6 +201,8 @@ router.get("/serviceDetails", function(req, res){
                     {
                         $project:
                         {
+                            watcherType: '$watcher_status',
+                            priority : "priority_num",
                             watcherDetails : '$watcherInfo'
                         }
                     }
@@ -208,7 +212,7 @@ router.get("/serviceDetails", function(req, res){
                         var resultData = [];
                         resultData.push({service:result,watchers:data})
                         console.log(JSON.stringify(resultData));
-                        res.render("serviceDetails", { title: 'ServiceDetails', session: req.session});
+                        res.render("serviceDetails", { title: 'ServiceDetails', session: req.session, serviceData: resultData });
                     })    
             })
     }

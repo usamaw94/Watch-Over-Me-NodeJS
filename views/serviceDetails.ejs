@@ -31,7 +31,7 @@
             <img src="dist/img/user.png" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Admin</a>
+            <a href="#" class="d-block"><%= session.adminName %></a>
           </div>
         </div>
         <nav class="mt-2">
@@ -39,7 +39,7 @@
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="admin_dashboard.html" class="nav-link">
+              <a href="/adminHome" class="nav-link">
                 <i class="nav-icon fa fa-dashboard"></i>
                 <p>
                   Admin Dashboard
@@ -47,7 +47,7 @@
               </a>
             </li>
             <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
+              <a href="/services" class="nav-link">
                 <i class="nav-icon fa fa-circle-o-notch"></i>
                 <p>
                   Services
@@ -109,7 +109,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/examples/login.html" class="nav-link">
+              <a href="/logout" class="nav-link">
                 <i class="nav-icon fa fa-sign-out text-danger"></i>
                 <p class="text">LOGOUT</p>
               </a>
@@ -129,9 +129,9 @@
           <div class="row">
             <div class="col-12">
               <h4>Service Details</h4>
-              <p>Service Id: 987</p>
-              <p>Service date: 19-6-2018</p>
-              <p>WOM Phone number : 0401 345 765</p>
+              <p>Service Id: <%= serviceData[0].service[0].serviceId %></p>
+              <p>Service date: <%= serviceData[0].service[0].serviceDate %> - <%= serviceData[0].service[0].serviceTime %></p>
+              <p>WOM Phone number : <%= serviceData[0].service[0].womNumber %></p>
             </div>
           </div>
         </div>
@@ -145,8 +145,8 @@
             </div><!-- /.col -->
             <div class="col-sm-6 fa">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="admin_dashboard.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="view_services.html">View deals</a></li>
+                <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                <li class="breadcrumb-item"><a href="/services">View deals</a></li>
                 <li class="breadcrumb-item active">Deal details</li>
               </ol>
             </div><!-- /.col -->
@@ -164,9 +164,9 @@
             <div class="col-lg-12 col-12">
               <div class="callout callout-info">
   
-                <p>Service Id: 987</p>
-                <p>Service date: 19-6-2018</p>
-                <h5>WOM Phone number : 0401 345 765</h5>
+                <p>Service Id: <%= serviceData[0].service[0].serviceId %></p>
+                <p>Service date: <%= serviceData[0].service[0].serviceDate %> - <%= serviceData[0].service[0].serviceTime %></p>
+                <h5>WOM Phone number : <%= serviceData[0].service[0].womNumber %></h5>
                 <a href="service_logs.html" class="btn btn-info" style="text-decoration: none"> &nbsp;<b>View logs</b></a>
               </div>
             </div>
@@ -182,7 +182,7 @@
                         <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Customer Info</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Wearer Info</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Watchers</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Watch</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Device</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab">SIM</a></li>
                       </ul>
                     </div><!-- /.card-header -->
@@ -193,43 +193,19 @@
                             <table class="table table-hover">
                               <tr>
                                 <th>Customer Id</th>
-                                <td>123</td>
+                                <td><%= serviceData[0].service[0].customers[0].person_id %></td>
                               </tr>
                               <tr>
                                 <th>Name</th>
-                                <td>Aleks</td>
-                              </tr>
-                              <tr>
-                                <th>Gender</th>
-                                <td>Male</td>
-                              </tr>
-                              <tr>
-                                <th>Date of Birth</th>
-                                <td>21-11-789</td>
+                                <td><%= serviceData[0].service[0].customers[0].person_first_name %> <%= serviceData[0].service[0].customers[0].person_last_name %></td>
                               </tr>
                               <tr>
                                 <th>Phone number</th>
-                                <td>0432 123 456</td>
+                                <td><%= serviceData[0].service[0].customers[0].phone_number %></td>
                               </tr>
                               <tr>
                                 <th>Email</th>
-                                <td>aleks@gmail.com</td>
-                              </tr>
-                              <tr>
-                                <th>Address</th>
-                                <td>Victoria, Australia</td>
-                              </tr>
-                              <tr>
-                                <th>Relation to wearer</th>
-                                <td>Brother</td>
-                              </tr>
-                              <tr>
-                                <th>Credit card number</th>
-                                <td>12212323214441</td>
-                              </tr>
-                              <tr>
-                                <th>Credit card code</th>
-                                <td>323</td>
+                                <td><%= serviceData[0].service[0].customers[0].email %></td>
                               </tr>
                             </table>
                           </div>
@@ -240,35 +216,23 @@
                             <table class="table table-hover">
                               <tr>
                                 <th>Wearer Id</th>
-                                <td>345</td>
+                                <td><%= serviceData[0].service[0].wearers[0].person_id %></td>
                               </tr>
                               <tr>
                                 <th>Name</th>
-                                <td>Peter</td>
-                              </tr>
-                              <tr>
-                                <th>Gender</th>
-                                <td>Male</td>
-                              </tr>
-                              <tr>
-                                <th>Date of birth</th>
-                                <td>11-01-1967</td>
+                                <td><%= serviceData[0].service[0].wearers[0].person_first_name %> <%= serviceData[0].service[0].wearers[0].person_last_name %></td>
                               </tr>
                               <tr>
                                 <th>Private Number</th>
-                                <td>0435 678 567</td>
+                                <td><%= serviceData[0].service[0].wearers[0].phone_number %></td>
                               </tr>
                               <tr>
                                 <th>WOM Number</th>
-                                <td>4325 567 432</td>
-                              </tr>
-                              <tr>
-                                <th>Address</th>
-                                <td>Victoria, Australia</td>
+                                <td><%= serviceData[0].service[0].womNumber %></td>
                               </tr>
                               <tr>
                                 <th>Email</th>
-                                <td>peter@gmail.com</td>
+                                <td><%= serviceData[0].service[0].wearers[0].email %></td>
                               </tr>
                             </table>
                           </div>
@@ -286,61 +250,66 @@
                               </div>
                               <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="card-body">
-                                  <form>
+
+                                    <form>
                                   <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter ...">
-                                  </div>
-  
-                                  <div class="form-group">
-                                    <label>Age</label>
-                                    <input type="number" class="form-control" placeholder="Enter ...">
-                                  </div>
-  
-                                  <div class="form-group">
-                                    <label>Gender</label>
-                                    <div class="form-check">
-                                      <input class="form-check-input" name="gender" type="radio" value="Male">
-                                      <label class="form-check-label">Male</label>
-                                    </div>
-                                    <div class="form-check">
-                                      <input class="form-check-input" name="gender" type="radio" value="Female">
-                                      <label class="form-check-label">Female</label>
-                                    </div>
-                                    <div class="form-check">
-                                      <input class="form-check-input" name="gender" type="radio" value="Other">
-                                      <label class="form-check-label">Other</label>
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                        <label>Add phone Number</label>
+                                      </div>
+                                      <div class="col-md-7">
+                                        <input type="text" name="watcher1Phone" id="watcher1Phone" class="form-control">
+                                      </div>
+                                      <div class="col-md-3">
+                                        <div id="checkWatcher1Phone" class="btn btn-info btn-block">Check</div>
+                                      </div>
                                     </div>
                                   </div>
-  
-                                  <div class="form-group">
-                                    <label>Phone Number</label>
-                                    <input type="text" class="form-control" placeholder="Enter ...">
+
+                                  <div id="watcher1Form">
+                                      <div class="form-group">
+                    
+                                        <input type="hidden" name="watcherExistStatus" id="watcherExistStatus">
+                                        <input type="hidden" name="watcherId" id="watcherId">
+                  
+                                        <div class="row">
+                                          <div class="col-md-2">
+                                            <label>Name</label>
+                                          </div>
+                                          <div class="col-md-5">
+                                            <input name="watcher1FName" id="w1FName" type="text" class="form-control" placeholder="First name">
+                                          </div>
+                                          <div class="col-md-5">
+                                            <input name="watcher1LName" id="w1LName" type="text" class="form-control" placeholder="Last name">
+                                          </div>
+                                        </div>
+                                      </div>
+                    
+                                      <div class="form-group">
+                                        <div class="row">
+                                          <div class="col-md-2">
+                                            <label>Email</label>
+                                          </div>
+                                          <div class="col-md-10">
+                                            <input name="watcher1Email" id="w1Email" type="email" class="form-control" placeholder="Enter ...">
+                                          </div>
+                                        </div>
+                                      </div>
+                    
+                                      <!-- <div id="addWatcher2" class="btn btn-info">
+                                        Add watcher# 2
+                                      </div> -->
+                  
+                                      <!-- <div style="display: none" id="removeWatcher2" class="btn btn-danger">
+                                        Remove watcher# 2
+                                      </div> -->
+                    
+                                      <hr>
                                   </div>
   
                                   <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" class="form-control" placeholder="Enter ...">
+                                    <input type="submit" class="btn btn-block btn-outline-info">
                                   </div>
-  
-                                  <div class="form-group">
-                                    <label>Address</label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                                  </div>
-  
-                                  <div class="form-group">
-                                    <label>Date of birth</label>
-                                    <input type="date" class="form-control" rows="3" placeholder="Enter ...">
-                                  </div>
-  
-                                  <div class="form-group">
-                                    <label>Relation to the wearer</label>
-                                    <input type="text" class="form-control" placeholder="Enter ...">
-                                  </div>
-  
-                                    <div class="form-group">
-                                      <input type="submit" class="btn btn-block btn-outline-info">
-                                    </div>
                                   </form>
                                 </div>
                               </div>
@@ -358,30 +327,16 @@
                                     <th>Watcher_ID</th>
                                     <th>Name</th>
                                     <th>Phone Number</th>
-                                    <th>Watcher type</th>
-                                    <th>Detail</th>
+                                    <th>Email</th>
                                   </tr>
+                                  <% for(var d of serviceData[0].watchers[0].watcherDetails) {%>
                                   <tr>
-                                    <td>183</td>
-                                    <td>John Doe</td>
-                                    <td>0435897119</td>
-                                    <td>Responding</td>
-                                    <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">View details</button></td>
+                                    <td><%= d.person_id %></td>
+                                    <td><%= d.person_first_name %> <%= d.person_last_name %></td>
+                                    <td><%= d.phone_number %></td>
+                                    <td><%= d.email %></td>
                                   </tr>
-                                  <tr>
-                                    <td>219</td>
-                                    <td>Alexander Pierce</td>
-                                    <td>0437897119</td>
-                                    <td>Responding</td>
-                                    <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">View details</button></td>
-                                  </tr>
-                                  <tr>
-                                    <td>657</td>
-                                    <td>Bob Doe</td>
-                                    <td>0435897999</td>
-                                    <td>Responding</td>
-                                    <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">View details</button></td>
-                                  </tr>
+                                  <% } %>
                                 </table>
                                 </div>
                               </div>
@@ -392,7 +347,7 @@
                           <div class="card-body table-responsive p-0">
                             <table class="table table-hover">
                               <tr>
-                                <th>Watch Id</th>
+                                <th>Device Id</th>
                                 <td>123</td>
                               </tr>
                               <tr>
