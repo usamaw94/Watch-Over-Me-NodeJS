@@ -149,3 +149,16 @@
 .show-full-details:hover {
     color: #17a2b8;
 }
+
+#addWatcherForm {
+   display: none; 
+}
+
+#addWatcherDsiable {
+    display: none;
+}
+
+#addWatcherSubmit {
+    display: none;
+}
+

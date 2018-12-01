@@ -549,6 +549,54 @@ router.get('/showCustomerDetails/:customerId',function(req,res){
     });
 })
 
+
+
+router.get('/checkNewWatcherPhoneNumber',function(req,res){
+    console.log(req.query.phone);
+    console.log(req.query.serviceId);
+
+    var serviceId = req.query.serviceId;
+    var query = Person.findOne({phone_number: req.query.phone});
+    query.exec(function(err,personData){
+        if(err){
+            console.log(err);
+        }
+        else{
+            if(personData != null){
+                var id = personData.person_id;
+                var fname = personData.person_first_name;
+                var lname = personData.person_last_name;
+                var phone = personData.phone_number;
+                var email = personData.email;
+
+                existStatus = 'yes';
+                var q = Relation.find({$and: [{watcher_id : id}, {service_id : serviceId}]});
+                q.exec(function(err,relationData){
+                    if(err){
+                        console.log(err)
+                    }
+                    else{
+                        var  watcherExist = "no";
+                        if(relationData != null){
+                            watcherExist = "yes";
+                        }
+                        
+                        res.send({ existStatus, watcherExist, id, fname, lname, phone, email });
+                    }
+
+                })
+            }
+            else{
+                existStatus = 'no';
+                var  watcherExist = "no"
+                res.send({ existStatus,watcherExist });
+            }
+        }
+    });
+})
+
+
+
 async function getNextSequenceValue(sequenceName){
     
     

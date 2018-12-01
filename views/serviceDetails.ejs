@@ -257,16 +257,20 @@
                                       <div class="col-md-2">
                                         <label>Add phone Number</label>
                                       </div>
-                                      <div class="col-md-7">
-                                        <input type="text" name="watcher1Phone" id="watcher1Phone" class="form-control">
+                                        <input type="hidden" name="wearerPhoneCheck" id="wearerPhoneCheck" value="<%= serviceData[0].service[0].wearers[0].phone_number %>" readonly>
+
+                                        <input type="text" name="serviceId" id="serviceId" value="<%= serviceData[0].service[0].serviceId %>" readonly>
+                                      
+                                        <div class="col-md-7">
+                                        <input type="text" name="watcherPhone" id="watcherPhone" class="form-control">
                                       </div>
                                       <div class="col-md-3">
-                                        <div id="checkWatcher1Phone" class="btn btn-info btn-block">Check</div>
+                                        <div id="checkWatcherPhone" class="btn btn-info btn-block">Check</div>
                                       </div>
                                     </div>
                                   </div>
 
-                                  <div id="watcher1Form">
+                                  <div id="addWatcherForm">
                                       <div class="form-group">
                     
                                         <input type="hidden" name="watcherExistStatus" id="watcherExistStatus">
@@ -296,19 +300,16 @@
                                         </div>
                                       </div>
                     
-                                      <!-- <div id="addWatcher2" class="btn btn-info">
-                                        Add watcher# 2
-                                      </div> -->
-                  
-                                      <!-- <div style="display: none" id="removeWatcher2" class="btn btn-danger">
-                                        Remove watcher# 2
-                                      </div> -->
-                    
                                       <hr>
-                                  </div>
-  
-                                  <div class="form-group">
-                                    <input type="submit" class="btn btn-block btn-outline-info">
+
+                                      <div id="addWatcherDsiable">
+                                        <h3>Watcher alraedy exist as a watcher for this service</h3>
+                                      </div>
+
+                                      <div id="addWatcherSubmit" class="form-group">
+                                          <input type="submit" class="btn btn-block btn-outline-info">
+                                      </div>
+
                                   </div>
                                   </form>
                                 </div>
