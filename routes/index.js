@@ -570,7 +570,7 @@ router.get('/checkNewWatcherPhoneNumber',function(req,res){
                 var email = personData.email;
 
                 existStatus = 'yes';
-                var q = Relation.find({$and: [{watcher_id : id}, {service_id : serviceId}]});
+                var q = Relation.findOne({$and: [{watcher_id : id}, {service_id : serviceId}]});
                 q.exec(function(err,relationData){
                     if(err){
                         console.log(err)
