@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Contact = require('../models/contact');
 const Log = require('../models/log');
 var admin = require("firebase-admin");
+const Person = require('../models/person');
+const Service = require('../models/service');
+const Counter = require('../models/counter');
+const personDetail = require('../models/personDetail');
+const Relation = require('../models/relation');
 // const io = require('../server');
 
 // var socket = io.connect('http://localhost:5000');
@@ -66,6 +70,36 @@ function alertProcesiing(registrationToken){
     },3000);
 }
 
+router.post('/userloginprocessing',function(req,res){
+    var q = Person.findOne({$and: [{phone_number : req.body.phone_num}, {password : req.body.password}]});
+    q.exec(function(err,userData){
+        if(err){
+            console.log(err);
+        }
+        else{
+            if(userData != null){
+                var query = Service.findOne({wearer_id: userData.person_id});
+                query.exec(function(err,serviceData){
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        if(serviceData != null){
+                            res.send(serviceData.service_id);
+                        }
+                        else{
+                            res.send("");
+                        }
+                    }
+                })
+            }
+            else{
+                res.send("");
+            }
+        }
+    })
+})
+
 router.post('/logsprocessing', function(req,res){
     var log = new Log(req.body);
     var regToken = log['registration_token'];
@@ -121,15 +155,6 @@ router.post('/hourlylogsprocessing', function(req,res){
         req.app.io.emit('logInserted', 'Data saved');
 
         res.send(JSON.stringify('Hourly Log Inserted'));
-    });
-});
-
-router.post('/contactsprocessing', function(req,res){
-    var contact = new Contact(req.body);
-    contact.save();
-
-    Contact.create(req.body).then(function(contact){
-      res.send(contact);
     });
 });
 
