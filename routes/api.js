@@ -66,6 +66,10 @@ function alertProcesiing(registrationToken){
     },3000);
 }
 
+router.post('/userloginprocessing',function(req,res){
+    console.log(req.body.phoneNum);
+})
+
 router.post('/logsprocessing', function(req,res){
     var log = new Log(req.body);
     var regToken = log['registration_token'];
