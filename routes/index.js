@@ -123,7 +123,7 @@ router.get('/services',function(req,res){
 })
 
 router.get("/serviceDetails", function(req, res){
-    var serviceId = req.query.serviceID;
+var serviceId = req.query.serviceID      ;
     console.log(serviceId);
     if(!req.session.adminEmail) {
         res.redirect('/');
@@ -168,7 +168,9 @@ router.get("/serviceDetails", function(req, res){
                 {
                     serviceId : '$service_id',
                     womNumber : '$wom_num',
-                    serviceStatus : '$status', 
+                    serviceStatus : '$status',
+                    serviceDate : '$service_reg_date',
+                    serviceTime : '$service_reg_time',
                     wearers: '$wearerInfo',
                     customers: '$customerInfo',
                     relationships : '$relationDetails',
@@ -199,6 +201,8 @@ router.get("/serviceDetails", function(req, res){
                     {
                         $project:
                         {
+                            watcherType: '$watcher_status',
+                            priority : "priority_num",
                             watcherDetails : '$watcherInfo'
                         }
                     }
@@ -208,7 +212,7 @@ router.get("/serviceDetails", function(req, res){
                         var resultData = [];
                         resultData.push({service:result,watchers:data})
                         console.log(JSON.stringify(resultData));
-                        res.render("serviceDetails", { title: 'ServiceDetails', session: req.session});
+                        res.render("serviceDetails", { title: 'ServiceDetails', session: req.session, serviceData: resultData });
                     })    
             })
     }
@@ -544,6 +548,54 @@ router.get('/showCustomerDetails/:customerId',function(req,res){
         }
     });
 })
+
+
+
+router.get('/checkNewWatcherPhoneNumber',function(req,res){
+    console.log(req.query.phone);
+    console.log(req.query.serviceId);
+
+    var serviceId = req.query.serviceId;
+    var query = Person.findOne({phone_number: req.query.phone});
+    query.exec(function(err,personData){
+        if(err){
+            console.log(err);
+        }
+        else{
+            if(personData != null){
+                var id = personData.person_id;
+                var fname = personData.person_first_name;
+                var lname = personData.person_last_name;
+                var phone = personData.phone_number;
+                var email = personData.email;
+
+                existStatus = 'yes';
+                var q = Relation.find({$and: [{watcher_id : id}, {service_id : serviceId}]});
+                q.exec(function(err,relationData){
+                    if(err){
+                        console.log(err)
+                    }
+                    else{
+                        var  watcherExist = "no";
+                        if(relationData != null){
+                            watcherExist = "yes";
+                        }
+                        
+                        res.send({ existStatus, watcherExist, id, fname, lname, phone, email });
+                    }
+
+                })
+            }
+            else{
+                existStatus = 'no';
+                var  watcherExist = "no"
+                res.send({ existStatus,watcherExist });
+            }
+        }
+    });
+})
+
+
 
 async function getNextSequenceValue(sequenceName){
     

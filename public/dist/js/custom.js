@@ -498,3 +498,59 @@ $(".showWatcherDetails").on("click", function(){
         });
 });
 
+$("#checkWatcherPhone").on("click", function(){
+
+    if($("#watcherPhone").val() != ''){
+
+        var watcherPhoneValue =  $("#watcherPhone").val();
+
+        var serviceId = $("#serviceId").val();
+
+        var url="/checkNewWatcherPhoneNumber";
+    
+        $.ajax({
+            url:url,
+            data:{ phone: watcherPhoneValue, serviceId: serviceId },
+            datatype:"json",
+            method:"GET",
+            success:function(data){
+
+                alert(data.existStatus+"/"+data.watcherExist );
+
+                var wearerPhone = $("#wearerPhoneCheck").val()
+                
+                if(watcherPhoneValue == wearerPhone) {
+                    alert('This number is already registered for wearer \nWearer cannot become watcher');
+                } else if(data.existStatus == 'yes'){
+
+                    if (data.watcherExist == 'yes'){
+                        alert("Watcher already exist as watcher");
+                    }
+                    // $('#watcherExistStatus').val(data.existStatus);
+                    // $('#watcherId').val(data.id);
+
+                    // $("#addWatcherForm").slideDown();
+                    // $("#w1FName").prop('readonly', true);
+                    // $("#w1FName").val(data.fname);
+                    // $("#w1LName").prop('readonly', true);
+                    // $("#w1LName").val(data.lname);
+                    // $("#w1Email").prop('readonly', true);
+                    // $("#w1Email").val(data.email);
+                } else {
+
+                    $('watcherExistStatus').val(data.existStatus);
+
+                    $("#w1FName").prop('readonly', false);
+                    $("#w1FName").val('');
+                    $("#w1LName").prop('readonly', false);
+                    $("#w1LName").val('');
+                    $("#w1Email").prop('readonly', false);
+                    $("#w1Email").val('');
+                    $("#watcher1Form").slideDown();
+                }
+            }
+        });
+    } else {
+        alert("Enter watcher phone number");
+    }
+});
