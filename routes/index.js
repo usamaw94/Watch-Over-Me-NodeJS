@@ -446,7 +446,7 @@ router.post("/addServiceProcessing",async function(req,res){
         watcherId = req.body.watcherId;
     }
 
-    if(req.body.customerId == ""){
+    if(req.body.customer == "Other"){
 
         var customerPhone = req.body.customerPhone;
         var customerFirstName = req.body.customerFName;
@@ -473,8 +473,11 @@ router.post("/addServiceProcessing",async function(req,res){
         });
 
     }
-    else{
-        customerId = req.body.customerId;
+    else if (req.body.customer == "watcher"){
+        customerId = watcherId;
+    }
+    else if(req.body.customer == "wearer"){
+        customerId = wearerId;
     }
 
     serviceId = "WOMS" + FormatNumberLength(await getNextSequenceValue('Service'),8);
