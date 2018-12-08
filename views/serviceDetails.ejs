@@ -251,7 +251,7 @@
                               <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="card-body">
 
-                                    <form>
+                                  <form action="" id="addWatcherFormSubmition">
                                   <div class="form-group">
                                     <div class="row">
                                       <div class="col-md-2">
@@ -259,8 +259,10 @@
                                       </div>
                                         <input type="hidden" name="wearerPhoneCheck" id="wearerPhoneCheck" value="<%= serviceData[0].service[0].wearers[0].phone_number %>" readonly>
 
-                                        <input type="text" name="serviceId" id="serviceId" value="<%= serviceData[0].service[0].serviceId %>" readonly>
-                                      
+                                        <input type="hidden" name="serviceId" id="serviceId" value="<%= serviceData[0].service[0].serviceId %>" readonly>
+
+                                        <input type="hidden" name="numWatchers" id="numWatchers" value="<%= serviceData[0].service[0].numberOfWatchers %>" readonly>
+
                                         <div class="col-md-7">
                                         <input type="text" name="watcherPhone" id="watcherPhone" class="form-control">
                                       </div>
@@ -273,18 +275,17 @@
                                   <div id="addWatcherForm">
                                       <div class="form-group">
                     
-                                        <input type="hidden" name="watcherExistStatus" id="watcherExistStatus">
-                                        <input type="hidden" name="watcherId" id="watcherId">
+                                        <input type="hidden" name="watcherId" id="watcherId" readonly>
                   
                                         <div class="row">
                                           <div class="col-md-2">
                                             <label>Name</label>
                                           </div>
                                           <div class="col-md-5">
-                                            <input name="watcher1FName" id="w1FName" type="text" class="form-control" placeholder="First name">
+                                            <input name="watcherFName" id="wFName" type="text" class="form-control" placeholder="First name">
                                           </div>
                                           <div class="col-md-5">
-                                            <input name="watcher1LName" id="w1LName" type="text" class="form-control" placeholder="Last name">
+                                            <input name="watcherLName" id="wLName" type="text" class="form-control" placeholder="Last name">
                                           </div>
                                         </div>
                                       </div>
@@ -295,7 +296,7 @@
                                             <label>Email</label>
                                           </div>
                                           <div class="col-md-10">
-                                            <input name="watcher1Email" id="w1Email" type="email" class="form-control" placeholder="Enter ...">
+                                            <input name="watcherEmail" id="wEmail" type="email" class="form-control" placeholder="Enter ...">
                                           </div>
                                         </div>
                                       </div>
@@ -303,12 +304,17 @@
                                       <hr>
 
                                       <div id="addWatcherDsiable">
-                                        <h3>Watcher alraedy exist as a watcher for this service</h3>
+                                        <h4>Watcher alraedy exist as a watcher for this service</h3>
                                       </div>
 
                                       <div id="addWatcherSubmit" class="form-group">
-                                          <input type="submit" class="btn btn-block btn-outline-info">
+                                        <h4>Person already exist</h4>
+                                        <input type="submit" value="Add Watcher" class="btn btn-block btn-outline-info">
                                       </div>
+
+                                      <div id="newWatcherSubmit" class="form-group">
+                                          <input type="submit" value="Add Watcher" class="btn btn-block btn-outline-info">
+                                        </div>
 
                                   </div>
                                   </form>
@@ -330,12 +336,12 @@
                                     <th>Phone Number</th>
                                     <th>Email</th>
                                   </tr>
-                                  <% for(var d of serviceData[0].watchers[0].watcherDetails) {%>
+                                  <% for(var d of serviceData[0].watchers) {%>
                                   <tr>
-                                    <td><%= d.person_id %></td>
-                                    <td><%= d.person_first_name %> <%= d.person_last_name %></td>
-                                    <td><%= d.phone_number %></td>
-                                    <td><%= d.email %></td>
+                                    <td><%= d.watcherDetails[0].person_id %></td>
+                                    <td><%= d.watcherDetails[0].person_first_name %> <%= d.person_last_name %></td>
+                                    <td><%= d.watcherDetails[0].phone_number %></td>
+                                    <td><%= d.watcherDetails[0].email %></td>
                                   </tr>
                                   <% } %>
                                 </table>

@@ -461,15 +461,15 @@ $(".showCustomerDetails").on("click", function(){
 $(".showWatcherDetails").on("click", function(){
 
 
-    var serviceID=$(this).attr('data-id');
+    var serviceId=$(this).attr('data-id');
 
     var numWatchers = $(this).attr('data-num-watcher');
 
-    var url="showWatcherDetails/"+ serviceID;
+    var url="/showWatcherDetails";
     
         $.ajax({
             url:url,
-            data:{serviceID},
+            data:{serviceId : serviceId},
             datatype:"json",
             method:"GET",
             success:function(data){
@@ -478,12 +478,12 @@ $(".showWatcherDetails").on("click", function(){
 
                 var length = data.length;
 
-                for(i=0; i<data[0].watcherDetails.length; i++){
-                    var personId = data[0].watcherDetails[i].person_id;
-                    var personName = data[0].watcherDetails[i].person_first_name + " " 
-                    + data[0].watcherDetails[i].person_last_name;
-                    var personPhone = data[0].watcherDetails[i].phone_number;
-                    var personEmail = data[0].watcherDetails[i].email;
+                for(i=0; i<data.length; i++){
+                    var personId = data[i].watcherDetails[0].person_id;
+                    var personName = data[i].watcherDetails[0].person_first_name + " " 
+                    + data[i].watcherDetails[0].person_last_name;
+                    var personPhone = data[i].watcherDetails[0].phone_number;
+                    var personEmail = data[i].watcherDetails[0].email;
 
                     var row = "<tr><td>"+ personId +"</td><td>" + personName + "</td><td>" + personPhone + "</td><td>" + personEmail + "</td></tr>";
                     $("#watcherDataRows").append(row);
@@ -496,6 +496,19 @@ $(".showWatcherDetails").on("click", function(){
                 $('#watcherDetails').modal('show');
             }
         });
+});
+
+$(document).ready(function(){
+    $("#watcherPhone").keyup(function(){     
+        $("#watcherId").val('');
+        $("#wFName").val('');
+        $("#wLName").val('');
+        $("#wEmail").val('');
+        $("#wFName").prop('readonly', false);
+        $("#wLName").prop('readonly', false);
+        $("#wEmail").prop('readonly', false);
+        $("#addWatcherForm").slideUp();
+    });
 });
 
 $("#checkWatcherPhone").on("click", function(){
@@ -515,42 +528,66 @@ $("#checkWatcherPhone").on("click", function(){
             method:"GET",
             success:function(data){
 
-                alert(data.existStatus+"/"+data.watcherExist );
+                var wearerPhone = $("#wearerPhoneCheck").val();
 
-                var wearerPhone = $("#wearerPhoneCheck").val()
-                
                 if(watcherPhoneValue == wearerPhone) {
                     alert('This number is already registered for wearer \nWearer cannot become watcher');
                 } else if(data.existStatus == 'yes'){
 
                     if (data.watcherExist == 'yes'){
-                        alert("Watcher already exist as watcher");
+                        $("#newWatcherSubmit").fadeOut();
+                        $("#addWatcherDsiable").fadeIn();
+                        $("#addWatcherSubmit").fadeOut();
+                        $("#addWatcherForm").slideDown();
+                        
+                        $("#watcherId").val(data.id);
+                        $("#wFName").prop('readonly', true);
+                        $("#wFName").val(data.fname);
+                        $("#wLName").prop('readonly', true);
+                        $("#wLName").val(data.lname);
+                        $("#wEmail").prop('readonly', true);
+                        $("#wEmail").val(data.email);
+                    } else {
+                        $("#newWatcherSubmit").fadeOut();
+                        $("#addWatcherSubmit").fadeIn();
+                        $("#addWatcherDsiable").fadeOut();
+                        $("#addWatcherForm").slideDown();
+                        
+                        $("#watcherId").val(data.id);
+                        $("#wFName").prop('readonly', true);
+                        $("#wFName").val(data.fname);
+                        $("#wLName").prop('readonly', true);
+                        $("#wLName").val(data.lname);
+                        $("#wEmail").prop('readonly', true);
+                        $("#wEmail").val(data.email);
                     }
-                    // $('#watcherExistStatus').val(data.existStatus);
-                    // $('#watcherId').val(data.id);
 
-                    // $("#addWatcherForm").slideDown();
-                    // $("#w1FName").prop('readonly', true);
-                    // $("#w1FName").val(data.fname);
-                    // $("#w1LName").prop('readonly', true);
-                    // $("#w1LName").val(data.lname);
-                    // $("#w1Email").prop('readonly', true);
-                    // $("#w1Email").val(data.email);
                 } else {
-
-                    $('watcherExistStatus').val(data.existStatus);
-
-                    $("#w1FName").prop('readonly', false);
-                    $("#w1FName").val('');
-                    $("#w1LName").prop('readonly', false);
-                    $("#w1LName").val('');
-                    $("#w1Email").prop('readonly', false);
-                    $("#w1Email").val('');
-                    $("#watcher1Form").slideDown();
+                    $("#newWatcherSubmit").fadeIn();
+                    $("#addWatcherSubmit").fadeOut();
+                    $("#addWatcherDsiable").fadeOut();
+                    $("#addWatcherForm").slideDown();
                 }
             }
         });
     } else {
         alert("Enter watcher phone number");
     }
+});
+
+$("#addWatcherFormSubmition").on("submit", function(e){
+    e.preventDefault();
+
+    var url="/addNewWatcher";
+    var data=$('#addWatcherFormSubmition').serialize();
+
+    $.ajax({
+        url:url,
+        data:data,
+        datatype:"json",
+        method:"GET",
+        success:function(data){
+            alert(data);
+        }
+    });
 });

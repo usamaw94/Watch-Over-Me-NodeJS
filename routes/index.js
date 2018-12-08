@@ -219,11 +219,11 @@ var serviceId = req.query.serviceID      ;
 })
 
 
-router.get('/showWatcherDetails:serviceId',function(req,res){
+router.get('/showWatcherDetails',function(req,res){
 
-    console.log(req.params.serviceId);
+    console.log(req.query.serviceId);
 
-    var serviceID = req.params.serviceId;
+    var serviceID = req.query.serviceId;
 
     var watcherId;
     var weareName;
@@ -570,7 +570,7 @@ router.get('/checkNewWatcherPhoneNumber',function(req,res){
                 var email = personData.email;
 
                 existStatus = 'yes';
-                var q = Relation.find({$and: [{watcher_id : id}, {service_id : serviceId}]});
+                var q = Relation.findOne({$and: [{watcher_id : id}, {service_id : serviceId}]});
                 q.exec(function(err,relationData){
                     if(err){
                         console.log(err)
@@ -595,6 +595,58 @@ router.get('/checkNewWatcherPhoneNumber',function(req,res){
     });
 })
 
+router.get('/addNewWatcher',async function(req,res){
+    var serviceId = req.query.serviceId;
+    var watcherPhone = req.query.watcherPhone;
+    var watcherId;
+    var wFName = req.query.watcherFName;
+    var wLName = req.query.watcherLName;
+    var wEmail = req.query.watcherEmail;
+    var numWatchers = req.query.numWatchers;
+    var priority = parseInt(numWatchers) + 1;
+    var date = moment().format('DD/MM/YYYY');
+    var time = moment().format('h:mm:ss a');
+
+    console.log(priority);
+
+    if(req.query.watcherId == ''){
+        console.log('new watcher');
+        watcherId = "WOMP" + FormatNumberLength(await getNextSequenceValue('Person'),8);
+
+        var newWatcher = new Person({person_id: watcherId,
+        person_first_name: wFName,
+        person_last_name: wLName,
+        phone_number: watcherPhone,
+        email: wEmail,
+        password: "womperson"});
+
+        var newWatcherDetail = new personDetail({person_id: watcherId,
+        phone_number: watcherPhone,
+        email: wEmail,
+        update_date: date,
+        update_time: time
+        });
+
+        newWatcher.save().then(function(){
+            newWatcherDetail.save();
+        });
+    }
+    else{
+        console.log("alraedy exist");
+        watcherId = req.query.watcherId;
+    } 
+
+    var newRelation = new Relation({service_id: serviceId,
+        watcher_id: watcherId,
+        priority_num: priority + "",
+        watcher_status: "Responding",
+        updated_date: date,
+        updated_time: time
+    });
+
+    newRelation.save();
+    res.send("Watcher");
+})
 
 
 async function getNextSequenceValue(sequenceName){
