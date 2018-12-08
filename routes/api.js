@@ -67,7 +67,7 @@ function alertProcesiing(registrationToken){
 }
 
 router.post('/userloginprocessing',function(req,res){
-    console.log(req.body.phoneNum);
+    console.log(req.body.phone_num);
 })
 
 router.post('/logsprocessing', function(req,res){
