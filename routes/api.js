@@ -158,5 +158,45 @@ router.post('/hourlylogsprocessing', function(req,res){
     });
 });
 
+router.post('/contactsprocessing', function(req,res){
+    
+    var serviceId = req.body.service_id;
+
+    console.log(JSON.stringify(serviceId));
+    var w = Relation.aggregate([
+        {
+            $match:
+            {
+                service_id: serviceId,                
+            }
+
+        },
+        {
+            $lookup:
+            {
+                from: 'persons',
+                localField: 'watcher_id',
+                foreignField: 'person_id',
+                as: 'watcherInfo'
+            }
+        },
+        {
+            $project:
+            {
+                watcherType: '$watcher_status',
+                priority : "$priority_num",
+                watcherId : { "$arrayElemAt": [ "$watcherInfo.person_id", 0 ] },
+                watcherName : {"$concat": [ { "$arrayElemAt": [ "$watcherInfo.person_first_name", 0 ] }, " ", { "$arrayElemAt": [ "$watcherInfo.person_last_name", 0 ] }]},
+                watcherPhone : { "$arrayElemAt": [ "$watcherInfo.phone_number", 0 ] }
+            }
+        }
+        ])
+
+        w.exec(function(err,data){
+            res.send(JSON.stringify(data));
+        })
+
+});
+
 
 module.exports = router;
