@@ -205,7 +205,7 @@ router.post('/phoneMeRequest', function(req,res){
         to: req.body.recipient_num,
         body: req.body.message
     }).then((message) => console.log(message.sid));
-    res.send("Request has been sent!");
+    res.send(JSON.stringify("Request has been sent!"));
 });
 
 module.exports = router;
