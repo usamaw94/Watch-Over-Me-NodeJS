@@ -14,6 +14,9 @@ const Relation = require('../models/relation');
 
 var serviceAccount = require("../womproject-18095-firebase-adminsdk-4facv-ce9129eb22.json");
 
+
+var helpMeStatus = false;
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://womproject-18095.firebaseio.com"
@@ -59,6 +62,7 @@ function callingWatchers(watcherCount,registrationToken){
     }
     else{
         setTimeout(function(){
+            helpMeStatus = false;
             sendNotification("Watcher Response","Watcher "+watcherCount+" is coming to help you","High",regToken);
         },15000);
     }
@@ -105,15 +109,21 @@ router.post('/logsprocessing', function(req,res){
     var log = new Log(req.body);
     var regToken = log['registration_token'];
 
-    log.save().then(function(log){
+    if(helpMeStatus == false){
+        helpMeStatus = true;
+        log.save().then(function(log){
 
-        req.app.io.emit('logInserted', 'Data saved');
-
-        alertProcesiing(regToken);
+            req.app.io.emit('logInserted', 'Data saved');
+    
+            alertProcesiing(regToken);
+            res.send(log);
+    
+        });
+    }
+    else{
         res.send(log);
-
-    });
-
+        sendNotification("Alert Received","Help Me Function already activated","High",registrationToken);
+    }
 
 });
 
