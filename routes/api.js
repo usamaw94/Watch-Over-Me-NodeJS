@@ -151,12 +151,8 @@ router.post('/interactionlogprocessing',function(req,res){
 });
 
 router.get('/connectionCheck', function(req,res){
-    var count = 0;
 
-    req.app.io.emit('playload', 'Data sent');
-    res.send("Hello");
-    //sendNotification("Alert received","We are calling help for you!","High","eUppQNG-AC8:APA91bHB5-_BlQlylM514ohDYiOErCDMIm1nfoIRsI33UC4pJL2ajT_ub2CoeY6VfM_i2jan9jrF2cYPQ-8Y3YFRiiF4dwbR8D9yt6uw0g4XEU-ai6at4lied3ggrtXyxYwop-xRWOHVKtb3nS7o270GtCTvQo2Ysw");
-
+    res.send("Connection ok!");
 });
 
 router.post('/hourlylogsprocessing', function(req,res){
