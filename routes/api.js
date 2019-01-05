@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Log = require('../models/log');
 var admin = require("firebase-admin");
+var twilioClient = require('twilio')('ACdaf67e53a9f0bcce14aade68d1441ce3','3e3ee5debf15f29ec9d8bc21735edba9');
 const Person = require('../models/person');
 const Service = require('../models/service');
 const Counter = require('../models/counter');
@@ -198,5 +199,13 @@ router.post('/contactsprocessing', function(req,res){
 
 });
 
+router.post('/phoneMeRequest', function(req,res){
+    twilioClient.messages.create({
+        from: "+61488852471",
+        to: req.body.recipient_num,
+        body: req.body.message
+    }).then((message) => console.log(message.sid));
+    res.send("Request has been sent!");
+});
 
 module.exports = router;
