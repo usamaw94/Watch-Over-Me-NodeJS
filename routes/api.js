@@ -152,7 +152,7 @@ router.post('/interactionlogprocessing',function(req,res){
 
 router.get('/connectionCheck', function(req,res){
 
-    res.send("Connection ok!");
+    res.send(JSON.stringify("Connection ok!"));
 });
 
 router.post('/hourlylogsprocessing', function(req,res){
