@@ -8,6 +8,7 @@ const Service = require('../models/service');
 const Counter = require('../models/counter');
 const personDetail = require('../models/personDetail');
 const Relation = require('../models/relation');
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 // const io = require('../server');
 
 // var socket = io.connect('http://localhost:5000');
@@ -45,12 +46,24 @@ function sendNotification(notificationTitle ,notificationBody, notificationPrior
     });
 }
 
-function callingWatchers(watcherCount,registrationToken){
+function callingWatchers(watcherCount,registrationToken,log,data){
 
     var regToken = registrationToken;
+    var recNum = "+61" + JSON.stringify(data.watcherPhone).substring(1);
+    var msg = "-\nYour wearer is in trouble contact him/her as soon as possible. \n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you are responding the reply with 'yes'. If you can't reply with 'no'\n\nRegards\nWOM Team";
     sendNotification("Connecting watcher","Now contacting watcher "+watcherCount,"High",regToken);
-    if(watcherCount < 5){
+    twilioClient.messages.create({
+        from: "+61488852471",
+        to: recNum,
+        body: msg
+    }).then(function(){
         setTimeout(function(){
+
+        },20000)
+    });
+
+
+        /*setTimeout(function(){
             setTimeout(function(){
                 sendNotification("Watcher Response","Watcher "+watcherCount+" didn't respond","High",regToken);
             },15000);
@@ -59,20 +72,52 @@ function callingWatchers(watcherCount,registrationToken){
                 callingWatchers(watcherCount,regToken);
             },5000);
         },15000);
-    }
-    else{
-        setTimeout(function(){
+        /setTimeout(function(){
             helpMeStatus = false;
             sendNotification("Watcher Response","Watcher "+watcherCount+" is coming to help you","High",regToken);
-        },15000);
-    }
+        },15000);*/
 }
 
-function alertProcesiing(registrationToken){
-    sendNotification("Alert Received","We're calling help for you!","High",registrationToken);
-    setTimeout(function(){
-        callingWatchers(1,registrationToken);
-    },3000);
+function alertProcesiing(registrationToken,log){
+    sendNotification("Alert Received","We're calling your watcher for you!","High",registrationToken);
+
+    var w = Relation.aggregate([
+        {
+            $match:
+            {
+                service_id: serviceId,                
+            }
+
+        },
+        {
+            $lookup:
+            {
+                from: 'persons',
+                localField: 'watcher_id',
+                foreignField: 'person_id',
+                as: 'watcherInfo'
+            }
+        },
+        {
+            $project:
+            {
+                watcherType: '$watcher_status',
+                priority : "$priority_num",
+                watcherId : { "$arrayElemAt": [ "$watcherInfo.person_id", 0 ] },
+                watcherName : {"$concat": [ { "$arrayElemAt": [ "$watcherInfo.person_first_name", 0 ] }, " ", { "$arrayElemAt": [ "$watcherInfo.person_last_name", 0 ] }]},
+                watcherPhone : { "$arrayElemAt": [ "$watcherInfo.phone_number", 0 ] }
+            }
+        }
+        ])
+
+        w.exec(function(err,data){
+            
+            for(var i = 0 ; i < data.length ; i++){
+                callingWatchers(i,registrationToken,log,data);
+            }
+            
+            //res.send(JSON.stringify(data));
+        })
 }
 
 router.post('/userloginprocessing',function(req,res){
@@ -115,7 +160,7 @@ router.post('/logsprocessing', function(req,res){
 
             req.app.io.emit('logInserted', 'Data saved');
     
-            alertProcesiing(regToken);
+            alertProcesiing(regToken,log);
             res.send(log);
     
         });
@@ -152,7 +197,7 @@ router.post('/interactionlogprocessing',function(req,res){
 
 router.get('/connectionCheck', function(req,res){
 
-    res.send(JSON.stringify("Connection ok!"));
+    res.send(JSON.stringify("Connection to WOM server is ok1"));
 });
 
 router.post('/hourlylogsprocessing', function(req,res){
@@ -212,5 +257,22 @@ router.post('/phoneMeRequest', function(req,res){
         body: req.body.message
     }).then((message) => res.send(JSON.stringify("Request has been sent!")));
 });
+
+router.post('/receiveMessage', (req, res) => {
+    const twiml = new MessagingResponse();
+  
+    if (req.body.Body == 'hello') {
+      twiml.message('Hi!');
+    } else if (req.body.Body == 'bye') {
+      twiml.message('Goodbye');
+    } else {
+      twiml.message(
+        'No Body param match, Twilio sends this in the request to your server.'
+      );
+    }
+  
+    res.writeHead(200, { 'Content-Type': 'text/xml' });
+    res.end(twiml.toString());
+  });
 
 module.exports = router;
