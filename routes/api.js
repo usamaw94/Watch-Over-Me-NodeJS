@@ -59,7 +59,7 @@ function callingWatchers(watcherCount,registrationToken,log,data){
     }).then(function(){
         setTimeout(function(){
 
-        })
+        },20000)
     });
 
 
@@ -79,7 +79,7 @@ function callingWatchers(watcherCount,registrationToken,log,data){
 }
 
 function alertProcesiing(registrationToken,log){
-    sendNotification("Alert Received","We're calling help for you!","High",registrationToken);
+    sendNotification("Alert Received","We're calling your watcher for you!","High",registrationToken);
 
     var w = Relation.aggregate([
         {
