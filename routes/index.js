@@ -176,6 +176,24 @@ var serviceId = req.query.serviceID      ;
                 }
             },
             {
+                $lookup:
+                {
+                    from: 'devices',
+                    localField: 'device_id',
+                    foreignField: 'device_id',
+                    as: 'deviceInfo'
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: 'sims',
+                    localField: 'sim_id',
+                    foreignField: 'sim_id',
+                    as: 'simInfo'
+                }
+            },
+            {
                 $project:
                 {
                     serviceId : '$service_id',
@@ -189,6 +207,8 @@ var serviceId = req.query.serviceID      ;
                     customers: '$customerInfo',
                     relationships : '$relationDetails',
                     pharmacy : '$pharmacyInfo',
+                    device : '$deviceInfo',
+                    sim : '$simInfo',
                     numberOfWatchers: {$size: "$relationDetails"},
                 }
             }
@@ -848,7 +868,18 @@ router.post("/activateService", function(req, res, next){
             serviceData.wom_num = womNumber;
             serviceData.device_id = device;
             serviceData.sim_id = simId;
+            serviceData.status = 'Activated';
             serviceData.save();
+        });
+
+        Device.findOne({ device_id: device }, function (err, deviceData){
+            deviceData.device_status = 'Assigned';
+            deviceData.save();
+        });
+
+        SIM.findOne({ sim_id: simId }, function (err, simData){
+            simData.sim_status = 'Assigned';
+            simData.save();
         });
 
         res.redirect('/serviceDetails?serviceID='+ serviceId);

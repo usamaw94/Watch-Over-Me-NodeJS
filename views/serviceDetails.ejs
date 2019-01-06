@@ -167,7 +167,11 @@
                 <p>Service date: <%= serviceData[0].service[0].serviceDate %> - <%= serviceData[0].service[0].serviceTime %></p>
                 <h5>WOM Phone number : <%= serviceData[0].service[0].womNumber %></h5>
                 <a href="service_logs.html" class="btn btn-info" style="text-decoration: none"> &nbsp;<b>View logs</b></a>
+                
+                <% if(serviceData[0].service[0].serviceStatus === 'Activated'){ %>
+                  <% } else { %>
                 <a href="" data-toggle="modal" data-target="#activateServiceModal" class="btn btn-success" style="text-decoration: none"> &nbsp;<b>Activate service</b></a>
+                <% } %>
               </div>
             </div>
           </div>
@@ -388,27 +392,23 @@
                                 <table class="table table-hover">
                                     <tr>
                                       <th>Device Id</th>
-                                      <td>123</td>
+                                      <td><%= serviceData[0].service[0].device[0].device_id %></td>
                                     </tr>
                                     <tr>
                                       <th>IMEI</th>
-                                      <td>123325544545</td>
+                                      <td><%= serviceData[0].service[0].device[0].device_imei %></td>
                                     </tr>
                                     <tr>
                                       <th>Manufacturer</th>
-                                      <td>Samasung</td>
+                                      <td><%= serviceData[0].service[0].device[0].device_manufacturer %></td>
                                     </tr>
                                     <tr>
                                       <th>Model</th>
-                                      <td>GM-3421</td>
+                                      <td><%= serviceData[0].service[0].device[0].device_model %></td>
                                     </tr>
                                     <tr>
                                       <th>Year</th>
-                                      <td>2017</td>
-                                    </tr>
-                                    <tr>
-                                      <th>Price ($)</th>
-                                      <td>100</td>
+                                      <td><%= serviceData[0].service[0].device[0].device_year %></td>
                                     </tr>
                                   </table>
 
@@ -428,19 +428,19 @@
                                 <table class="table table-hover">
                                     <tr>
                                       <th>SIM Id</th>
-                                      <td>123</td>
+                                      <td><%= serviceData[0].service[0].sim[0].sim_id %></td>
                                     </tr>
                                     <tr>
                                       <th>SIM Number</th>
-                                      <td>123325544545</td>
+                                      <td><%= serviceData[0].service[0].sim[0].sim_num %></td>
                                     </tr>
                                     <tr>
                                       <th>Provider</th>
-                                      <td>Samasung</td>
+                                      <td><%= serviceData[0].service[0].sim[0].sim_provider %></td>
                                     </tr>
                                     <tr>
-                                      <th>Status</th>
-                                      <td>GM-3421</td>
+                                      <th>WOM Number</th>
+                                      <td><%= serviceData[0].service[0].sim[0].wom_num %></td>
                                     </tr>
                                 </table>
 
