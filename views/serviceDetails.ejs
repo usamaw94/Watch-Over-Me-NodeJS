@@ -163,11 +163,11 @@
           <div class="row">
             <div class="col-lg-12 col-12">
               <div class="callout callout-info">
-  
                 <p>Service Id: <%= serviceData[0].service[0].serviceId %></p>
                 <p>Service date: <%= serviceData[0].service[0].serviceDate %> - <%= serviceData[0].service[0].serviceTime %></p>
                 <h5>WOM Phone number : <%= serviceData[0].service[0].womNumber %></h5>
                 <a href="service_logs.html" class="btn btn-info" style="text-decoration: none"> &nbsp;<b>View logs</b></a>
+                <a href="" data-toggle="modal" data-target="#activateServiceModal" class="btn btn-success" style="text-decoration: none"> &nbsp;<b>Activate service</b></a>
               </div>
             </div>
           </div>
@@ -182,6 +182,7 @@
                         <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Customer Info</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Wearer Info</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Watchers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#tab_6" data-toggle="tab">Pharmacy</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Device</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab">SIM</a></li>
                       </ul>
@@ -321,7 +322,8 @@
                                 </div>
                               </div>
                             </div>
-  
+                            
+                            <div id="reload">
                             <div class="card-body table-responsive p-0">
                               <div class="card card-info card-outline">
                                 <div class="card-header">
@@ -347,102 +349,102 @@
                                 </table>
                                 </div>
                               </div>
+                            </div>
                           </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_6">
+                            <div class="card-body table-responsive p-0">
+                              <table class="table table-hover">
+                                <tr>
+                                  <th>Pharmacy Id</th>
+                                  <td><%= serviceData[0].service[0].pharmacy[0].organization_id %></td>
+                                </tr>
+                                <tr>
+                                  <th>Name</th>
+                                  <td><%= serviceData[0].service[0].pharmacy[0].organization_name %></td>
+                                </tr>
+                                <tr>
+                                  <th>Phone</th>
+                                  <td><%= serviceData[0].service[0].pharmacy[0].organization_phone %></td>
+                                </tr>
+                                <tr>
+                                  <th>Email</th>
+                                  <td><%= serviceData[0].service[0].pharmacy[0].organization_email %></td>
+                                </tr>
+                              </table>
+                            </div>
                         </div>
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="tab_4">
                           <div class="card-body table-responsive p-0">
-                            <table class="table table-hover">
-                              <tr>
-                                <th>Device Id</th>
-                                <td>123</td>
-                              </tr>
-                              <tr>
-                                <th>IMEI</th>
-                                <td>123325544545</td>
-                              </tr>
-                              <tr>
-                                <th>Manufacturer</th>
-                                <td>Samasung</td>
-                              </tr>
-                              <tr>
-                                <th>Model</th>
-                                <td>GM-3421</td>
-                              </tr>
-                              <tr>
-                                <th>Year</th>
-                                <td>2017</td>
-                              </tr>
-                              <tr>
-                                <th>Price ($)</th>
-                                <td>100</td>
-                              </tr>
-                            </table>
+
+                              <% if(serviceData[0].service[0].deviceId === 'Not assigned') { %>
+                                
+                                <h4>Device is not assigned</h4>
+
+                              <% } else { %>
+                                
+                                <table class="table table-hover">
+                                    <tr>
+                                      <th>Device Id</th>
+                                      <td>123</td>
+                                    </tr>
+                                    <tr>
+                                      <th>IMEI</th>
+                                      <td>123325544545</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Manufacturer</th>
+                                      <td>Samasung</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Model</th>
+                                      <td>GM-3421</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Year</th>
+                                      <td>2017</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Price ($)</th>
+                                      <td>100</td>
+                                    </tr>
+                                  </table>
+
+                              <% } %>
                           </div>
                         </div>
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="tab_5">
                           <div class="card-body table-responsive p-0">
-                            <table class="table table-hover">
-                              <tr>
-                                <th>SIM Id</th>
-                                <td>123</td>
-                              </tr>
-                              <tr>
-                                <th>SIM Number</th>
-                                <td>123325544545</td>
-                              </tr>
-                              <tr>
-                                <th>Provider</th>
-                                <td>Samasung</td>
-                              </tr>
-                              <tr>
-                                <th>Status</th>
-                                <td>GM-3421</td>
-                              </tr>
-                            </table>
-                            <table class="table table-hover">
-                              <tr>
-                                <th>Plan Id</th>
-                                <td>123</td>
-                              </tr>
-                              <tr>
-                                <th>Cost per month ($)</th>
-                                <td>10</td>
-                              </tr>
-                              <tr>
-                                <th>Minutes per month</th>
-                                <td>100</td>
-                              </tr>
-                              <tr>
-                                <th>Data per month (MB)</th>
-                                <td>100</td>
-                              </tr>
-                              <tr>
-                                <th>SMS per month</th>
-                                <td>150</td>
-                              </tr>
-                              <tr>
-                                <th>Type of plan</th>
-                                <td>Monthly plan</td>
-                              </tr>
-                              <tr>
-                                <th>Paln supplier name</th>
-                                <td>Telstra</td>
-                              </tr>
-                              <tr>
-                                <th>Contact person</th>
-                                <td>James</td>
-                              </tr>
-                              <tr>
-                                <th>Phone number</th>
-                                <td>0213122323</td>
-                              </tr>
-                              <tr>
-                                <th>Email</th>
-                                <td>aleks@gmail.com</td>
-                              </tr>
-                            </table>
+                            
+                              <% if(serviceData[0].service[0].simId === 'Not assigned') { %>
+                                
+                                <h4>SIM is not assigned</h4>
+
+                              <% } else { %>
+    
+                                <table class="table table-hover">
+                                    <tr>
+                                      <th>SIM Id</th>
+                                      <td>123</td>
+                                    </tr>
+                                    <tr>
+                                      <th>SIM Number</th>
+                                      <td>123325544545</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Provider</th>
+                                      <td>Samasung</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Status</th>
+                                      <td>GM-3421</td>
+                                    </tr>
+                                </table>
+
+                              <% } %>
                           </div>
                         </div>
                         <!-- /.tab-pane -->
@@ -462,56 +464,51 @@
       <!-- /.content -->
     </div>
   
-    <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Watcher Details</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-          <div class="modal-body">
-            <table class="table table-striped">
-              <tr>
-                <th>Watcher_ID:</th>
-                <td>183</td>
-              </tr>
-              <tr>
-                <th>Name:</th>
-                <td>John</td>
-              </tr>
-              <tr>
-                <th>Date of birth:</th>
-                <td>12-11-1984</td>
-              </tr>
-              <tr>
-                <th>Gender:</th>
-                <td>Male</td>
-              </tr>
-              <tr>
-                <th>Phone Number:</th>
-                <td>0435897119</td>
-              </tr>
-              <tr>
-                <th>Email:</th>
-                <td>john@gmail.com</td>
-              </tr>
-              <tr>
-                <th>Address:</th>
-                <td>Victoria, Australia</td>
-              </tr>
-              <tr>
-                <th>Relation to wearer:</th>
-                <td>Son</td>
-              </tr>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <div class="modal fade" id="activateServiceModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <form action="/activateService" method="POST">
+              <div class="modal-header">
+                <h4 class="modal-title">Activate service</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+    
+                <div class="form-group">
+                  <label>Service ID</label>
+                  <input type="text" name="serviceId" value="<%= serviceData[0].service[0].serviceId %>" class="form-control" readonly required>
+                </div>
+
+                <div class="form-group">
+                  <label>Choose WOM Number</label>
+                  <select id="SIM" name="simId" class="form-control select2" style="width: 100%;">
+                    <% for(var sim of serviceData[0].simsResult) {%>
+                      <option value="<%= sim.sim_id %>"><%= sim.wom_num %></option>
+                    <% } %>
+                  </select>
+                </div>
+
+                <input type="hidden" id="womNumber" name="womNumber" readonly>
+    
+                <div class="form-group">
+                  <label>Choose Device</label>
+                  <select name="device" class="form-control select2" style="width: 100%;">
+                    <% for(var dvs of serviceData[0].devicesResult) {%>
+                      <option value="<%= dvs.device_id %>"><%= dvs.device_manufacturer %> <%= dvs.device_model %>(<%= dvs.device_year %>)</option>
+                    <% } %>
+                  </select>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Activate</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-    </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">
@@ -562,4 +559,16 @@
   <!-- AdminLTE for demo purposes -->
   <script src="dist/js/demo.js"></script>
   
+  <script>
+
+      $(document).ready(function() {
+        $('#womNumber').val($('#SIM option:selected').text());
+      
+          $('#SIM').change(function(event) {
+            $('#womNumber').val($('#SIM option:selected').text());
+          });
+      });
+
+  </script>
+
   <script src="dist/js/custom.js"></script>

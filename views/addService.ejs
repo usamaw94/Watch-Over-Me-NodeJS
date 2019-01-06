@@ -363,13 +363,14 @@
   
                       <div class="form-group">
                         <label>Select pharmacy</label>
-                        <select id="pharmacy" name="pharmacy" class="form-control select2" style="width: 100%;">
-                          <option selected="selected">myChemist</option>
-                          <option>Pharmacist</option>
-                          <option>Bulk Biller</option>
-                          <option>Gourmet pharmacy</option>
+                        <select id="pharmacy" name="pharmacy" class="form-control select2" style="width: 100%;">  
+                          <% for(var d of data) {%>
+                            <option value="<%= d.organization_id %>"><%= d.organization_name %></option>
+                            <% } %>
                         </select>
                       </div>
+
+                      <input type="hidden" name="pharmacyName" id="pharmacyName" readonly>
                     </div>
                   </div>
                   <!-- /.card-body -->
@@ -656,6 +657,15 @@
 <script src="dist/js/stepByStepForm.js"></script>
 
 <script>
+
+$(document).ready(function() {
+  $('#pharmacyName').val($('#pharmacy option:selected').text());
+
+    $('#pharmacy').change(function(event) {
+      $('#pharmacyName').val($('#pharmacy option:selected').text());
+    });
+});
+
   $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()

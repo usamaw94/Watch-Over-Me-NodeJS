@@ -5,6 +5,9 @@ const Log = require('../models/log');
 const Admin = require('../models/admin');
 
 const Person = require('../models/person');
+const Device = require('../models/device');
+const SIM = require('../models/sim');
+const Organization = require('../models/organization');
 const Service = require('../models/service');
 const Counter = require('../models/counter');
 const personDetail = require('../models/personDetail');
@@ -164,16 +167,28 @@ var serviceId = req.query.serviceID      ;
                 }
             },
             {
+                $lookup:
+                {
+                    from: 'organizations',
+                    localField: 'pharmacy_id',
+                    foreignField: 'organization_id',
+                    as: 'pharmacyInfo'
+                }
+            },
+            {
                 $project:
                 {
                     serviceId : '$service_id',
                     womNumber : '$wom_num',
+                    deviceId : '$device_id',
+                    simId : '$sim_id',
                     serviceStatus : '$status',
                     serviceDate : '$service_reg_date',
                     serviceTime : '$service_reg_time',
                     wearers: '$wearerInfo',
                     customers: '$customerInfo',
                     relationships : '$relationDetails',
+                    pharmacy : '$pharmacyInfo',
                     numberOfWatchers: {$size: "$relationDetails"},
                 }
             }
@@ -209,10 +224,23 @@ var serviceId = req.query.serviceID      ;
                     ])
             
                     w.exec(function(err,data){
-                        var resultData = [];
-                        resultData.push({service:result,watchers:data})
-                        console.log(JSON.stringify(resultData));
-                        res.render("serviceDetails", { title: 'ServiceDetails', session: req.session, serviceData: resultData });
+
+                        var devices = Device.find({ device_status : 'Available' });
+
+                        devices.exec(function(err,devicesData){
+
+                            var sims = SIM.find({ sim_status : 'Available'});
+                            
+                            sims.exec(function(err,simsData){
+
+                                var resultData = [];
+                                resultData.push({service:result,watchers:data,devicesResult:devicesData,simsResult:simsData})
+                                console.log(JSON.stringify(resultData));
+                                res.render("serviceDetails", { title: 'ServiceDetails', session: req.session, serviceData: resultData });
+
+                            })
+
+                        })
                     })    
             })
     }
@@ -367,12 +395,24 @@ router.get('/alllogs', function(req,res){
 })
 
 router.get("/addService", function(req, res){
+
+    var isPharmacy = 'yes';
+
     if(!req.session.adminEmail) {
         console.log(req.session.adminEmail);
         res.redirect('/');
     } else{
         console.log(req.session.adminEmail);
-        res.render("addService", { title: 'Add new services', session: req.session});
+        var query = Organization.find({is_pharmacy: isPharmacy});
+        query.exec(function(err,orgsData){
+            console.log(orgsData);
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.render("addService", { title: 'Add new services', session: req.session, data : orgsData});
+            }
+        })
     }
 })
 
@@ -384,7 +424,7 @@ router.post("/addServiceProcessing",async function(req,res){
     var customerId;
     var serviceId;
     var womNumber;
-    var organizationId;
+    var pharmacyId = req.body.pharmacy;
     var date = moment().format('DD/MM/YYYY');
     var time = moment().format('h:mm:ss a');
 
@@ -486,7 +526,7 @@ router.post("/addServiceProcessing",async function(req,res){
         wearer_id: wearerId,
         wom_num: "Not assigned",
         customer_id: customerId,
-        pharmacy_id: "WOMO00000661",
+        pharmacy_id: pharmacyId,
         service_reg_date: date,
         service_reg_time: time,
         status: "Pending"});
@@ -648,9 +688,172 @@ router.get('/addNewWatcher',async function(req,res){
     });
 
     newRelation.save();
-    res.send("Watcher");
+    res.send("Watcher added");
 })
 
+router.get("/devices", function(req, res){
+    if(!req.session.adminEmail) {
+        console.log(req.session.adminEmail);
+        res.redirect('/');
+    } else{
+        console.log(req.session.adminEmail);
+        var query = Device.find();
+        query.exec(function(err,devicesData){
+            console.log(devicesData);
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.render("devices", { title: 'Devices', session: req.session, data : devicesData});
+            }
+        })
+    }
+})
+
+
+router.get('/addNewDevice',async function(req,res){
+    var imei = req.query.imei;
+    var manufacturer = req.query.manufacturer;
+    var model = req.query.model;
+    var deviceYear = req.query.deviceYear;
+    var status = "Available";
+    var date = moment().format('DD/MM/YYYY');
+    var time = moment().format('h:mm:ss a');
+
+    deviceId = "WOMD" + FormatNumberLength(await getNextSequenceValue('Device'),8);
+
+    var newDevice = new Device({device_id: deviceId,
+        device_imei: imei,
+        device_manufacturer: manufacturer,
+        device_model: model,
+        device_year: deviceYear,
+        device_status: status,
+        device_date: date,
+        device_time: time});
+
+        newDevice.save().then(function(err){
+            res.send("Device added");
+        });
+})
+
+router.get("/sims", function(req, res){
+    if(!req.session.adminEmail) {
+        console.log(req.session.adminEmail);
+        res.redirect('/');
+    } else{
+        console.log(req.session.adminEmail);
+        var query = SIM.find();
+        query.exec(function(err,simsData){
+            console.log(simsData);
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.render("sims", { title: 'SIMs', session: req.session, data : simsData});
+            }
+        })
+    }
+})
+
+router.get('/addNewSIM',async function(req,res){
+
+    var simNum = req.query.simNum;
+    var provider = req.query.simProvider;
+    var womNum = req.query.womNum;
+    var status = "Available";
+    var date = moment().format('DD/MM/YYYY');
+    var time = moment().format('h:mm:ss a');
+
+    simId = "WOMSM" + FormatNumberLength(await getNextSequenceValue('sim'),7);
+
+    var newSIM = new SIM({
+        sim_id: simId,
+        sim_num: simNum,
+        sim_provider: provider,
+        wom_num: womNum,
+        sim_status: status,
+        sim_date: date,
+        sim_time: time});
+
+        newSIM.save().then(function(err){
+            res.send("SIM added");
+        });
+})
+
+router.get("/organizations", function(req, res){
+    if(!req.session.adminEmail) {
+        console.log(req.session.adminEmail);
+        res.redirect('/');
+    } else{
+        console.log(req.session.adminEmail);
+        var query = Organization.find();
+        query.exec(function(err,orgsData){
+            console.log(orgsData);
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.render("organizations", { title: 'Organizations', session: req.session, data : orgsData});
+            }
+        })
+    }
+})
+
+router.get('/addNewOrganization',async function(req,res){
+
+    var orgName = req.query.orgName;
+    var orgPhone = req.query.orgPhone;
+    var orgEmail = req.query.orgEmail;
+    var orgAddress = req.query.orgAddress;
+    var orgReference = req.query.orgReference;
+    var isPharmacy = req.query.isPharmacy;
+    var orgPrimaryContact = req.query.orgPrimaryContact;
+    var orgSecondaryContact = req.query.orgSecondaryContact;
+    var date = moment().format('DD/MM/YYYY');
+    var time = moment().format('h:mm:ss a');
+
+    orgId = "WOMO" + FormatNumberLength(await getNextSequenceValue('Organization'),8);
+
+    var newOrg = new Organization({
+        organization_id: orgId,
+        organization_name: orgName,
+        organization_phone: orgPhone,
+        organization_email: orgEmail,
+        organization_address: orgAddress,
+        organization_ref_num: orgReference,
+        is_pharmacy: isPharmacy,
+        org_primary_contact_name: orgPrimaryContact,
+        org_secondary_contact_name: orgSecondaryContact,
+        organization_date: date,
+        organization_time: time});
+
+        newOrg.save().then(function(err){
+            res.send("Organization added");
+        });
+})
+
+
+router.post("/activateService", function(req, res, next){
+
+    var serviceId =  req.body.serviceId;
+    var simId =  req.body.simId;
+    var womNumber =  req.body.womNumber;
+    var device =  req.body.device;
+
+    if(!req.session.adminEmail) {
+        console.log(req.session.adminEmail);
+        res.redirect('/');
+    } else{
+        Service.findOne({ service_id: serviceId }, function (err, serviceData){
+            serviceData.wom_num = womNumber;
+            serviceData.device_id = device;
+            serviceData.sim_id = simId;
+            serviceData.save();
+        });
+
+        res.redirect('/serviceDetails?serviceID='+ serviceId);
+    }
+})
 
 async function getNextSequenceValue(sequenceName){
     
