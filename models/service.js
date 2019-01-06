@@ -18,6 +18,12 @@ const serviceSchema = new Schema({
     pharmacy_id:{
         type: String
     },
+    device_id:{
+        type: String
+    },
+    sim_id:{
+        type: String
+    },
     service_reg_date:{
         type: String
     },

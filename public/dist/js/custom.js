@@ -388,7 +388,7 @@ $("#nextToConfirmation").on("click", function(){
     $("#cnfrmWatcher2Phone").text($('#watcher2Phone').val());
     $("#cnfrmWatcher2Email").text($('#w2Email').val());
     
-    $("#cnfrmPharmacyName").text($('#pharmacy').val());
+    $("#cnfrmPharmacyName").text($('#pharmacyName').val());
 
     $("#cnfrmCustomerFName").text($('#customerFName').val());
     $("#cnfrmCustomerLName").text($('#customerLName').val());
@@ -578,6 +578,10 @@ $("#checkWatcherPhone").on("click", function(){
 $("#addWatcherFormSubmition").on("submit", function(e){
     e.preventDefault();
 
+    var serviceId = $("#serviceId").val();
+
+    var reloadUrl = "/serviceDetails?serviceID=" + serviceId; 
+
     var url="/addNewWatcher";
     var data=$('#addWatcherFormSubmition').serialize();
 
@@ -588,6 +592,73 @@ $("#addWatcherFormSubmition").on("submit", function(e){
         method:"GET",
         success:function(data){
             alert(data);
+            $('#reload').load(reloadUrl +" #reload");
+            $("#addWatcherForm").slideUp();
         }
     });
+    $('#addWatcherFormSubmition').trigger("reset");
+});
+
+//----------------------------------------------
+
+$("#addDeviceForm").on("submit", function(e){
+    e.preventDefault();
+
+    var url="/addNewDevice";
+    var data=$('#addDeviceForm').serialize();
+
+    $.ajax({
+        url:url,
+        data:data,
+        datatype:"json",
+        method:"GET",
+        success:function(data){
+            alert(data);
+            $('#reload').load("/devices #reload");
+            $('#collapseOne').collapse('toggle');
+        }
+    });
+    $('#addDeviceForm').trigger("reset");
+});
+
+//----------------------------------------------
+
+$("#addSimForm").on("submit", function(e){
+    e.preventDefault();
+    var url="/addNewSIM";
+    var data=$('#addSimForm').serialize();
+
+    $.ajax({
+        url:url,
+        data:data,
+        datatype:"json",
+        method:"GET",
+        success:function(data){
+            alert(data);
+            $('#reload').load("/sims #reload");
+            $('#collapseOne').collapse('toggle');
+        }
+    });
+    $('#addSimForm').trigger("reset");
+});
+
+//----------------------------------------------
+
+$("#addOrganizationForm").on("submit", function(e){
+    e.preventDefault();
+    var url="/addNewOrganization";
+    var data=$('#addOrganizationForm').serialize();
+
+    $.ajax({
+        url:url,
+        data:data,
+        datatype:"json",
+        method:"GET",
+        success:function(data){
+            alert(data);
+            $('#reload').load("/organizations #reload");
+            $('#collapseOne').collapse('toggle');
+        }
+    });
+    $('#addOrganizationForm').trigger("reset");
 });
