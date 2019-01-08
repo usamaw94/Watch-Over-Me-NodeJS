@@ -162,7 +162,48 @@ router.post('/logsprocessing', function(req,res){
 
             req.app.io.emit('logInserted', 'Data saved');
     
-            alertProcesiing(regToken,log);
+
+            var w = Relation.aggregate([
+                {
+                    $match:
+                    {
+                        service_id: serviceId,                
+                    }
+        
+                },
+                {
+                    $lookup:
+                    {
+                        from: 'persons',
+                        localField: 'watcher_id',
+                        foreignField: 'person_id',
+                        as: 'watcherInfo'
+                    }
+                },
+                {
+                    $project:
+                    {
+                        watcherType: '$watcher_status',
+                        priority : "$priority_num",
+                        watcherId : { "$arrayElemAt": [ "$watcherInfo.person_id", 0 ] },
+                        watcherName : {"$concat": [ { "$arrayElemAt": [ "$watcherInfo.person_first_name", 0 ] }, " ", { "$arrayElemAt": [ "$watcherInfo.person_last_name", 0 ] }]},
+                        watcherPhone : { "$arrayElemAt": [ "$watcherInfo.phone_number", 0 ] }
+                    }
+                }
+                ])
+        
+                w.exec(function(err,data){
+                    
+                    console.log(JSON.stringify(log) + "\n\n" + JSON.stringify(data));
+        
+                    for(var i = 0 ; i < data.length ; i++){
+                        //callingWatchers(i,registrationToken,log,data);
+                    }
+                    
+                    //res.send(JSON.stringify(data));
+                })
+
+            //alertProcesiing(regToken,log);
             res.send(log);
     
         });
