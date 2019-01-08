@@ -156,8 +156,8 @@ router.post('/logsprocessing', function(req,res){
     var log = new Log(req.body);
     var regToken = log['registration_token'];
 
-    if(helpMeStatus == false){
-        helpMeStatus = true;
+    //if(helpMeStatus == false){
+        //helpMeStatus = true;
         log.save().then(function(log){
 
             req.app.io.emit('logInserted', 'Data saved');
@@ -166,11 +166,11 @@ router.post('/logsprocessing', function(req,res){
             res.send(log);
     
         });
-    }
-    else{
-        res.send(log);
-        sendNotification("Alert Received","Help Me Function already activated","High",registrationToken);
-    }
+    //}
+    //else{
+        //res.send(log);
+        //sendNotification("Alert Received","Help Me Function already activated","High",registrationToken);
+    //}
 
 });
 
