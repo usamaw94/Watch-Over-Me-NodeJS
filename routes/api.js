@@ -195,18 +195,12 @@ router.post('/logsprocessing', function(req,res){
                 w.exec(function(err,data){
                     
                     console.log(JSON.stringify(log) + "\n\n" + JSON.stringify(data));
-        
-                    for(var i = 0 ; i < data.length ; i++){
-                        //callingWatchers(i,registrationToken,log,data);
-                    }
                     
-                    //res.send(JSON.stringify(data));
+                    res.send(log);
+
                 })
 
-            //alertProcesiing(regToken,log);
-            res.send(log);
-    
-        });
+            });
     //}
     //else{
         //res.send(log);
