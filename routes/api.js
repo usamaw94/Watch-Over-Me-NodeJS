@@ -156,6 +156,7 @@ router.post('/logsprocessing', function(req,res){
     var log = new Log(req.body);
     var regToken = log['registration_token'];
 
+    console.log(JSON.stringify(log));
     //if(helpMeStatus == false){
         //helpMeStatus = true;
         log.save().then(function(log){
