@@ -112,8 +112,10 @@ function alertProcesiing(registrationToken,log){
 
         w.exec(function(err,data){
             
+            console.log(JSON.stringify(log) + "\n\n" + JSON.stringify(data));
+
             for(var i = 0 ; i < data.length ; i++){
-                callingWatchers(i,registrationToken,log,data);
+                //callingWatchers(i,registrationToken,log,data);
             }
             
             //res.send(JSON.stringify(data));
