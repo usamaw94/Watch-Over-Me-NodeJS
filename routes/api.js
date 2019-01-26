@@ -15,6 +15,10 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 var serviceAccount = require("../womproject-18095-firebase-adminsdk-4facv-ce9129eb22.json");
 
+var watcherStatus = [];
+
+
+
 
 var helpMeStatus = false;
 
@@ -78,7 +82,7 @@ function callingWatchers(watcherCount,registrationToken,log,data){
         },15000);*/
 }
 
-function alertProcesiing(registrationToken,log){
+function alertProcessing(registrationToken,log){
     sendNotification("Alert Received","We're calling your watcher for you!","High",registrationToken);
 
     var w = Relation.aggregate([
@@ -199,7 +203,7 @@ router.post('/logsprocessing', function(req,res){
                     res.send(log);
 
                     var recNum = "+61" + JSON.stringify(data.watcherPhone).substring(1);
-                    var msg = "-\nYour wearer is in trouble contact him/her as soon as possible. \n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you are responding the reply with 'yes'. If you can't reply with 'no'\n\nRegards\nWOM Team";
+                    var msg = "-\nYour wearer is in trouble contact him/her as soon as possible. \n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you are responding then reply with 'yes'. If you can't reply with 'no'\n\nRegards\nWOM Team";
                     sendNotification("Connecting watcher","Now contacting watcher "+watcherCount,"High",regToken);
                     twilioClient.messages.create({
                     from: "+61488852471",
@@ -248,7 +252,7 @@ router.post('/interactionlogprocessing',function(req,res){
 
 router.get('/connectionCheck', function(req,res){
 
-    res.send(JSON.stringify("Connection to WOM server is ok1"));
+    res.send(JSON.stringify("Connection to WOM server is ok!"));
 });
 
 router.post('/hourlylogsprocessing', function(req,res){
