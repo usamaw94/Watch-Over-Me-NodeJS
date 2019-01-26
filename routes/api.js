@@ -50,38 +50,6 @@ function sendNotification(notificationTitle ,notificationBody, notificationPrior
     });
 }
 
-function callingWatchers(watcherCount,registrationToken,log,data){
-
-    var regToken = registrationToken;
-    var recNum = "+61" + JSON.stringify(data.watcherPhone).substring(1);
-    var msg = "-\nYour wearer is in trouble contact him/her as soon as possible. \n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you are responding the reply with 'yes'. If you can't reply with 'no'\n\nRegards\nWOM Team";
-    sendNotification("Connecting watcher","Now contacting watcher "+watcherCount,"High",regToken);
-    twilioClient.messages.create({
-        from: "+61488852471",
-        to: recNum,
-        body: msg
-    }).then(function(){
-        setTimeout(function(){
-
-        },20000)
-    });
-
-
-        /*setTimeout(function(){
-            setTimeout(function(){
-                sendNotification("Watcher Response","Watcher "+watcherCount+" didn't respond","High",regToken);
-            },15000);
-            watcherCount++;
-            setTimeout(function(){
-                callingWatchers(watcherCount,regToken);
-            },5000);
-        },15000);
-        /setTimeout(function(){
-            helpMeStatus = false;
-            sendNotification("Watcher Response","Watcher "+watcherCount+" is coming to help you","High",regToken);
-        },15000);*/
-}
-
 function alertProcessing(registrationToken,log){
     sendNotification("Alert Received","We're calling your watcher for you!","High",registrationToken);
 
@@ -336,5 +304,87 @@ router.post('/receiveMessage', (req, res) => {
     res.send(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
 
   });
+
+
+  router.post('/helpmecheck', function(req,res){
+    var log = new Log(req.body);
+    var regToken = log['registration_token'];
+    var serviceId = log['service_id'];
+
+    //res.send(JSON.stringify(log));
+    //if(helpMeStatus == false){
+        //helpMeStatus = true;
+        log.save().then(function(log){
+
+            req.app.io.emit('logInserted', 'Data saved');
+    
+
+            var w = Relation.aggregate([
+                {
+                    $match:
+                    {
+                        service_id: serviceId,                
+                    }
+        
+                },
+                {
+                    $lookup:
+                    {
+                        from: 'persons',
+                        localField: 'watcher_id',
+                        foreignField: 'person_id',
+                        as: 'watcherInfo'
+                    }
+                },
+                {
+                    $project:
+                    {
+                        watcherType: '$watcher_status',
+                        priority : "$priority_num",
+                        watcherId : { "$arrayElemAt": [ "$watcherInfo.person_id", 0 ] },
+                        watcherName : {"$concat": [ { "$arrayElemAt": [ "$watcherInfo.person_first_name", 0 ] }, " ", { "$arrayElemAt": [ "$watcherInfo.person_last_name", 0 ] }]},
+                        watcherPhone : { "$arrayElemAt": [ "$watcherInfo.phone_number", 0 ] }
+                    }
+                }
+                ])
+        
+                w.exec(function(err,data){
+                    
+                    sendNotification("Alert Received","We're calling your watcher for you!","High",regToken);
+                    callingWatchers(0,regToken,log,data);
+                        
+                    res.send(log);
+                })
+
+            });
+    //}
+    //else{
+        //res.send(log);
+        //sendNotification("Alert Received","Help Me Function already activated","High",registrationToken);
+    //}
+
+});
+
+function callingWatchers(i,regToken,log,data){
+
+    var wCount = i+1;
+    var recNum = "+61" + data[i].watcherPhone.substring(1);
+    var msg = "-\nYour wearer is in trouble contact him/her as soon as possible. \n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you are responding then reply with 'yes'. If you can't reply with 'no'\n\nRegards\nWOM Team";
+    sendNotification("Connecting watcher","Now contacting watcher " + wCount,"High",regToken);
+    twilioClient.messages.create({
+        from: "+61488852471",
+        to: recNum,
+        body: msg
+    }).then(function(){
+        setTimeout(function(){
+            sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
+                i++;
+                if(i<data.length){
+                    callingWatchers(i,regToken,log,data);
+                }
+        },20000)
+    });
+}
+
 
 module.exports = router;
