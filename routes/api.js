@@ -313,7 +313,9 @@ router.post('/receiveMessage', (req, res) => {
     var serviceId = log['service_id'];
     var helpMeStatus = false;
 
-    res.send("Got it");
+    res.send(JSON.stringify("Got it" + "\n"+serviceId));
+
+
 
     /*for(var hCount = 0 ; hCount < watcherResponses.length ; hCount ++){
         if(serviceId == watcherResponses[hCount].service_id){
