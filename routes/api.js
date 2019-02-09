@@ -440,6 +440,7 @@ router.post('/receiveMessage', (req, res) => {
 
 function compareWatcherResponse(senderNum,serviceNum,response){
 
+    console.log(response);
     if(response == "YES" || response == "Y"){
         for(var i = 0 ; i < watcherResponses.length ; i++){
             if(JSON.stringify(watcherResponses[i].service_id) == serviceNum){
