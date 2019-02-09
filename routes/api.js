@@ -258,8 +258,8 @@ router.post('/receiveMessage', (req, res) => {
     var msgBody = req.body.Body;
 
     console.log(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
-    console.log(JSON.stringify(msgBody.substring(0,11)))
-    console.log(JSON.stringify(msgBody.substring(12)));
+    console.log(JSON.stringify(msgBody.substring(0,12)))
+    console.log(JSON.stringify(msgBody.substring(13)));
     //console.log(JSON.stringify(watcherResponses));
     res.send(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
 
