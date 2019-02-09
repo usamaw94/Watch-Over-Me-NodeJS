@@ -15,8 +15,57 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 var serviceAccount = require("../womproject-18095-firebase-adminsdk-4facv-ce9129eb22.json");
 
-var watcherResponses = [];
+//var watcherResponses = [];
 
+
+var watcherResponses = [
+    {
+        "service_id": "WOMS00000672",
+        "helpme_status": "true",
+        "wearer_id": "WOMP00000849",
+        "wearer_fname": "Usama",
+        "wearer_lname": "Waheed",
+        "wearer_phone": "+61403887321",
+        "watchers": [
+            {
+                "_id": "5c0b80c01776ab12c860e535",
+                "watcherType": "Responding",
+                "priority": "1",
+                "watcherId": "WOMP00000850",
+                "watcherName": "Waqas Waheed",
+                "watcherPhone": "0435533452",
+                "response": "false"
+            },
+            {
+                "_id": "5c0b81061776ab12c860e538",
+                "watcherType": "Responding",
+                "priority": "2",
+                "watcherId": "WOMP00000851",
+                "watcherName": "Rad Williams",
+                "watcherPhone": "0408360203",
+                "response": "false"
+            },
+            {
+                "_id": "5c0b81b81776ab12c860e53b",
+                "watcherType": "Responding",
+                "priority": "3",
+                "watcherId": "WOMP00000852",
+                "watcherName": "Ali Abbas",
+                "watcherPhone": "0435467229",
+                "response": "false"
+            },
+            {
+                "_id": "5c0b81e41776ab12c860e53e",
+                "watcherType": "Responding",
+                "priority": "3",
+                "watcherId": "WOMP00000853",
+                "watcherName": "Jass Karan",
+                "watcherPhone": "0452131229",
+                "response": "false"
+            }
+        ]
+    }
+];
 
 
 
@@ -372,7 +421,7 @@ router.post('/receiveMessage', (req, res) => {
                             temp["wearer_phone"] = "+61" + wrData[0].wearerPhone.substring(1);
                             temp["watchers"] = watchers;
                             watcherResponses.push(temp);
-                            
+                            res.send(watcherResponses);
                             callingWatchers(0,regToken,log,temp);
                         },5000)
                             
@@ -394,6 +443,11 @@ function compareWatcherResponse(senderNum,serviceNum,response){
     console.log(senderNum);
     console.log(serviceNum);
     console.log(response);
+
+    for(var i = 0 ; i < watcherResponses[0].watchers.length ; i++){
+        var phone = "+61" + watcherResponses[0].watchers[i].watcherPhone.substring(1);
+        console.log(phone);
+    }
 
 }
 
