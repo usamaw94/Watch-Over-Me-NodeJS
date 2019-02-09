@@ -258,7 +258,9 @@ router.post('/receiveMessage', (req, res) => {
     var msgBody = req.body.Body;
 
     console.log(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
-    console.log(JSON.stringify(watcherResponses));
+    console.log(JSON.stringify(msgBody.substring(0,11)))
+    console.log(JSON.stringify(msgBody.substring(12)));
+    //console.log(JSON.stringify(watcherResponses));
     res.send(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
 
   });
@@ -379,7 +381,6 @@ function callingWatchers(i,regToken,log,tempData){
 
     //////
     setTimeout(function(){
-        sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
         for(var c = 0 ; c < watcherResponses.length ; c++){
             if(watcherResponses[c].service_id == log.service_id){
                 for(var j = 0 ; j < watcherResponses[c].watchers.length ; j++){
@@ -394,6 +395,7 @@ function callingWatchers(i,regToken,log,tempData){
 
         i++;
         if (nextCall == true && i < tempData.watchers.length){
+            sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
             if(i == tempData.watchers.length){
                 i = 0;
             }
