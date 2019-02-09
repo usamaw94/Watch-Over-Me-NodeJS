@@ -307,7 +307,7 @@ router.post('/receiveMessage', (req, res) => {
     var msgBody = req.body.Body;
 
     var serviceId = JSON.stringify(msgBody.substring(0,12).toUpperCase());
-    var response = JSON.stringify(msgBody.substring(14).toUpperCase());
+    var response = JSON.stringify(msgBody.substring(13).toUpperCase());
 
 
     compareWatcherResponse(JSON.stringify(sender),serviceId,response);
@@ -440,8 +440,8 @@ router.post('/receiveMessage', (req, res) => {
 
 function compareWatcherResponse(senderNum,serviceNum,response){
 
-    console.log(response);
-    if(JSON.stringify(response) == JSON.stringify("YES")){
+    var expectedRes = "YES";
+    if(response == expectedRes){
         console.log(response);
         for(var i = 0 ; i < watcherResponses.length ; i++){
             if(JSON.stringify(watcherResponses[i].service_id) == serviceNum){
