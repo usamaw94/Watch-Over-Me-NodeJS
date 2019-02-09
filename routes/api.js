@@ -313,11 +313,10 @@ router.post('/receiveMessage', (req, res) => {
     var serviceId = log['service_id'];
     var helpMeStatus = false;
 
-    res.send(JSON.stringify("Got it" + "\n"+serviceId));
 
 
 
-    /*for(var hCount = 0 ; hCount < watcherResponses.length ; hCount ++){
+    for(var hCount = 0 ; hCount < watcherResponses.length ; hCount ++){
         if(serviceId == watcherResponses[hCount].service_id){
             helpMeStatus = true;
         }
@@ -414,7 +413,7 @@ router.post('/receiveMessage', (req, res) => {
     }
     else{
         res.send(JSON.stringify("Help Me function already active!"));
-    }*/
+    }
 
 });
 
