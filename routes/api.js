@@ -421,11 +421,11 @@ router.post('/receiveMessage', (req, res) => {
                             temp["wearer_phone"] = "+61" + wrData[0].wearerPhone.substring(1);
                             temp["watchers"] = watchers;
                             watcherResponses.push(temp);
-                            res.send(watcherResponses);
+                            
                             callingWatchers(0,regToken,log,temp);
                         },5000)
                             
-                        //res.send(watcherResponses);
+                        res.send("Help Me function activated!");
                 })
             })
 
@@ -461,6 +461,7 @@ function compareWatcherResponse(senderNum,serviceNum,response){
 function callingWatchers(i,regToken,log,tempData){
 
     var responseIndex = -1;
+    var removeIndex = -1;
     var nextCall = true; 
     var wCount = i+1;
     var recNum = "+61" + tempData.watchers[i].watcherPhone.substring(1);
@@ -475,8 +476,10 @@ function callingWatchers(i,regToken,log,tempData){
             if(watcherResponses[c].service_id == log.service_id){
                 for(var j = 0 ; j < watcherResponses[c].watchers.length ; j++){
                     if(watcherResponses[c].watchers[j].response == 'true'){
+                        console.log("There");
                         nextCall = false;
                         responseIndex = j;
+                        removeIndex = c;
                         break;
                     }
                 }
@@ -494,7 +497,9 @@ function callingWatchers(i,regToken,log,tempData){
             },5000)
         }
         else{
-            sendNotification("Connecting watcher","Watcher " +responseIndex+ " is coming to help you","High",regToken);
+            sendNotification("Connecting watcher","Watcher " + responseIndex+1 + " is coming to help you","High",regToken);
+            watcherResponses.remove(removeIndex);
+            console.log(JSOn.stringify(watcherResponses));
         }
             
     },20000)
