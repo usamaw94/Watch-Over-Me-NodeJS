@@ -260,7 +260,7 @@ router.post('/receiveMessage', (req, res) => {
     console.log(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
     console.log(JSON.stringify(msgBody.substring(0,12).toUpperCase()))
     console.log(JSON.stringify(msgBody.substring(13).toUpperCase()));
-    //console.log(JSON.stringify(watcherResponses));
+    console.log(JSON.stringify(watcherResponses));
     res.send(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
 
   });
