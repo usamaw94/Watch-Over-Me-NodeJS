@@ -498,7 +498,7 @@ function callingWatchers(i,regToken,log,tempData){
         }
         else{
             sendNotification("Connecting watcher","Watcher " + responseIndex+1 + " is coming to help you","High",regToken);
-            watcherResponses.remove(removeIndex);
+            delete watcherResponses[removeIndex];
             console.log(JSOn.stringify(watcherResponses));
         }
             
