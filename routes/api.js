@@ -502,7 +502,7 @@ function callingWatchers(i,regToken,log,tempData){
             for (var l = 0 ; l < watcherResponses[removeIndex].watchers.length ; l++){
                 if(l != responseIndex){
                     var senderNum = "+61" + watcherResponses[removeIndex].watchers[l].watcherPhone.substring(1);
-                    var infomsg = "Watcher "+watcherNum+" "+watcherResponses[removeIndex].watchers[l].watcherName+", responded with yes and he is going to assist "+watcherResponses[removeIndex].wearer_fname+"\n\nRegards\nWOM Team";
+                    var infomsg = "Watcher "+watcherNum+" "+watcherResponses[removeIndex].watchers[responseIndex].watcherName+", responded with yes and he is going to assist "+watcherResponses[removeIndex].wearer_fname+"\n\nRegards\nWOM Team";
                     twilioClient.messages.create({
                         from: "+61488852471",
                         to: senderNum,
