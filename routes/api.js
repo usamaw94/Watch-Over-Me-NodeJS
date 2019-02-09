@@ -450,7 +450,7 @@ function compareWatcherResponse(senderNum,serviceNum,response){
                 var phone = "+61" + watcherResponses[i].watchers[j].watcherPhone.substring(1);
                 if(JSON.stringify(phone) == senderNum){
                     watcherResponses[i].watchers[j].response = "true";
-                    console.log(watcherResponses);
+                    console.log(JSON.stringify(watcherResponses));
                 }
             }
         }
