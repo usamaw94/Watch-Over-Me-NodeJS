@@ -257,8 +257,22 @@ router.post('/receiveMessage', (req, res) => {
     var sender = req.body.From;
     var msgBody = req.body.Body;
 
+    var serviceId = JSON.stringify(msgBody.substring(0,12).toUpperCase());
+    var response = JSON.stringify(msgBody.substring(13).toUpperCase());
+
+    for(var i = 0 ; i < watcherResponses.length ; i++){
+        if(serviceId == watcherResponses[i].service_id){
+            for(var j = 0 ; j < watcherResponses[i].watchers.length ; j++){
+                var phone = "+61" + watcherResponses[i].watchers[j].watcherPhone.substring(1);
+                if(phone == sender){
+                    watcherResponses[i].watchers[j].response = "true";
+                }
+            }
+        }
+    }
+
     console.log(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
-    console.log(JSON.stringify(msgBody.substring(0,12).toUpperCase()))
+    console.log(JSON.stringify(msgBody.substring(0,12).toUpperCase()));
     console.log(JSON.stringify(msgBody.substring(13).toUpperCase()));
     console.log(JSON.stringify(watcherResponses));
     res.send(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
