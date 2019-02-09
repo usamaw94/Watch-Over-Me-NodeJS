@@ -467,6 +467,7 @@ function callingWatchers(i,regToken,log,tempData){
 
     //////
     setTimeout(function(){
+        console.log(JSON.stringify(watcherResponses));
         for(var c = 0 ; c < watcherResponses.length ; c++){
             if(JSON.stringify(watcherResponses[c].service_id) == JSON.stringify(log.service_id)){
                 for(var j = 0 ; j < watcherResponses[c].watchers.length ; j++){
