@@ -507,8 +507,8 @@ function callingWatchers(i,regToken,log,tempData){
                         from: "+61488852471",
                         to: senderNum,
                         body: infomsg
-                    }),then(function(){
-                        continue;
+                    }).then(function(){
+                        console.log("Message Sent");
                     })
                 }
             }
