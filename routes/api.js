@@ -311,10 +311,15 @@ router.post('/receiveMessage', (req, res) => {
     var log = new Log(req.body);
     var regToken = log['registration_token'];
     var serviceId = log['service_id'];
+    var helpMeStatus = false;
 
-    //res.send(JSON.stringify(log));
-    //if(helpMeStatus == false){
-        //helpMeStatus = true;
+    for(var hCount = 0 ; hCount < watcherResponses.length ; hCount ++){
+        if(serviceId == watcherResponses[hCount].service_id){
+            helpMeStatus = true;
+        }
+    }
+
+    if(helpMeStatus == false){
         log.save().then(function(log){
 
             req.app.io.emit('logInserted', 'Data saved');
@@ -402,11 +407,10 @@ router.post('/receiveMessage', (req, res) => {
             })
 
         });
-    //}
-    //else{
-        //res.send(log);
-        //sendNotification("Alert Received","Help Me Function already activated","High",registrationToken);
-    //}
+    }
+    else{
+        res.send(JSON.stringify("Help Me function already active!"));
+    }
 
 });
 
@@ -441,7 +445,6 @@ function callingWatchers(i,regToken,log,tempData){
     var msg = "Your Wearer, " + tempData.wearer_fname +" "+ tempData.wearer_lname +", has pressed the HelpMe button and needs assistance at their location.\n\nYou are Watcher " + wCount + " of Service Nume: " + tempData.service_id + "\n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you will visit firstname and assist then reply: <service number><space><yes>(e.g:WOMSxxxxxxxx Yes)\nIf you will not visit firstname then reply: <service number><space><no>(e.g:WOMSxxxxxxxx No)\n\nThe next Watcher will be contacted immediately if we receive a No from you.\n\nIf we do not receive a response from you within 20 seconds then we will assume your reply is 'No' and contact the next Watcher.\n\nWe will tell you which Watcher is visiting "+tempData.wearer_fname+", or if no Watcher is available to visit.\n\n\nRegards\nWOM Team";
     sendNotification("Connecting watcher","Now contacting watcher " + wCount,"High",regToken);
 
-    //////
     twilioClient.messages.create({
         from: "+61488852471",
         to: recNum,
