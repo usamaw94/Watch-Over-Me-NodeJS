@@ -472,9 +472,9 @@ function callingWatchers(i,regToken,log,tempData){
     setTimeout(function(){
         console.log(JSON.stringify(watcherResponses));
         for(var c = 0 ; c < watcherResponses.length ; c++){
-            if(JSON.stringify(watcherResponses[c].service_id) == JSON.stringify(log.service_id)){
+            if(watcherResponses[c].service_id == log.service_id){
                 for(var j = 0 ; j < watcherResponses[c].watchers.length ; j++){
-                    if(JSON.stringify(watcherResponses[c].watchers[j].response) == "true"){
+                    if(watcherResponses[c].watchers[j].response == 'true'){
                         nextCall = false;
                         responseIndex = j;
                         break;
