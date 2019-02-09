@@ -288,20 +288,6 @@ router.post('/phoneMeRequest', function(req,res){
 });
 
 router.post('/receiveMessage', (req, res) => {
-    // const twiml = new MessagingResponse();
-  
-    // if (req.body.Body == 'hello') {
-    //   twiml.message('Hi!');
-    // } else if (req.body.Body == 'bye') {
-    //   twiml.message('Goodbye');
-    // } else {
-    //   twiml.message(
-    //     'No Body param match, Twilio sends this in the request to your server.'
-    //   );
-    // }
-  
-    // res.writeHead(200, { 'Content-Type': 'text/xml' });
-    // res.end(twiml.toString());
 
     var sender = req.body.From;
     var msgBody = req.body.Body;
@@ -309,29 +295,15 @@ router.post('/receiveMessage', (req, res) => {
     var serviceId = JSON.stringify(msgBody.substring(0,12).toUpperCase());
     var response = msgBody.substring(13).toUpperCase();
 
-
     compareWatcherResponse(JSON.stringify(sender),serviceId,response);
 
-    // for(var i = 0 ; i < watcherResponses.length ; i++){
-    //     if(serviceId == watcherResponses[i].service_id){
-    //         for(var j = 0 ; j < watcherResponses[i].watchers.length ; j++){
-    //             var phone = "+61" + watcherResponses[i].watchers[j].watcherPhone.substring(1);
-    //             console.log(JSON.stringify(phone));
-    //             console.log(JSON.stringify(sender));
-    //             if(phone == sender){
-    //                 console.log("Compared")
-    //                 watcherResponses[i].watchers[j].response = "true";
-    //             }
-    //         }
-    //     }
-    // }
+    const twiml = new MessagingResponse();
+  
 
-    // console.log(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
-    // console.log(JSON.stringify(msgBody.substring(0,12).toUpperCase()));
-    // console.log(JSON.stringify(msgBody.substring(13).toUpperCase()));
-    // console.log(JSON.stringify(watcherResponses));
-    res.send(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
-
+    twiml.message('Thanks for you respone. \nYour wearer will be informed\n\n\nRegards\nWOM Team');
+  
+    res.writeHead(200, { 'Content-Type': 'text/xml' });
+    res.end(twiml.toString());
   });
 
 
@@ -522,23 +494,6 @@ function callingWatchers(i,regToken,log,tempData){
             }
         },20000)
     });
-    
-    
-    /*twilioClient.messages.create({
-        from: "+61488852471",
-        to: recNum,
-        body: msg
-    }).then(function(){
-        setTimeout(function(){
-            sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
-                i++;
-                if(i<data.length){
-                    setTimeout(function(){
-                        callingWatchers(i,regToken,log,data);
-                    },5000)
-                }
-        },20000)
-    });*/
 }
 
 
