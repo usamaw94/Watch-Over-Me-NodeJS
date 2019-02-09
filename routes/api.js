@@ -15,10 +15,10 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 var serviceAccount = require("../womproject-18095-firebase-adminsdk-4facv-ce9129eb22.json");
 
-//var watcherResponses = [];
+var watcherResponses = [];
 
 
-var watcherResponses = [
+/*var watcherResponses = [
     {
         "service_id": "WOMS00000672",
         "helpme_status": "true",
@@ -65,7 +65,7 @@ var watcherResponses = [
             }
         ]
     }
-];
+];*/
 
 
 
@@ -440,17 +440,14 @@ router.post('/receiveMessage', (req, res) => {
 
 function compareWatcherResponse(senderNum,serviceNum,response){
 
-    console.log(senderNum);
-    console.log(serviceNum);
-    console.log(response);
-
-    for(var i = 0 ; i < watcherResponses.length ; i++){
-        if(JSON.stringify(watcherResponses[i].service_id) == serviceNum){
-            for(var j = 0 ; j < watcherResponses[i].watchers.length ; j++){
-                var phone = "+61" + watcherResponses[i].watchers[j].watcherPhone.substring(1);
-                if(JSON.stringify(phone) == senderNum){
-                    watcherResponses[i].watchers[j].response = "true";
-                    console.log(JSON.stringify(watcherResponses));
+    if(response == "YES" || response == "Y"){
+        for(var i = 0 ; i < watcherResponses.length ; i++){
+            if(JSON.stringify(watcherResponses[i].service_id) == serviceNum){
+                for(var j = 0 ; j < watcherResponses[i].watchers.length ; j++){
+                    var phone = "+61" + watcherResponses[i].watchers[j].watcherPhone.substring(1);
+                    if(JSON.stringify(phone) == senderNum){
+                        watcherResponses[i].watchers[j].response = "true";
+                    }
                 }
             }
         }
