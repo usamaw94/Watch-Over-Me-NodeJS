@@ -307,7 +307,7 @@ router.post('/receiveMessage', (req, res) => {
     var msgBody = req.body.Body;
 
     var serviceId = JSON.stringify(msgBody.substring(0,12).toUpperCase());
-    var response = JSON.stringify(msgBody.substring(13).toUpperCase());
+    var response = msgBody.substring(13).toUpperCase();
 
 
     compareWatcherResponse(JSON.stringify(sender),serviceId,response);
