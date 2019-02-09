@@ -264,7 +264,10 @@ router.post('/receiveMessage', (req, res) => {
         if(serviceId == watcherResponses[i].service_id){
             for(var j = 0 ; j < watcherResponses[i].watchers.length ; j++){
                 var phone = "+61" + watcherResponses[i].watchers[j].watcherPhone.substring(1);
+                console.log(JSON.stringify(phone));
+                console.log(JSON.stringify(sender));
                 if(phone == sender){
+                    console.log("Compared")
                     watcherResponses[i].watchers[j].response = "true";
                 }
             }
