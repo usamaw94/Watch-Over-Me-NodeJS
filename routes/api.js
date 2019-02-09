@@ -444,9 +444,13 @@ function compareWatcherResponse(senderNum,serviceNum,response){
     console.log(serviceNum);
     console.log(response);
 
-    for(var i = 0 ; i < watcherResponses[0].watchers.length ; i++){
-        var phone = "+61" + watcherResponses[0].watchers[i].watcherPhone.substring(1);
-        console.log(phone);
+    for(var i = 0 ; i < watcherResponses.length ; i++){
+        if(watcherResponses[i].service_id == serviceNum){
+            for(var j = 0 ; j < watcherResponses[i].watchers.length ; j++){
+                var phone = "+61" + watcherResponses[i].watchers[j].watcherPhone.substring(1);
+                console.log(phone);
+            }
+        }
     }
 
 }
