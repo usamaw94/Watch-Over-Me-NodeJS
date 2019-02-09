@@ -17,58 +17,6 @@ var serviceAccount = require("../womproject-18095-firebase-adminsdk-4facv-ce9129
 
 var watcherResponses = [];
 
-
-/*var watcherResponses = [
-    {
-        "service_id": "WOMS00000672",
-        "helpme_status": "true",
-        "wearer_id": "WOMP00000849",
-        "wearer_fname": "Usama",
-        "wearer_lname": "Waheed",
-        "wearer_phone": "+61403887321",
-        "watchers": [
-            {
-                "_id": "5c0b80c01776ab12c860e535",
-                "watcherType": "Responding",
-                "priority": "1",
-                "watcherId": "WOMP00000850",
-                "watcherName": "Waqas Waheed",
-                "watcherPhone": "0435533452",
-                "response": "false"
-            },
-            {
-                "_id": "5c0b81061776ab12c860e538",
-                "watcherType": "Responding",
-                "priority": "2",
-                "watcherId": "WOMP00000851",
-                "watcherName": "Rad Williams",
-                "watcherPhone": "0408360203",
-                "response": "false"
-            },
-            {
-                "_id": "5c0b81b81776ab12c860e53b",
-                "watcherType": "Responding",
-                "priority": "3",
-                "watcherId": "WOMP00000852",
-                "watcherName": "Ali Abbas",
-                "watcherPhone": "0435467229",
-                "response": "false"
-            },
-            {
-                "_id": "5c0b81e41776ab12c860e53e",
-                "watcherType": "Responding",
-                "priority": "3",
-                "watcherId": "WOMP00000853",
-                "watcherName": "Jass Karan",
-                "watcherPhone": "0452131229",
-                "response": "false"
-            }
-        ]
-    }
-];*/
-
-
-
 var helpMeStatus = false;
 
 admin.initializeApp({
@@ -128,78 +76,8 @@ router.post('/userloginprocessing',function(req,res){
             }
         }
     })
-})
-
-router.post('/logsprocessing', function(req,res){
-    var log = new Log(req.body);
-    var regToken = log['registration_token'];
-    var serviceId = log['service_id'];
-
-    //res.send(JSON.stringify(log));
-    //if(helpMeStatus == false){
-        //helpMeStatus = true;
-        log.save().then(function(log){
-
-            req.app.io.emit('logInserted', 'Data saved');
-    
-
-            var w = Relation.aggregate([
-                {
-                    $match:
-                    {
-                        service_id: serviceId,                
-                    }
-        
-                },
-                {
-                    $lookup:
-                    {
-                        from: 'persons',
-                        localField: 'watcher_id',
-                        foreignField: 'person_id',
-                        as: 'watcherInfo'
-                    }
-                },
-                {
-                    $project:
-                    {
-                        watcherType: '$watcher_status',
-                        priority : "$priority_num",
-                        watcherId : { "$arrayElemAt": [ "$watcherInfo.person_id", 0 ] },
-                        watcherName : {"$concat": [ { "$arrayElemAt": [ "$watcherInfo.person_first_name", 0 ] }, " ", { "$arrayElemAt": [ "$watcherInfo.person_last_name", 0 ] }]},
-                        watcherPhone : { "$arrayElemAt": [ "$watcherInfo.phone_number", 0 ] }
-                    }
-                }
-                ])
-        
-                w.exec(function(err,data){
-                    
-                    res.send(log);
-
-                    var recNum = "+61" + JSON.stringify(data.watcherPhone).substring(1);
-                    var msg = "-\nYour wearer is in trouble contact him/her as soon as possible. \n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you are responding then reply with 'yes'. If you can't reply with 'no'\n\nRegards\nWOM Team";
-                    sendNotification("Connecting watcher","Now contacting watcher "+watcherCount,"High",regToken);
-                    twilioClient.messages.create({
-                    from: "+61488852471",
-                    to: recNum,
-                    body: msg
-                    }).then(function(){
-                        setTimeout(function(){
-
-                        },20000)
-                    });
-
-
-                })
-
-            });
-    //}
-    //else{
-        //res.send(log);
-        //sendNotification("Alert Received","Help Me Function already activated","High",registrationToken);
-    //}
-
 });
+
 
 router.get('/alllogs', function(req,res){
     var query = Log.find().sort('-_id');
@@ -312,9 +190,6 @@ router.post('/receiveMessage', (req, res) => {
     var regToken = log['registration_token'];
     var serviceId = log['service_id'];
     var helpMeStatus = false;
-
-
-
 
     for(var hCount = 0 ; hCount < watcherResponses.length ; hCount ++){
         if(serviceId == watcherResponses[hCount].service_id){
