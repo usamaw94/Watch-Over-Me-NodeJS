@@ -333,7 +333,7 @@ router.post('/receiveMessage', (req, res) => {
                             priority : "$priority_num",
                             watcherId : { "$arrayElemAt": [ "$watcherInfo.person_id", 0 ] },
                             watcherName : {"$concat": [ { "$arrayElemAt": [ "$watcherInfo.person_first_name", 0 ] }, " ", { "$arrayElemAt": [ "$watcherInfo.person_last_name", 0 ] }]},
-                            watcherPhone : "+61" + { "$arrayElemAt": [ "$watcherInfo.phone_number", 0 ] }.substring(1),
+                            watcherPhone : { "$arrayElemAt": [ "$watcherInfo.phone_number", 0 ] },
                             response: 'false',
                         }
                     }
