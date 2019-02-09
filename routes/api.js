@@ -466,7 +466,7 @@ function callingWatchers(i,regToken,log,tempData){
     var wCount = i+1;
     var recNum = "+61" + tempData.watchers[i].watcherPhone.substring(1);
     console.log("Watcher "+ wCount + " called");
-    var msg = "-\nYour wearer is in trouble contact him/her as soon as possible. \n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you are responding then reply with 'yes'. If you can't reply with 'no'\n\nRegards\nWOM Team";
+    var msg = "Your Wearer, " + tempData.wearer_fname +" "+ tempData.wearer_lname +", has pressed the HelpMe button and needs assistance at their location.\n\nYou are Watcher " + wCount + " of Service Nume: " + tempData.service_id + "\n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you will visit firstname and assist then reply: <service number><space><yes>(e.g:WOMSxxxxxxxx Yes)\nIf you will not visit firstname then reply: <service number><space><no>(e.g:WOMSxxxxxxxx No)\n\nThe next Watcher will be contacted immediately if we receive a No from you.\n\nIf we do not receive a response from you within 20 seconds then we will assume your reply is 'No' and contact the next Watcher.\n\nWe will tell you which Watcher is visiting "+tempData.wearer_fname+", or if no Watcher is available to visit.\n\n\nRegards\nWOM Team";
     sendNotification("Connecting watcher","Now contacting watcher " + wCount,"High",regToken);
 
     //////
@@ -497,7 +497,21 @@ function callingWatchers(i,regToken,log,tempData){
             },5000)
         }
         else{
-            sendNotification("Connecting watcher","Watcher " + responseIndex+1 + " is coming to help you","High",regToken);
+            var watcherNum = responseIndex+1
+            sendNotification("Connecting watcher","Watcher " + watcherNum + "  responded with YES","High",regToken);
+            for (var l = 0 ; l < watcherResponses[removeIndex].watchers.length ; i++){
+                if(l != responseIndex){
+                    var senderNum = "+61" + watcherResponses[removeIndex].watchers[l].watcherPhone.substring(1);
+                    var infomsg = "Watcher "+watcherNum+" "+watcherResponses[removeIndex].watchers[l].watcherName+", responded with yes and he is going to assist "+watcherResponses[removeIndex].wearer_fname+"\n\nRegards\nWOM Team"
+                    twilioClient.messages.create({
+                        from: "+61488852471",
+                        to: senderNum,
+                        body: infomsg
+                    }),then(function(){
+                        continue;
+                    })
+                }
+            }
             delete watcherResponses[removeIndex];
             console.log(JSON.stringify(watcherResponses));
         }
