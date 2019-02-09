@@ -260,24 +260,27 @@ router.post('/receiveMessage', (req, res) => {
     var serviceId = JSON.stringify(msgBody.substring(0,12).toUpperCase());
     var response = JSON.stringify(msgBody.substring(13).toUpperCase());
 
-    for(var i = 0 ; i < watcherResponses.length ; i++){
-        if(serviceId == watcherResponses[i].service_id){
-            for(var j = 0 ; j < watcherResponses[i].watchers.length ; j++){
-                var phone = "+61" + watcherResponses[i].watchers[j].watcherPhone.substring(1);
-                console.log(JSON.stringify(phone));
-                console.log(JSON.stringify(sender));
-                if(phone == sender){
-                    console.log("Compared")
-                    watcherResponses[i].watchers[j].response = "true";
-                }
-            }
-        }
-    }
 
-    console.log(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
-    console.log(JSON.stringify(msgBody.substring(0,12).toUpperCase()));
-    console.log(JSON.stringify(msgBody.substring(13).toUpperCase()));
-    console.log(JSON.stringify(watcherResponses));
+    compareWatcherResponse(JSON.stringify(sender),serviceId,response);
+
+    // for(var i = 0 ; i < watcherResponses.length ; i++){
+    //     if(serviceId == watcherResponses[i].service_id){
+    //         for(var j = 0 ; j < watcherResponses[i].watchers.length ; j++){
+    //             var phone = "+61" + watcherResponses[i].watchers[j].watcherPhone.substring(1);
+    //             console.log(JSON.stringify(phone));
+    //             console.log(JSON.stringify(sender));
+    //             if(phone == sender){
+    //                 console.log("Compared")
+    //                 watcherResponses[i].watchers[j].response = "true";
+    //             }
+    //         }
+    //     }
+    // }
+
+    // console.log(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
+    // console.log(JSON.stringify(msgBody.substring(0,12).toUpperCase()));
+    // console.log(JSON.stringify(msgBody.substring(13).toUpperCase()));
+    // console.log(JSON.stringify(watcherResponses));
     res.send(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
 
   });
@@ -385,6 +388,14 @@ router.post('/receiveMessage', (req, res) => {
     //}
 
 });
+
+function compareWatcherResponse(senderNum,serviceNum,response){
+
+    console.log(senderNum);
+    console.log(serviceNum);
+    console.log(response);
+
+}
 
 function callingWatchers(i,regToken,log,tempData){
 
