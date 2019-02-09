@@ -15,7 +15,7 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 var serviceAccount = require("../womproject-18095-firebase-adminsdk-4facv-ce9129eb22.json");
 
-var watcherStatus = [];
+var watcherResponses = [];
 
 
 
@@ -50,49 +50,6 @@ function sendNotification(notificationTitle ,notificationBody, notificationPrior
     });
 }
 
-function alertProcessing(registrationToken,log){
-    sendNotification("Alert Received","We're calling your watcher for you!","High",registrationToken);
-
-    var w = Relation.aggregate([
-        {
-            $match:
-            {
-                service_id: serviceId,                
-            }
-
-        },
-        {
-            $lookup:
-            {
-                from: 'persons',
-                localField: 'watcher_id',
-                foreignField: 'person_id',
-                as: 'watcherInfo'
-            }
-        },
-        {
-            $project:
-            {
-                watcherType: '$watcher_status',
-                priority : "$priority_num",
-                watcherId : { "$arrayElemAt": [ "$watcherInfo.person_id", 0 ] },
-                watcherName : {"$concat": [ { "$arrayElemAt": [ "$watcherInfo.person_first_name", 0 ] }, " ", { "$arrayElemAt": [ "$watcherInfo.person_last_name", 0 ] }]},
-                watcherPhone : { "$arrayElemAt": [ "$watcherInfo.phone_number", 0 ] }
-            }
-        }
-        ])
-
-        w.exec(function(err,data){
-            
-            console.log(JSON.stringify(log) + "\n\n" + JSON.stringify(data));
-
-            for(var i = 0 ; i < data.length ; i++){
-                //callingWatchers(i,registrationToken,log,data);
-            }
-            
-            //res.send(JSON.stringify(data));
-        })
-}
 
 router.post('/userloginprocessing',function(req,res){
     var q = Person.findOne({$and: [{phone_number : req.body.phone_num}, {password : req.body.password}]});
@@ -301,6 +258,7 @@ router.post('/receiveMessage', (req, res) => {
     var msgBody = req.body.Body;
 
     console.log(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
+    console.log(JSON.stringify(watcherResponses));
     res.send(JSON.stringify("Message from : "+sender+"\nSaying : "+msgBody));
 
   });
@@ -317,46 +275,90 @@ router.post('/receiveMessage', (req, res) => {
         log.save().then(function(log){
 
             req.app.io.emit('logInserted', 'Data saved');
-    
 
-            var w = Relation.aggregate([
+
+            var wr = Service.aggregate([
                 {
                     $match:
                     {
-                        service_id: serviceId,                
+                        service_id: serviceId,
                     }
-        
                 },
                 {
                     $lookup:
                     {
                         from: 'persons',
-                        localField: 'watcher_id',
+                        localField: 'wearer_id',
                         foreignField: 'person_id',
-                        as: 'watcherInfo'
-                    }
+                        as: 'wearerInfo'
+                    },
                 },
                 {
                     $project:
                     {
-                        watcherType: '$watcher_status',
-                        priority : "$priority_num",
-                        watcherId : { "$arrayElemAt": [ "$watcherInfo.person_id", 0 ] },
-                        watcherName : {"$concat": [ { "$arrayElemAt": [ "$watcherInfo.person_first_name", 0 ] }, " ", { "$arrayElemAt": [ "$watcherInfo.person_last_name", 0 ] }]},
-                        watcherPhone : { "$arrayElemAt": [ "$watcherInfo.phone_number", 0 ] }
+                        wearerId : '$wearer_id',
+                        wearerFName : { "$arrayElemAt": [ "$wearerInfo.person_first_name", 0 ] },
+                        wearerLName : { "$arrayElemAt": [ "$wearerInfo.person_last_name", 0 ] },
+                        wearerPhone : { "$arrayElemAt": [ "$wearerInfo.phone_number", 0 ] },
                     }
                 }
-                ])
-        
-                w.exec(function(err,data){
-                    
-                    sendNotification("Alert Received","We're calling your watcher for you!","High",regToken);
-                    callingWatchers(0,regToken,log,data);
-                        
-                    res.send(log);
-                })
 
-            });
+            ])
+    
+            wr.exec(function(err,wrData){
+
+                var w = Relation.aggregate([
+                    {
+                        $match:
+                        {
+                            service_id: serviceId,                
+                        }
+            
+                    },
+                    {
+                        $lookup:
+                        {
+                            from: 'persons',
+                            localField: 'watcher_id',
+                            foreignField: 'person_id',
+                            as: 'watcherInfo'
+                        }
+                    },
+                    {
+                        $project:
+                        {
+                            watcherType: '$watcher_status',
+                            priority : "$priority_num",
+                            watcherId : { "$arrayElemAt": [ "$watcherInfo.person_id", 0 ] },
+                            watcherName : {"$concat": [ { "$arrayElemAt": [ "$watcherInfo.person_first_name", 0 ] }, " ", { "$arrayElemAt": [ "$watcherInfo.person_last_name", 0 ] }]},
+                            watcherPhone : { "$arrayElemAt": [ "$watcherInfo.phone_number", 0 ] },
+                            response: 'false',
+                        }
+                    }
+                    ])
+            
+                w.exec(function(err,watchers){
+                        
+                        sendNotification("Alert Received","We're calling your watcher for you!","High",regToken);
+                        setTimeout(function(){
+                            var temp = new Object();
+                            temp["service_id"] = log.service_id;
+                            temp["helpme_status"] = 'true';
+                            temp["wearer_id"] = wrData[0].wearerId;
+                            temp["wearer_fname"] = wrData[0].wearerFName;
+                            temp["wearer_lname"] = wrData[0].wearerLName;
+                            temp["wearer_phone"] = "+61" + wrData[0].wearerPhone.substring(1);
+                            temp["watchers"] = watchers;
+                            watcherResponses.push(temp);
+                            
+                            callingWatchers(0,regToken,log,temp);
+                        },5000)
+                            
+                        //res.send(watcherResponses);
+                })
+            })
+
+        });
     //}
     //else{
         //res.send(log);
@@ -365,13 +367,52 @@ router.post('/receiveMessage', (req, res) => {
 
 });
 
-function callingWatchers(i,regToken,log,data){
+function callingWatchers(i,regToken,log,tempData){
 
+    var responseIndex = -1;
+    var nextCall = true; 
     var wCount = i+1;
-    var recNum = "+61" + data[i].watcherPhone.substring(1);
+    var recNum = "+61" + tempData.watchers[i].watcherPhone.substring(1);
+    console.log("Watcher "+ wCount + " called");
     var msg = "-\nYour wearer is in trouble contact him/her as soon as possible. \n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you are responding then reply with 'yes'. If you can't reply with 'no'\n\nRegards\nWOM Team";
     sendNotification("Connecting watcher","Now contacting watcher " + wCount,"High",regToken);
-    twilioClient.messages.create({
+
+    //////
+    setTimeout(function(){
+        sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
+        for(var c = 0 ; c < watcherResponses.length ; c++){
+            if(watcherResponses[c].service_id == log.service_id){
+                for(var j = 0 ; j < watcherResponses[c].watchers.length ; j++){
+                    if(watcherResponses[c].watchers[j].response == "true"){
+                        nextCall = false;
+                        responseIndex = j;
+                        break;
+                    }
+                }
+            }
+        }
+
+        i++;
+        if (nextCall == true && i < tempData.watchers.length){
+            if(i == tempData.watchers.length){
+                i = 0;
+            }
+            setTimeout(function(){
+                callingWatchers(i,regToken,log,tempData);
+            },5000)
+        }
+        else{
+            sendNotification("Connecting watcher","Watcher " +responseIndex+ " is coming to help you","High",regToken);
+        }
+            
+    },20000)
+    
+    
+    
+    
+    
+    
+    /*twilioClient.messages.create({
         from: "+61488852471",
         to: recNum,
         body: msg
@@ -380,10 +421,12 @@ function callingWatchers(i,regToken,log,data){
             sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
                 i++;
                 if(i<data.length){
-                    callingWatchers(i,regToken,log,data);
+                    setTimeout(function(){
+                        callingWatchers(i,regToken,log,data);
+                    },5000)
                 }
         },20000)
-    });
+    });*/
 }
 
 
