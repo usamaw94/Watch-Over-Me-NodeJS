@@ -425,7 +425,7 @@ router.post('/receiveMessage', (req, res) => {
                             callingWatchers(0,regToken,log,temp);
                         },5000)
                             
-                        res.send("Help Me function activated!");
+                        res.send(JSON.stringify("Help Me function activated!"));
                 })
             })
 
@@ -499,7 +499,7 @@ function callingWatchers(i,regToken,log,tempData){
         else{
             sendNotification("Connecting watcher","Watcher " + responseIndex+1 + " is coming to help you","High",regToken);
             delete watcherResponses[removeIndex];
-            console.log(JSOn.stringify(watcherResponses));
+            console.log(JSON.stringify(watcherResponses));
         }
             
     },20000)
