@@ -330,6 +330,11 @@ function callingWatchers(i,regToken,log,tempData){
         to: recNum,
         body: msg
     }).then(function(){
+        twilioClient.calls.create({
+            url: 'http://demo.twilio.com/docs/voice.xml',
+            to: recNum,
+            from: "+61488852471"
+        }).then((call) => console.log(JSON.stringify("Request has been sent!")));
         setTimeout(function(){
             console.log(JSON.stringify(watcherResponses));
             for(var c = 0 ; c < watcherResponses.length ; c++){
