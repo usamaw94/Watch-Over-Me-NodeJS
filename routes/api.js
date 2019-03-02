@@ -334,12 +334,12 @@ function callingWatchers(i,regToken,log,tempData){
             console.log(JSON.stringify(watcherResponses));
             for(var c = 0 ; c < watcherResponses.length ; c++){
                 if(watcherResponses[c].service_id == log.service_id){
+                    removeIndex = c;
                     for(var j = 0 ; j < watcherResponses[c].watchers.length ; j++){
                         if(watcherResponses[c].watchers[j].response == 'true'){
                             console.log("There");
                             nextCall = false;
                             responseIndex = j;
-                            removeIndex = c;
                             break;
                         }
                     }
