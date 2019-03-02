@@ -358,18 +358,20 @@ function callingWatchers(i,regToken,log,tempData){
             }
             else{
                 var watcherNum = responseIndex+1
-                sendNotification("Connecting watcher","Watcher " + watcherNum + "  responded with YES","High",regToken);
-                for (var l = 0 ; l < watcherResponses[removeIndex].watchers.length ; l++){
-                    if(l != responseIndex){
-                        var senderNum = "+61" + watcherResponses[removeIndex].watchers[l].watcherPhone.substring(1);
-                        var infomsg = "Watcher "+watcherNum+" "+watcherResponses[removeIndex].watchers[responseIndex].watcherName+", responded with yes and he is going to assist "+watcherResponses[removeIndex].wearer_fname+"\n\nRegards\nWOM Team";
-                        twilioClient.messages.create({
-                            from: "+61488852471",
-                            to: senderNum,
-                            body: infomsg
-                        }).then(function(){
-                            console.log("Message Sent");
-                        })
+                if(responseIndex != -1){
+                    sendNotification("Connecting watcher","Watcher " + watcherNum + "  responded with YES","High",regToken);
+                    for (var l = 0 ; l < watcherResponses[removeIndex].watchers.length ; l++){
+                        if(l != responseIndex){
+                            var senderNum = "+61" + watcherResponses[removeIndex].watchers[l].watcherPhone.substring(1);
+                            var infomsg = "Watcher "+watcherNum+" "+watcherResponses[removeIndex].watchers[responseIndex].watcherName+", responded with yes and he is going to assist "+watcherResponses[removeIndex].wearer_fname+"\n\nRegards\nWOM Team";
+                            twilioClient.messages.create({
+                                from: "+61488852471",
+                                to: senderNum,
+                                body: infomsg
+                            }).then(function(){
+                                console.log("Message Sent");
+                            })
+                        }
                     }
                 }
                 delete watcherResponses[removeIndex];
