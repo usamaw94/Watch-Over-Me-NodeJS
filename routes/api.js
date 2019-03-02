@@ -192,7 +192,7 @@ router.post('/receiveMessage', (req, res) => {
     var helpMeStatus = false;
 
     for(var hCount = 0 ; hCount < watcherResponses.length ; hCount ++){
-        if(watcherResponses[hCount] != null && serviceId == watcherResponses[hCount].service_id){
+        if(serviceId == watcherResponses[hCount].service_id){
             helpMeStatus = true;
         }
     }
@@ -373,6 +373,9 @@ function callingWatchers(i,regToken,log,tempData){
                     }
                 }
                 delete watcherResponses[removeIndex];
+                watcherResponses = watcherResponses.filter(function(x){
+                    return (x !== (undefined || null || ''));
+                });
                 console.log(JSON.stringify(watcherResponses));
             }
         },20000)
