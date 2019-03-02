@@ -191,12 +191,10 @@ router.post('/receiveMessage', (req, res) => {
     var serviceId = log['service_id'];
     var helpMeStatus = false;
 
-    if(!watcherResponses){
-        for(var hCount = 0 ; hCount < watcherResponses.length ; hCount ++){
-            if(serviceId == watcherResponses[hCount].service_id){
-                helpMeStatus = true;
-            }
-        }   
+    for(var hCount = 0 ; hCount < watcherResponses.length ; hCount ++){
+        if(watcherResponses[hCount] != null && serviceId == watcherResponses[hCount].service_id){
+            helpMeStatus = true;
+        }
     }
 
     if(helpMeStatus == false){
