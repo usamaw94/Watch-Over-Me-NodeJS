@@ -507,7 +507,7 @@ router.post("/addServiceProcessing",async function(req,res){
     }
 
     if(req.body.customer == "Other"){
-
+        console.log("customer is other");
         var customerPhone = req.body.customerPhone;
         var customerFirstName = req.body.customerFName;
         var customerLastName = req.body.customerLName;
@@ -534,9 +534,11 @@ router.post("/addServiceProcessing",async function(req,res){
 
     }
     else if (req.body.customer == "watcher"){
+        console.log("customer is watcher");
         customerId = watcherId;
     }
     else if(req.body.customer == "wearer"){
+        console.log("customer is wearer");
         customerId = wearerId;
     }
 
@@ -547,6 +549,8 @@ router.post("/addServiceProcessing",async function(req,res){
         wom_num: "Not assigned",
         customer_id: customerId,
         pharmacy_id: pharmacyId,
+        device_id: "Not assigned",
+        sim_id: "Not assigned",
         service_reg_date: date,
         service_reg_time: time,
         status: "Pending"});
@@ -561,6 +565,7 @@ router.post("/addServiceProcessing",async function(req,res){
     service.save().then(function(){
         relation.save();
     });
+    
 })
 
 
