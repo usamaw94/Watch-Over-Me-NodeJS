@@ -347,7 +347,7 @@ function callingWatchers(i,regToken,log,tempData){
             }
 
             i++;
-            if (nextCall == true && i < tempData.watchers.length){
+            if (nextCall == true){
                 sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
                 if(i == tempData.watchers.length){
                     i = 0;
