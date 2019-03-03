@@ -385,7 +385,7 @@ function callingWatchers(i,regToken,log,tempData){
                 });
                 console.log(JSON.stringify(watcherResponses));
             }
-        },20000)
+        },30000)
     });
 }
 
