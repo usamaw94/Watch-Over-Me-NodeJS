@@ -334,7 +334,7 @@ function callingWatchers(i,regToken,log,tempData){
             url: 'http://demo.twilio.com/docs/voice.xml',
             to: recNum,
             from: "+61488852471"
-        }).then((call) => console.log(JSON.stringify("Request has been sent!")));
+        }).then((call) => console.log(JSON.stringify("Call has been sent!")));
         setTimeout(function(){
             console.log(JSON.stringify(watcherResponses));
             for(var c = 0 ; c < watcherResponses.length ; c++){
