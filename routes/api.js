@@ -331,7 +331,7 @@ function callingWatchers(i,regToken,log,tempData){
         body: msg
     }).then(function(){
         twilioClient.calls.create({
-            url: 'http://demo.twilio.com/docs/voice.xml',
+            url: 'https://handler.twilio.com/twiml/EH188dc109e62c15bb744484fa84b0f08c',
             to: recNum,
             from: "+61488852471"
         }).then((call) => console.log(JSON.stringify("Call has been sent!")));
