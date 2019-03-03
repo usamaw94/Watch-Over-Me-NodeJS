@@ -1,3 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>WOM Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+
+    <!-- iCheck -->
+    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="plugins/morris/morris.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="plugins/select2/select2.min.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="dist/css/custom.css">
+
+    <link rel="stylesheet" href="dist/css/stepByStepForm.css">
+
+</head>
+<body class="hold-transition sidebar-mini">
+    <script src = "/socket.io/socket.io.js"></script>
+
+
+
 <div class="wrapper">
 
     <!-- Navbar -->
@@ -46,65 +89,35 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item has-treeview">
-              <a href="/services" class="nav-link">
+            <li class="nav-item">
+              <a href="/services" class="nav-link active">
                 <i class="nav-icon fa fa-circle-o-notch"></i>
                 <p>
                   Services
-                  <i class="right fa fa-angle-left"></i>
                 </p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="add_services.html" class="nav-link">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Add services</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="view_services.html" class="nav-link">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>View services</p>
-                  </a>
-                </li>
-              </ul>
             </li>
             <li class="nav-item">
-              <a href="watches.html" class="nav-link">
+              <a href="/devices" class="nav-link">
                 <i class="nav-icon fa fa-clock-o"></i>
                 <p>
-                  Watches
+                  Devices
                 </p>
               </a>
-            </li>
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fa fa-phone"></i>
-                <p>
-                  SIMs & Plans
-                  <i class="right fa fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="sims.html" class="nav-link">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>SIMs</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="manage_plans.html" class="nav-link">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>Plans</p>
-                  </a>
-                </li>
-              </ul>
             </li>
             <li class="nav-item">
-              <a href="watches.html" class="nav-link">
+              <a href="/sims" class="nav-link">
+                <i class="nav-icon fa fa-phone"></i>
+                <p>
+                  SIMs
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/organizations" class="nav-link">
                 <i class="nav-icon fa fa-hospital-o"></i>
                 <p>
-                  Pharmacies
+                  Organizations
                 </p>
               </a>
             </li>
@@ -121,6 +134,7 @@
       <!-- /.sidebar -->
     </aside>
   
+    <div id="reloadContent">
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper main-content">
       <!-- Content Header (Page header) -->
@@ -166,7 +180,7 @@
                 <p>Service Id: <%= serviceData[0].service[0].serviceId %></p>
                 <p>Service date: <%= serviceData[0].service[0].serviceDate %> - <%= serviceData[0].service[0].serviceTime %></p>
                 <h5>WOM Phone number : <%= serviceData[0].service[0].womNumber %></h5>
-                <a href="service_logs.html" class="btn btn-info" style="text-decoration: none"> &nbsp;<b>View logs</b></a>
+                <button id="viewLogs" data-service-id="<%= serviceData[0].service[0].serviceId %>" data-service-status="<%= serviceData[0].service[0].serviceStatus %>" class="btn btn-info" style="text-decoration: none"> &nbsp;<b>View logs</b></button>
                 
                 <% if(serviceData[0].service[0].serviceStatus === 'Activated'){ %>
                   <% } else { %>
@@ -468,7 +482,7 @@
         <div class="modal-dialog">
           <!-- Modal content-->
           <div class="modal-content">
-            <form action="/activateService" method="POST">
+            <form id="activateServiceForm">
               <div class="modal-header">
                 <h4 class="modal-title">Activate service</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -477,7 +491,7 @@
     
                 <div class="form-group">
                   <label>Service ID</label>
-                  <input type="text" name="serviceId" value="<%= serviceData[0].service[0].serviceId %>" class="form-control" readonly required>
+                  <input type="text" id="modalServiceId" name="serviceId" value="<%= serviceData[0].service[0].serviceId %>" class="form-control" readonly required>
                 </div>
 
                 <div class="form-group">
@@ -517,6 +531,7 @@
       <strong>Copyright &copy; 2018 <a href="#">Watch Over Me</a>.</strong> All rights
       reserved.
     </footer>
+  </div>
   
   </div>
   <!-- ./wrapper -->
@@ -572,3 +587,6 @@
   </script>
 
   <script src="dist/js/custom.js"></script>
+
+</body>
+</html>

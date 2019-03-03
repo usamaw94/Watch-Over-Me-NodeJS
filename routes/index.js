@@ -16,7 +16,6 @@ const Relation = require('../models/relation');
 const io = require('../server');
 const moment = require('moment');
 var assert = require('assert');
-
 var personId = "";
 
 var mongodb;
@@ -31,6 +30,159 @@ MongoClient.connect(url,function(err,db){
 
 
 router.get("/", function(req, res){
+
+    if(!req.session.userPhone) {
+        res.render("userLogin", { title: 'Watch Over Me - UserLogin', data : 'some text' });
+    } else {
+        console.log(req.session.adminEmail);
+        res.redirect('/userPanel');
+    }
+})
+
+router.get("/userPanel",async function(req, res){
+    if(!req.session.userPhone) {
+        console.log(req.session.userPhone);
+        res.redirect('/');
+    } else{
+        var userId = req.session.userId;
+        var query = Service.findOne({
+            wearer_id: userId
+        });
+        await query.exec(function(err,serviceData){
+            if(err){
+                console.log(err);
+            }
+            else{
+                if(serviceData != null){
+                    var serviceId = serviceData.service_id;
+                    console.log(serviceId);
+    
+                    var q = Service.aggregate([
+                    {
+                        $match:
+                        {
+                            service_id: serviceId,                
+                        }
+                    
+                    },
+                    {
+                        $lookup:
+                        {
+                            from: 'persons',
+                            localField: 'wearer_id',
+                            foreignField: 'person_id',
+                            as: 'wearerInfo'
+                        }
+                    },
+                    {
+                        $lookup:
+                        {
+                            from: 'persons',
+                            localField: 'customer_id',
+                            foreignField: 'person_id',
+                            as: 'customerInfo'
+                        }
+                    },
+                    {
+                        $lookup:
+                        {
+                            from: 'relations',
+                            localField: 'service_id',
+                            foreignField: 'service_id',
+                            as: 'relationDetails'
+                        }
+                    },
+                    {
+                        $project:
+                        {
+                            serviceId : '$service_id',
+                            womNumber : '$wom_num',
+                            serviceStatus : '$status', 
+                            wearers: '$wearerInfo',
+                            customers: '$customerInfo',
+                            relationships : '$relationDetails',
+                            numberOfWatchers: {$size: "$relationDetails"},
+                        }
+                    }
+                    ])
+    
+                    q.exec(function(err,wearerServiceResult){
+
+                        console.log('Wearer Service data');
+                        console.log(wearerServiceResult);
+
+                        var query = Service.find({customer_id: userId});
+                        query.exec(function(err,customerServiceResult){
+                            if(err){
+                                console.log(err);
+                            }
+                            else{
+                                if(customerServiceResult != ""){
+                                    console.log('Customer Service data');
+                                    console.log(customerServiceResult);
+
+                                    res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, session: req.session});
+                                }
+                                else {
+                                    console.log('No Customer Service data');
+                                    customerServiceResult = "" ;    
+                                    res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult , session: req.session});
+                                }
+                            }
+                        });   
+                    });
+    
+                } else {
+                    console.log('No wearer service data');
+                    wearerServiceResult = "";
+
+                    var query = Service.find({customer_id: userId});
+                    query.exec(function(err,customerServiceResult){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            if(customerServiceResult != ""){
+                                console.log('Customer Service data');
+                                console.log(customerServiceResult);
+                                res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, session: req.session});
+                            }
+                            else {
+                                console.log('No Customer Service data');
+                                customerServiceResult = "" ;    
+                                res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, session: req.session});
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+})
+
+router.post("/userLogin", function(req, res){
+
+    var query = Person.findOne({ phone_number: req.body.userPhone, password: req.body.userPassword});
+    query.exec(function(err,loginData){
+        if(err){
+            console.log(err);
+            res.redirect('/');
+        } else {
+            //var admin = new Admin(JSON.stringify(loginData));
+            if(loginData!=null){
+                console.log(loginData.phone_number);
+                req.session.userId = loginData.person_id;
+                req.session.userPhone = loginData.phone_number;
+                req.session.userName = loginData.person_first_name + " " + loginData.person_last_name;
+                res.redirect('/userPanel');
+            } else {
+                res.redirect('/');
+            }
+        }
+    });
+})
+
+router.get("/admin", function(req, res){
     if(!req.session.adminEmail) {
         res.render("login", { title: 'Express', data : 'some text' });
     } else {
@@ -49,6 +201,19 @@ router.get("/adminHome", function(req, res){
     }
 })
 
+router.get('/alllogs', function(req,res){
+    if(!req.session.adminEmail) {
+        console.log(req.session.adminEmail);
+        res.redirect('/');
+    } else{
+        var serviceId = req.query.serviceID;
+        var query = Log.find({service_id: serviceId}).sort('-_id');
+        query.exec(function(err,log){
+            //res.send(log);
+            res.render('logs',{log,serviceId, session: req.session});
+        });
+    }
+})
 
 router.post("/loginProcessing", function(req, res, next){
 
@@ -406,14 +571,6 @@ router.get('/logout',function(req,res){
     });
 })
 
-router.get('/alllogs', function(req,res){
-    var query = Log.find().sort('-_id');
-    query.exec(function(err,log){
-        //res.send(log);
-        res.render('logs',{log});
-    });
-})
-
 router.get("/addService", function(req, res){
 
     var isPharmacy = 'yes';
@@ -499,7 +656,6 @@ router.post("/addServiceProcessing",async function(req,res){
 
         watcherOne.save().then(function(){
             watcherOneDetail.save();
-            res.render('test',{data: JSON.stringify(watcherOne) + JSON.stringify(watcherOneDetail)});
         });
     }
     else{
@@ -565,6 +721,7 @@ router.post("/addServiceProcessing",async function(req,res){
     service.save().then(function(){
         relation.save();
     });
+    res.render('test');
     
 })
 
@@ -858,12 +1015,12 @@ router.get('/addNewOrganization',async function(req,res){
 })
 
 
-router.post("/activateService", function(req, res, next){
+router.get("/activateService",async function(req, res){
 
-    var serviceId =  req.body.serviceId;
-    var simId =  req.body.simId;
-    var womNumber =  req.body.womNumber;
-    var device =  req.body.device;
+    var serviceId =  req.query.serviceId;
+    var simId =  req.query.simId;
+    var womNumber =  req.query.womNumber;
+    var device =  req.query.device;
 
     if(!req.session.adminEmail) {
         console.log(req.session.adminEmail);
@@ -887,7 +1044,13 @@ router.post("/activateService", function(req, res, next){
             simData.save();
         });
 
-        res.redirect('/serviceDetails?serviceID='+ serviceId);
+        res.send("Service activated");
+
+        // res.render('serviceActivation',{serviceId});
+
+        // res.redirect('back');
+
+        // res.redirect('/serviceDetails?serviceID='+ serviceId);
     }
 })
 
