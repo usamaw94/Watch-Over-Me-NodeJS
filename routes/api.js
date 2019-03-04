@@ -95,7 +95,7 @@ router.post('/interactionlogprocessing',function(req,res){
             console.error(err);
         }
         else{
-            req.app.io.emit('logInserted', 'Data saved');
+            req.app.io.emit('logInserted',hourlyLogs['service_id']);
 
             res.send(JSON.stringify('Logs inserted'));
         }
@@ -200,7 +200,7 @@ router.post('/receiveMessage', (req, res) => {
     if(helpMeStatus == false){
         log.save().then(function(log){
 
-            req.app.io.emit('logInserted', 'Data saved');
+            req.app.io.emit('logInserted',log['service_id']);
 
 
             var wr = Service.aggregate([
