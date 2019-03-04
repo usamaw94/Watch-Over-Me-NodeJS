@@ -135,7 +135,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h4>Service Logs</h4>
-                        <p>Service Id: <%= serviceId %></p>
+                        <p>Service Id: <span id="getServiceId"><%= serviceId %></span></p>
                     </div>
                 </div>
             </div>
@@ -502,7 +502,9 @@
 
         socket.on('logInserted',function(data){
 
-            $('#wrapperContent').load('/alllogs #wrapperContent', function() {
+            var reloadLink = '/alllogs?serviceID='+data;
+
+            $('#wrapperContent').load(reloadLink + ' #wrapperContent', function() {
                 initialMap();
             });
             // location.reload(true);

@@ -51,13 +51,13 @@
 
             <ul class="nav">
                 <li class="active">
-                    <a href="home.html">
+                    <a href="/userPanel">
                         <i class="ti-panel"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li>
-                    <a href="wearerService.html">
+                    <a href="/wearerServiceDetails">
                         <i class="ti-settings"></i>
                         <p>Service as Wearer</p>
                     </a>
@@ -69,13 +69,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="servicesListCustomer.html">
+                    <a href="/customerServiceList">
                         <i class="ti-settings"></i>
                         <p>Services as Customer</p>
                     </a>
                 </li>
                 <li>
-                    <a href="userProfile.html">
+                    <a href="/userProfile">
                         <i class="ti-user"></i>
                         <p>User Profile</p>
                     </a>
@@ -141,7 +141,7 @@
                                     <div class="stats">
                                         <%if (locals.wearerServiceData) { %>
 
-                                            <a href="/wearerServiceDetails?serviceID=<%= wearerServiceData[0].serviceId %>"><i class="ti-eye"></i> View</a>
+                                            <a href="/wearerServiceDetails"><i class="ti-eye"></i> View</a>
 
                                         <% } else { %>
                                             
@@ -172,15 +172,9 @@
                                 <div class="footer">
                                     <hr />
                                     <div class="stats">
-                                            <%if (locals.customerServiceData) { %>
-
-                                                <a href="/customerServices %>"><i class="ti-eye"></i> View</a>
-    
-                                            <% } else { %>
-                                                
-                                                <p><i class="ti-close"></i> No data to show</p>
-    
-                                            <% } %>
+                                        <div class="stats">
+                                            <a href="servicesListWatcher.html"><i class="ti-eye"></i> View All</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +199,15 @@
                                 <div class="footer">
                                     <hr />
                                     <div class="stats">
-                                        <a href="servicesListCustomer.html"><i class="ti-eye"></i> View All</a>
+                                            <%if (locals.customerServiceData) { %>
+
+                                                <a href="/customerServiceList"><i class="ti-eye"></i> View All</a>
+    
+                                            <% } else { %>
+                                                
+                                                <p><i class="ti-close"></i> No data to show</p>
+    
+                                            <% } %>
                                     </div>
                                 </div>
                             </div>
@@ -239,7 +241,7 @@
                                         <td><%= wearerServiceData[0].numberOfWatchers %></td>
                                         <td><%= wearerServiceData[0].serviceStatus %></td>
                                         <td>
-                                            <a class="btn btn-info" href="/wearerServiceDetails?serviceID=<%= wearerServiceData[0].serviceId %>">View details</a>
+                                            <a class="btn btn-info" href="/wearerServiceDetails">View details</a>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -298,7 +300,9 @@
                         <div class="card">
                             <div class="header">
                                 <div style="float: right" class="text-right">
-                                    <a href="servicesListCustomer.html" class="btn btn-sm btn-primary btn-icon">View all</a>
+                                    <%if (locals.customerServiceData) { %>
+                                    <a href="/customerServiceList" class="btn btn-sm btn-primary btn-icon">View all</a>
+                                    <% } %>
                                 </div>
                                 <p class="category">Services as</p>
                                 <h4 class="title">Customer</h4>

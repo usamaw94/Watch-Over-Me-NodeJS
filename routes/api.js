@@ -111,7 +111,7 @@ router.post('/hourlylogsprocessing', function(req,res){
     var log = new Log(req.body);
     log.save().then(function(log){
 
-        req.app.io.emit('logInserted', 'Data saved');
+        req.app.io.emit('logInserted',log['service_id']);
 
         res.send(JSON.stringify('Hourly Log Inserted'));
     });
