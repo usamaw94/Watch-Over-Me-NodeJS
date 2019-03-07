@@ -498,6 +498,8 @@ $(".showWatcherDetails").on("click", function(){
         });
 });
 
+//----------------------------------------------
+
 $(document).ready(function(){
     $("#watcherPhone").keyup(function(){     
         $("#watcherId").val('');

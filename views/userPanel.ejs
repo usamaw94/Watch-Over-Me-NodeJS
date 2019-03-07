@@ -25,6 +25,7 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="userPanelAssets/css/demo.css" rel="stylesheet" />
 
+    <link href="userPanelAssets/css/custom.css" rel="stylesheet" />
 
     <!--  Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
@@ -237,8 +238,8 @@
                                     <tr>
                                         <td><%= wearerServiceData[0].serviceId %></td>
                                         <td><%= wearerServiceData[0].womNumber %></td>
-                                        <td><%= wearerServiceData[0].customers[0].person_first_name %> <%= wearerServiceData[0].customers[0].person_last_name %></td>
-                                        <td><%= wearerServiceData[0].numberOfWatchers %></td>
+                                        <td><span data-id="<%= wearerServiceData[0].customers[0].person_id %>" class="showCustomerDetails show-full-details"><%= wearerServiceData[0].customers[0].person_first_name %> <%= wearerServiceData[0].customers[0].person_last_name %></span></td>
+                                        <td><span data-id="<%= wearerServiceData[0].serviceId %>" data-num-watcher="<%= wearerServiceData[0].numberOfWatchers %>" class="showWatcherDetails show-full-details"><%= wearerServiceData[0].numberOfWatchers %></span></td>
                                         <td><%= wearerServiceData[0].serviceStatus %></td>
                                         <td>
                                             <a class="btn btn-info" href="/wearerServiceDetails">View details</a>
@@ -373,6 +374,73 @@
     </div>
 </div>
 
+<div class="modal fade" id="customerDetailsModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-custom-title modal-title">Customer Details</span>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>Wearer_ID:</th>
+                        <td id="modalCustomerId"></td>
+                    </tr>
+                    <tr>
+                        <th>Name:</th>
+                        <td id="modalCustomerName"></td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number:</th>
+                        <td id="modalCustomerPhone"></td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td id="modalCustomerEmail"></td>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="watcherDetailsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-custom-title modal-title">Watcher Details</span>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h6>Total watchers : <span id="modalTotalWatchers"></span></h6>
+                <table class="table table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>Watcher_ID:</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                    </thead>
+                    <tbody id="watcherDataRows">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 
@@ -396,6 +464,8 @@
 	<script src="userPanelAssets/js/paper-dashboard.js"></script>
 
 	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-	<script src="userPanelAssets/js/demo.js"></script>
+    <script src="userPanelAssets/js/demo.js"></script>
+    
+    <script src="userPanelAssets/js/custom.js"></script>
 
 </html>
