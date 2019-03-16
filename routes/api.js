@@ -63,7 +63,8 @@ router.post('/userloginprocessing',function(req,res){
                     }
                     else{
                         if(serviceData != null){
-                            res.send(serviceData.service_id + "|" + userData.person_first_name + " " + userData.person_last_name);
+                            console.log(serviceData.service_id + "/" + userData.person_first_name + " " + userData.person_last_name);
+                            res.send(serviceData.service_id + "/" + userData.person_first_name + " " + userData.person_last_name);
                         }
                         else{
                             res.send("");
