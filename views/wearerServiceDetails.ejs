@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="userPanelAssets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="userPanelAssets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Paper Dashboard by Creative Tim</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href="userPanelAssets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="userPanelAssets/css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Paper Dashboard core CSS    -->
+    <link href="userPanelAssets/css/paper-dashboard.css" rel="stylesheet"/>
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="userPanelAssets/css/demo.css" rel="stylesheet" />
+
+
+    <!--  Fonts and icons     -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <link href="userPanelAssets/css/themify-icons.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+
+        <!--
+            Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+            Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+        -->
+
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="http://www.creative-tim.com" class="simple-text">
+                    Watch Over ME
+                </a>
+            </div>
+
+            <ul class="nav">
+                    <li>
+                        <a href="/userPanel">
+                            <i class="ti-panel"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/wearerServiceDetails">
+                            <i class="ti-settings"></i>
+                            <p>Service as Wearer</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="servicesList.html">
+                            <i class="ti-settings"></i>
+                            <p>Services as Watcher</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/customerServiceList">
+                            <i class="ti-settings"></i>
+                            <p>Services as Customer</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/userProfile">
+                            <i class="ti-user"></i>
+                            <p>User Profile</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/logout">
+                            <i class="ti-close"></i>
+                            <p>Logout</p>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Service as Wearer</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <!--<li>-->
+                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                        <!--<i class="ti-panel"></i>-->
+                        <!--<p>Stats</p>-->
+                        <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="dropdown">-->
+                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                        <!--<i class="ti-bell"></i>-->
+                        <!--<p class="notification">5</p>-->
+                        <!--<p>Notifications</p>-->
+                        <!--<b class="caret"></b>-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="#">Notification 1</a></li>-->
+                        <!--<li><a href="#">Notification 2</a></li>-->
+                        <!--<li><a href="#">Notification 3</a></li>-->
+                        <!--<li><a href="#">Notification 4</a></li>-->
+                        <!--<li><a href="#">Another notification</a></li>-->
+                        <!--</ul>-->
+                        <!--</li>-->
+                        <li>
+                            <a href="#">
+                                <i class="ti-user"></i>
+                                <p><%= session.userName %></p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+
+            <div class="container-fluid">
+                    <%if (locals.serviceData) { %>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Service Details</h4>
+                                <p class="category">ID: <%= serviceData[0].service[0].serviceId %></p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Created Date</th>
+                                        <td><%= serviceData[0].service[0].serviceDate %> - <%= serviceData[0].service[0].serviceTime %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>WOM Number</th>
+                                        <td><%= serviceData[0].service[0].womNumber %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td><%= serviceData[0].service[0].serviceStatus %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>No. of watchers</th>
+                                        <td><%= serviceData[0].service[0].numberOfWatchers %></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Customer Details</h4>
+                                <p class="category">ID: <%= serviceData[0].service[0].customers[0].person_id %></p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>First name</th>
+                                        <td><%= serviceData[0].service[0].customers[0].person_first_name %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Last name</th>
+                                        <td><%= serviceData[0].service[0].customers[0].person_last_name %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phone number</th>
+                                        <td><%= serviceData[0].service[0].customers[0].phone_number %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <td><%= serviceData[0].service[0].customers[0].email %></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Device Details</h4>
+                                <p class="category">ID: <%= serviceData[0].service[0].device[0].device_id %></p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <% if(serviceData[0].service[0].deviceId === 'Not assigned') { %>
+                                
+                                    <centre>
+                                            <h6 class="text-center info" style="margin-left:20px; color: #F3BB45">Device is not assigned</h6>
+                                        </centre>
+        
+                                <% } else { %>
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>IMEI</th>
+                                        <td><%= serviceData[0].service[0].device[0].device_imei %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Manufacturer</th>
+                                        <td><%= serviceData[0].service[0].device[0].device_manufacturer %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Model</th>
+                                        <td><%= serviceData[0].service[0].device[0].device_model %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Year</th>
+                                        <td><%= serviceData[0].service[0].device[0].device_year %></td>
+                                    </tr>
+                                </table>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Pharmacy Details</h4>
+                                <p class="category">ID: <%= serviceData[0].service[0].pharmacy[0].organization_id %></p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Name</th>
+                                        <td><%= serviceData[0].service[0].pharmacy[0].organization_name %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phone</th>
+                                        <td><%= serviceData[0].service[0].pharmacy[0].organization_phone %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <td><%= serviceData[0].service[0].pharmacy[0].organization_email %></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">SIM Details</h4>
+                                <p class="category">ID: WOMSM0000821</p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                    <% if(serviceData[0].service[0].simId === 'Not assigned') { %>
+                                        
+                                        <centre>
+                                                <h6 class="text-center info" style="margin-left:20px; color: #F3BB45">SIM is not assigned</h6>
+                                            </centre>
+        
+                                      <% } else { %>
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>SIM Number</th>
+                                        <td><%= serviceData[0].service[0].sim[0].sim_num %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Provider</th>
+                                        <td><%= serviceData[0].service[0].sim[0].sim_provider %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>WOM Number</th>
+                                        <td><%= serviceData[0].service[0].sim[0].wom_num %></td>
+                                    </tr>
+                                </table>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <!-- <div style="float: right" class="text-right">
+                                    <btn class="btn btn-lg btn-primary btn-icon">&nbsp; <i class="fa fa-plus"></i>&nbsp;Add new watcher &nbsp;</btn>
+                                </div> -->
+                                <h4 class="title">Watchers Details</h4>
+                                <p class="category">Total watchers : <%= serviceData[0].service[0].numberOfWatchers %></p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% for(var d of serviceData[0].watchers) {%>
+                                    <tr>
+                                        <td><%= d.watcherDetails[0].person_id %></td>
+                                        <td><%= d.watcherDetails[0].person_first_name %> <%= d.person_last_name %></td>
+                                        <td><%= d.watcherDetails[0].phone_number %></td>
+                                        <td><%= d.watcherDetails[0].email %></td>
+                                    </tr>
+                                    <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+
+                    <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="content">
+                                            <centre>
+                                                <h3 class="text-center info" style="margin-bottom:20px; color: #F3BB45">User is not the wearer for any service</h6>
+                                            </centre>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                    </div>
+
+                    <% } %>
+            </div>
+        </div>
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+
+                        <li>
+                            <a href="http://www.creative-tim.com">
+                                Creative Tim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://blog.creative-tim.com">
+                                Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.creative-tim.com/license">
+                                Licenses
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright pull-right">
+                    &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</div>
+
+
+</body>
+
+<!--   Core JS Files   -->
+<script src="userPanelAssets/js/jquery.min.js" type="text/javascript"></script>
+<script src="userPanelAssets/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!--  Checkbox, Radio & Switch Plugins -->
+<script src="userPanelAssets/js/bootstrap-checkbox-radio.js"></script>
+
+<!--  Charts Plugin -->
+<script src="userPanelAssets/js/chartist.min.js"></script>
+
+<!--  Notifications Plugin    -->
+<script src="userPanelAssets/js/bootstrap-notify.js"></script>
+
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+
+<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+<script src="userPanelAssets/js/paper-dashboard.js"></script>
+
+<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+<script src="userPanelAssets/js/demo.js"></script>
+
+<!--<script type="text/javascript">-->
+<!--$(document).ready(function(){-->
+
+<!--demo.initChartist();-->
+
+<!--$.notify({-->
+<!--icon: 'ti-gift',-->
+<!--message: "Welcome to <b>Paper Dashboard</b> - a beautiful Bootstrap freebie for your next project."-->
+
+<!--},{-->
+<!--type: 'success',-->
+<!--timer: 4000-->
+<!--});-->
+
+<!--});-->
+<!--</script>-->
+
+</html>

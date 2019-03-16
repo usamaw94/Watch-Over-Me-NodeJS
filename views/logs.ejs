@@ -1,3 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>WOM Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+
+    <!-- iCheck -->
+    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="plugins/morris/morris.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="plugins/select2/select2.min.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="dist/css/custom.css">
+
+    <link rel="stylesheet" href="dist/css/stepByStepForm.css">
+
+</head>
+<body class="hold-transition sidebar-mini">
+    <script src = "/socket.io/socket.io.js"></script>
+
+
+
+
 <div class="wrapper" id="wrapperContent">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom fixed-top">
@@ -5,12 +49,6 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="E:\Admin LTE Sample\AdminLTE-3.0.0-alpha.2\AdminLTE-3.0.0-alpha.2\index.html" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
             </li>
         </ul>
     </nav>
@@ -25,99 +63,66 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <!--<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-              <div class="image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                  <img src="dist/img/user.png" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                  <a href="#" class="d-block"><%= session.adminName %></a>
+                </div>
               </div>
-              <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
-              </div>
-            </div>-->
-
-            <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                         with font-awesome or any other icon font library -->
-                    <li class="nav-item">
-                        <a href="admin_dashboard.html" class="nav-link">
-                            <i class="nav-icon fa fa-dashboard"></i>
-                            <p>
-                                Admin Dashboard
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-circle-o-notch"></i>
-                            <p>
-                                Services
-                                <i class="right fa fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="add_services.html" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>Add services</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="view_services.html" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>View services</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="watches.html" class="nav-link">
-                            <i class="nav-icon fa fa-clock-o"></i>
-                            <p>
-                                Watches
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-phone"></i>
-                            <p>
-                                SIMs & Plans
-                                <i class="right fa fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="sims.html" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>SIMs</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="manage_plans.html" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>Plans</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="watches.html" class="nav-link">
-                            <i class="nav-icon fa fa-hospital-o"></i>
-                            <p>
-                                Pharmacies
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages/examples/login.html" class="nav-link">
-                            <i class="nav-icon fa fa-sign-out text-danger"></i>
-                            <p class="text">LOGOUT</p>
-                        </a>
-                    </li>
+                  <!-- Add icons to the links using the .nav-icon class
+                       with font-awesome or any other icon font library -->
+                  <li class="nav-item">
+                    <a href="/adminHome" class="nav-link">
+                      <i class="nav-icon fa fa-dashboard"></i>
+                      <p>
+                        Admin Dashboard
+                      </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/services" class="nav-link active">
+                      <i class="nav-icon fa fa-circle-o-notch"></i>
+                      <p>
+                        Services
+                      </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/devices" class="nav-link">
+                      <i class="nav-icon fa fa-clock-o"></i>
+                      <p>
+                        Devices
+                      </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/sims" class="nav-link">
+                      <i class="nav-icon fa fa-phone"></i>
+                      <p>
+                        SIMs
+                      </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/organizations" class="nav-link">
+                      <i class="nav-icon fa fa-hospital-o"></i>
+                      <p>
+                        Organizations
+                      </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/logout" class="nav-link">
+                      <i class="nav-icon fa fa-sign-out text-danger"></i>
+                      <p class="text">LOGOUT</p>
+                    </a>
+                  </li>
                 </ul>
-            </nav>
+              </nav>
             <!-- /.sidebar-menu -->
         </div>
         <!-- /.sidebar -->
@@ -130,9 +135,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h4>Service Logs</h4>
-                        <p>Service Id: 987</p>
-                        <p>Service date: 19-6-2018</p>
-                        <p>WOM Phone number : 0401 345 765</p>
+                        <p>Service Id: <span id="getServiceId"><%= serviceId %></span></p>
                     </div>
                 </div>
             </div>
@@ -161,9 +164,7 @@
                     <div class="col-lg-12 col-12">
                         <div class="callout callout-info">
 
-                            <p>Service Id: 987</p>
-                            <p>Service date: 19-6-2018</p>
-                            <h5>WOM Phone number : 0401 345 765</h5>
+                            <h5>Service Id: <%= serviceId %></h5>
 
                             <button class="btn btn-primary" data-toggle="modal" data-target="#trackWearer">
                                 Track Wearer
@@ -501,10 +502,15 @@
 
         socket.on('logInserted',function(data){
 
-            $('#wrapperContent').load('/alllogs #wrapperContent', function() {
+            var reloadLink = '/alllogs?serviceID='+data;
+
+            $('#wrapperContent').load(reloadLink + ' #wrapperContent', function() {
                 initialMap();
             });
             // location.reload(true);
         });
     });
 </script>
+
+</body>
+</html>

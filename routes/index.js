@@ -16,7 +16,6 @@ const Relation = require('../models/relation');
 const io = require('../server');
 const moment = require('moment');
 var assert = require('assert');
-
 var personId = "";
 
 var mongodb;
@@ -31,107 +30,301 @@ MongoClient.connect(url,function(err,db){
 
 
 router.get("/", function(req, res){
-    if(!req.session.adminEmail) {
-        res.render("login", { title: 'Express', data : 'some text' });
+
+    if(!req.session.userPhone) {
+        res.render("userLogin", { title: 'Watch Over Me - UserLogin', data : 'some text' });
     } else {
         console.log(req.session.adminEmail);
-        res.redirect('/adminHome');
+        res.redirect('/userPanel');
     }
 })
 
-router.get("/adminHome", function(req, res){
-    if(!req.session.adminEmail) {
-        console.log(req.session.adminEmail);
+router.get("/userPanel",function(req, res){
+    if(!req.session.userPhone) {
+        console.log(req.session.userPhone);
         res.redirect('/');
     } else{
-        console.log(req.session.adminEmail);
-        res.render("index", { title: 'AdminDashboarc', session: req.session});
+        var userId = req.session.userId;
+        var query = Service.findOne({
+            wearer_id: userId
+        });
+        query.exec(function(err,serviceData){
+            if(err){
+                console.log(err);
+            }
+            else{
+                if(serviceData != null){
+                    var serviceId = serviceData.service_id;
+                    console.log(serviceId);
+    
+                    var q = Service.aggregate([
+                    {
+                        $match:
+                        {
+                            service_id: serviceId,                
+                        }
+                    
+                    },
+                    {
+                        $lookup:
+                        {
+                            from: 'persons',
+                            localField: 'wearer_id',
+                            foreignField: 'person_id',
+                            as: 'wearerInfo'
+                        }
+                    },
+                    {
+                        $lookup:
+                        {
+                            from: 'persons',
+                            localField: 'customer_id',
+                            foreignField: 'person_id',
+                            as: 'customerInfo'
+                        }
+                    },
+                    {
+                        $lookup:
+                        {
+                            from: 'relations',
+                            localField: 'service_id',
+                            foreignField: 'service_id',
+                            as: 'relationDetails'
+                        }
+                    },
+                    {
+                        $project:
+                        {
+                            serviceId : '$service_id',
+                            womNumber : '$wom_num',
+                            serviceStatus : '$status', 
+                            wearers: '$wearerInfo',
+                            customers: '$customerInfo',
+                            relationships : '$relationDetails',
+                            numberOfWatchers: {$size: "$relationDetails"},
+                        }
+                    }
+                    ])
+    
+                    q.exec(function(err,wearerServiceResult){
+
+                        console.log('Wearer Service data');
+                        console.log(wearerServiceResult);
+
+                        var query = Service.find({customer_id: userId});
+                        query.exec(function(err,customerServiceResult){
+                            if(err){
+                                console.log(err);
+                            }
+                            else{
+                                if(customerServiceResult != ""){
+                                    console.log('Customer Service data');
+                                    console.log(customerServiceResult);
+
+                                    res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, session: req.session});
+                                }
+                                else {
+                                    console.log('No Customer Service data');
+                                    customerServiceResult = "" ;    
+                                    res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult , session: req.session});
+                                }
+                            }
+                        });   
+                    });
+    
+                } else {
+                    console.log('No wearer service data');
+                    wearerServiceResult = "";
+
+                    var query = Service.find({customer_id: userId});
+                    query.exec(function(err,customerServiceResult){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            if(customerServiceResult != ""){
+                                console.log('Customer Service data');
+                                console.log(customerServiceResult);
+                                res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, session: req.session});
+                            }
+                            else {
+                                console.log('No Customer Service data');
+                                customerServiceResult = "" ;    
+                                res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, session: req.session});
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 })
 
-
-router.post("/loginProcessing", function(req, res, next){
-
-    var query = Admin.findOne({ admin_email: req.body.adminEmail, admin_password: req.body.adminPassword});
-    query.exec(function(err,loginData){
-        if(err){
-            console.log(err);
-            res.redirect('/');
-        } else {
-            //var admin = new Admin(JSON.stringify(loginData));
-            if(loginData!=null){
-                console.log(loginData.admin_email);
-                req.session.adminEmail = loginData.admin_email;
-                req.session.adminName = loginData.admin_name;
-                res.redirect('/adminHome');
-            } else {
-                res.redirect('/');
-            }
-        }
-    });
-})
-
-router.get('/services',function(req,res){
-    if(!req.session.adminEmail) {
+router.get("/wearerServiceDetails",function(req, res){
+    if(!req.session.userPhone) {
+        console.log(req.session.userPhone);
         res.redirect('/');
     } else{
-        var services_list = [];
-
-       var q = Service.aggregate([
-        {
-            $lookup:
-            {
-                from: 'persons',
-                localField: 'wearer_id',
-                foreignField: 'person_id',
-                as: 'wearerInfo'
+        var userId = req.session.userId;
+        var query = Service.findOne({
+            wearer_id: userId
+        });
+        query.exec(function(err,serviceData){
+            if(err){
+                console.log(err);
             }
-        },
-        {
-            $lookup:
-            {
-                from: 'persons',
-                localField: 'customer_id',
-                foreignField: 'person_id',
-                as: 'customerInfo'
+            else{
+                if(serviceData != null){
+                    var serviceId = serviceData.service_id;
+                    console.log(serviceId);
+                    var q = Service.aggregate([
+                        {
+                            $match:
+                            {
+                                service_id: serviceId,                
+                            }
+                
+                        },
+                        {
+                            $lookup:
+                            {
+                                from: 'persons',
+                                localField: 'wearer_id',
+                                foreignField: 'person_id',
+                                as: 'wearerInfo'
+                            }
+                        },
+                        {
+                            $lookup:
+                            {
+                                from: 'persons',
+                                localField: 'customer_id',
+                                foreignField: 'person_id',
+                                as: 'customerInfo'
+                            }
+                        },
+                        {
+                            $lookup:
+                            {
+                                from: 'relations',
+                                localField: 'service_id',
+                                foreignField: 'service_id',
+                                as: 'relationDetails'
+                            }
+                        },
+                        {
+                            $lookup:
+                            {
+                                from: 'organizations',
+                                localField: 'pharmacy_id',
+                                foreignField: 'organization_id',
+                                as: 'pharmacyInfo'
+                            }
+                        },
+                        {
+                            $lookup:
+                            {
+                                from: 'devices',
+                                localField: 'device_id',
+                                foreignField: 'device_id',
+                                as: 'deviceInfo'
+                            }
+                        },
+                        {
+                            $lookup:
+                            {
+                                from: 'sims',
+                                localField: 'sim_id',
+                                foreignField: 'sim_id',
+                                as: 'simInfo'
+                            }
+                        },
+                        {
+                            $project:
+                            {
+                                serviceId : '$service_id',
+                                womNumber : '$wom_num',
+                                deviceId : '$device_id',
+                                simId : '$sim_id',
+                                serviceStatus : '$status',
+                                serviceDate : '$service_reg_date',
+                                serviceTime : '$service_reg_time',
+                                wearers: '$wearerInfo',
+                                customers: '$customerInfo',
+                                relationships : '$relationDetails',
+                                pharmacy : '$pharmacyInfo',
+                                device : '$deviceInfo',
+                                sim : '$simInfo',
+                                numberOfWatchers: {$size: "$relationDetails"},
+                            }
+                        }
+                        ])    
+                        q.exec(function(err,result){
+            
+                            var w = Relation.aggregate([
+                                {
+                                    $match:
+                                    {
+                                        service_id: serviceId,                
+                                    }
+                        
+                                },
+                                {
+                                    $lookup:
+                                    {
+                                        from: 'persons',
+                                        localField: 'watcher_id',
+                                        foreignField: 'person_id',
+                                        as: 'watcherInfo'
+                                    }
+                                },
+                                {
+                                    $project:
+                                    {
+                                        watcherType: '$watcher_status',
+                                        priority : "priority_num",
+                                        watcherDetails : '$watcherInfo'
+                                    }
+                                }
+                                ])
+                        
+                                w.exec(function(err,data){
+            
+                                    var devices = Device.find({ device_status : 'Available' });
+            
+                                    devices.exec(function(err,devicesData){
+            
+                                        var sims = SIM.find({ sim_status : 'Available'});
+                                        
+                                        sims.exec(function(err,simsData){
+            
+                                            var resultData = [];
+                                            resultData.push({service:result,watchers:data,devicesResult:devicesData,simsResult:simsData})
+                                            console.log(JSON.stringify(resultData));
+                                            res.render("wearerServiceDetails", { title: 'ServiceDetails', session: req.session, serviceData: resultData });
+            
+                                        })
+            
+                                    })
+                                })    
+                        })
+                } else {
+                    var resultData = null;
+                    res.render("wearerServiceDetails", { title: 'ServiceDetails', session: req.session, serviceData: resultData });
+                }
             }
-        },
-        {
-            $lookup:
-            {
-                from: 'relations',
-                localField: 'service_id',
-                foreignField: 'service_id',
-                as: 'relationDetails'
-            }
-        },
-        {
-            $project:
-            {
-                serviceId : '$service_id',
-                womNumber : '$wom_num',
-                serviceStatus : '$status', 
-                wearers: '$wearerInfo',
-                customers: '$customerInfo',
-                relationships : '$relationDetails',
-                numberOfWatchers: {$size: "$relationDetails"},
-            }
-        }
-        ])
-
-        q.exec(function(err,result){
-            res.render("services", {title: 'WOM Services', session: req.session, data : result});
-        })
+        });
     }
 })
 
-router.get("/serviceDetails", function(req, res){
-var serviceId = req.query.serviceID      ;
+router.get("/customerServiceDetails",function(req, res){
+    var serviceId = req.query.serviceID;
     console.log(serviceId);
-    if(!req.session.adminEmail) {
+    if(!req.session.userPhone) {
+        console.log(req.session.userPhone);
         res.redirect('/');
     } else{
-        var q = Service.aggregate([
+            var q = Service.aggregate([
             {
                 $match:
                 {
@@ -212,8 +405,360 @@ var serviceId = req.query.serviceID      ;
                     numberOfWatchers: {$size: "$relationDetails"},
                 }
             }
-            ])
+            ])    
+            q.exec(function(err,result){
+
+                var w = Relation.aggregate([
+                    {
+                        $match:
+                        {
+                            service_id: serviceId,                
+                        }
+            
+                    },
+                    {
+                        $lookup:
+                        {
+                            from: 'persons',
+                            localField: 'watcher_id',
+                            foreignField: 'person_id',
+                            as: 'watcherInfo'
+                        }
+                    },
+                    {
+                        $project:
+                        {
+                            watcherType: '$watcher_status',
+                            priority : "priority_num",
+                            watcherDetails : '$watcherInfo'
+                        }
+                    }
+                    ])
+            
+                    w.exec(function(err,data){
+
+                        var devices = Device.find({ device_status : 'Available' });
+
+                        devices.exec(function(err,devicesData){
+
+                            var sims = SIM.find({ sim_status : 'Available'});
+                            
+                            sims.exec(function(err,simsData){
+
+                                var resultData = [];
+                                resultData.push({service:result,watchers:data,devicesResult:devicesData,simsResult:simsData})
+                                console.log(JSON.stringify(resultData));
+                                res.render("customerServiceDetails", { title: 'ServiceDetails', session: req.session, serviceData: resultData });
+
+                            })
+
+                        })
+                    })    
+            })
+    }
+})
+
+router.get('/customerServiceList',function(req,res){
+    if(!req.session.userPhone) {
+        console.log(req.session.userPhone);
+        res.redirect('/');
+    } else{
+        var userId = req.session.userId;
+       var q = Service.aggregate([
+        {
+            $match:
+            {
+                customer_id: userId,                
+            }
+        
+        },
+        {
+            $lookup:
+            {
+                from: 'persons',
+                localField: 'wearer_id',
+                foreignField: 'person_id',
+                as: 'wearerInfo'
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'persons',
+                localField: 'customer_id',
+                foreignField: 'person_id',
+                as: 'customerInfo'
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'relations',
+                localField: 'service_id',
+                foreignField: 'service_id',
+                as: 'relationDetails'
+            }
+        },
+        {
+            $project:
+            {
+                serviceId : '$service_id',
+                womNumber : '$wom_num',
+                serviceStatus : '$status', 
+                wearers: '$wearerInfo',
+                customers: '$customerInfo',
+                relationships : '$relationDetails',
+                numberOfWatchers: {$size: "$relationDetails"},
+            }
+        }
+        ])
+
+        q.exec(function(err,result){
+            console.log(result);
+            res.render("customerServiceList", {title: 'WOM Services', session: req.session, data : result});
+        })
+    }
+})
+
+router.get("/userProfile",function(req, res){
+    if(!req.session.userPhone) {
+        console.log(req.session.userPhone);
+        res.redirect('/');
+    } else {
+        userId = req.session.userId;
+        var query = Person.findOne({person_id: userId});
+        query.exec(function(err,personData){
+            if(err){
+                console.log(err);
+            }
+            else{
+                if(personData != null){
+                    console.log(personData);
+                    res.render("userProfile", {title: 'WOM Services', session: req.session, data : personData});
+                }
+            }
+        });
+    }
+})
+
+router.post("/userLogin", function(req, res){
+
+    var query = Person.findOne({ phone_number: req.body.userPhone, password: req.body.userPassword});
+    query.exec(function(err,loginData){
+        if(err){
+            console.log(err);
+            res.redirect('/');
+        } else {
+            //var admin = new Admin(JSON.stringify(loginData));
+            if(loginData!=null){
+                console.log(loginData.phone_number);
+                req.session.userId = loginData.person_id;
+                req.session.userPhone = loginData.phone_number;
+                req.session.userName = loginData.person_first_name + " " + loginData.person_last_name;
+                res.redirect('/userPanel');
+            } else {
+                res.redirect('/');
+            }
+        }
+    });
+})
+
+router.get("/admin", function(req, res){
+    if(!req.session.adminEmail) {
+        res.render("login", { title: 'Express', data : 'some text' });
+    } else {
+        console.log(req.session.adminEmail);
+        res.redirect('/adminHome');
+    }
+})
+
+router.get("/adminHome", function(req, res){
+    if(!req.session.adminEmail) {
+        console.log(req.session.adminEmail);
+        res.redirect('/');
+    } else{
+        console.log(req.session.adminEmail);
+        res.render("index", { title: 'AdminDashboarc', session: req.session});
+    }
+})
+
+router.get('/alllogs', function(req,res){
+    if(!req.session.adminEmail) {
+        console.log(req.session.adminEmail);
+        res.redirect('/');
+    } else{
+        var serviceId = req.query.serviceID;
+        var query = Log.find({service_id: serviceId}).sort('-_id');
+        query.exec(function(err,log){
+            //res.send(log);
+            res.render('logs',{log,serviceId, session: req.session});
+        });
+    }
+})
+
+router.post("/loginProcessing", function(req, res, next){
+
+    var query = Admin.findOne({ admin_email: req.body.adminEmail, admin_password: req.body.adminPassword});
+    query.exec(function(err,loginData){
+        if(err){
+            console.log(err);
+            res.redirect('/');
+        } else {
+            //var admin = new Admin(JSON.stringify(loginData));
+            if(loginData!=null){
+                console.log(loginData.admin_email);
+                req.session.adminEmail = loginData.admin_email;
+                req.session.adminName = loginData.admin_name;
+                res.redirect('/adminHome');
+            } else {
+                res.redirect('/');
+            }
+        }
+    });
+})
+
+router.get('/services',function(req,res){
+    if(!req.session.adminEmail) {
+        res.redirect('/');
+    } else{
+        var services_list = [];
+
+       var q = Service.aggregate([
+        {
+            $lookup:
+            {
+                from: 'persons',
+                localField: 'wearer_id',
+                foreignField: 'person_id',
+                as: 'wearerInfo'
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'persons',
+                localField: 'customer_id',
+                foreignField: 'person_id',
+                as: 'customerInfo'
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'relations',
+                localField: 'service_id',
+                foreignField: 'service_id',
+                as: 'relationDetails'
+            }
+        },
+        {
+            $project:
+            {
+                serviceId : '$service_id',
+                womNumber : '$wom_num',
+                serviceStatus : '$status', 
+                wearers: '$wearerInfo',
+                customers: '$customerInfo',
+                relationships : '$relationDetails',
+                numberOfWatchers: {$size: "$relationDetails"},
+            }
+        }
+        ])
+
+        q.exec(function(err,result){
+            res.render("services", {title: 'WOM Services', session: req.session, data : result});
+        })
+    }
+})
+
+router.get("/serviceDetails", function(req, res){
+var serviceId = req.query.serviceID;
+    console.log(serviceId);
+    if(!req.session.adminEmail) {
+        res.redirect('/');
+    } else{
+            var q = Service.aggregate([
+            {
+                $match:
+                {
+                    service_id: serviceId,                
+                }
     
+            },
+            {
+                $lookup:
+                {
+                    from: 'persons',
+                    localField: 'wearer_id',
+                    foreignField: 'person_id',
+                    as: 'wearerInfo'
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: 'persons',
+                    localField: 'customer_id',
+                    foreignField: 'person_id',
+                    as: 'customerInfo'
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: 'relations',
+                    localField: 'service_id',
+                    foreignField: 'service_id',
+                    as: 'relationDetails'
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: 'organizations',
+                    localField: 'pharmacy_id',
+                    foreignField: 'organization_id',
+                    as: 'pharmacyInfo'
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: 'devices',
+                    localField: 'device_id',
+                    foreignField: 'device_id',
+                    as: 'deviceInfo'
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: 'sims',
+                    localField: 'sim_id',
+                    foreignField: 'sim_id',
+                    as: 'simInfo'
+                }
+            },
+            {
+                $project:
+                {
+                    serviceId : '$service_id',
+                    womNumber : '$wom_num',
+                    deviceId : '$device_id',
+                    simId : '$sim_id',
+                    serviceStatus : '$status',
+                    serviceDate : '$service_reg_date',
+                    serviceTime : '$service_reg_time',
+                    wearers: '$wearerInfo',
+                    customers: '$customerInfo',
+                    relationships : '$relationDetails',
+                    pharmacy : '$pharmacyInfo',
+                    device : '$deviceInfo',
+                    sim : '$simInfo',
+                    numberOfWatchers: {$size: "$relationDetails"},
+                }
+            }
+            ])    
             q.exec(function(err,result){
 
                 var w = Relation.aggregate([
@@ -406,14 +951,6 @@ router.get('/logout',function(req,res){
     });
 })
 
-router.get('/alllogs', function(req,res){
-    var query = Log.find().sort('-_id');
-    query.exec(function(err,log){
-        //res.send(log);
-        res.render('logs',{log});
-    });
-})
-
 router.get("/addService", function(req, res){
 
     var isPharmacy = 'yes';
@@ -499,7 +1036,6 @@ router.post("/addServiceProcessing",async function(req,res){
 
         watcherOne.save().then(function(){
             watcherOneDetail.save();
-            res.render('test',{data: JSON.stringify(watcherOne) + JSON.stringify(watcherOneDetail)});
         });
     }
     else{
@@ -565,6 +1101,7 @@ router.post("/addServiceProcessing",async function(req,res){
     service.save().then(function(){
         relation.save();
     });
+    res.render('test');
     
 })
 
@@ -858,12 +1395,12 @@ router.get('/addNewOrganization',async function(req,res){
 })
 
 
-router.post("/activateService", function(req, res, next){
+router.get("/activateService",async function(req, res){
 
-    var serviceId =  req.body.serviceId;
-    var simId =  req.body.simId;
-    var womNumber =  req.body.womNumber;
-    var device =  req.body.device;
+    var serviceId =  req.query.serviceId;
+    var simId =  req.query.simId;
+    var womNumber =  req.query.womNumber;
+    var device =  req.query.device;
 
     if(!req.session.adminEmail) {
         console.log(req.session.adminEmail);
@@ -887,7 +1424,13 @@ router.post("/activateService", function(req, res, next){
             simData.save();
         });
 
-        res.redirect('/serviceDetails?serviceID='+ serviceId);
+        res.send("Service activated");
+
+        // res.render('serviceActivation',{serviceId});
+
+        // res.redirect('back');
+
+        // res.redirect('/serviceDetails?serviceID='+ serviceId);
     }
 })
 

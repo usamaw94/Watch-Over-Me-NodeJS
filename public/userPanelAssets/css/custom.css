@@ -1,0 +1,14 @@
+.show-full-details {
+    transition: 0.5s;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.show-full-details:hover {
+    color: #F3BB45;
+}
+
+.modal-custom-title {
+    font-size: 18px;
+    font-weight: bold
+}

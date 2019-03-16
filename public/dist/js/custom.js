@@ -498,6 +498,8 @@ $(".showWatcherDetails").on("click", function(){
         });
 });
 
+//----------------------------------------------
+
 $(document).ready(function(){
     $("#watcherPhone").keyup(function(){     
         $("#watcherId").val('');
@@ -661,4 +663,43 @@ $("#addOrganizationForm").on("submit", function(e){
         }
     });
     $('#addOrganizationForm').trigger("reset");
+});
+
+//----------------------------------------------
+
+$("#activateServiceForm").on("submit", function(e){
+    e.preventDefault();
+    var url="/activateService";
+    var serviceId = $('#modalServiceId').val();
+    var data=$('#activateServiceForm').serialize();
+
+    var reloadUrl = "/serviceDetails?serviceID=" + serviceId;
+
+    // alert(data);
+
+    $.ajax({
+        url:url,
+        data:data,
+        datatype:"json",
+        method:"GET",
+        success:function(data){
+            alert(data);
+            $('#reloadContent').load(reloadUrl + " #reloadContent");
+            $('#activateServiceModal').modal('toggle');
+        }
+    });
+    $('#activateServiceForm').trigger("reset");
+});
+
+//----------------------------------------------
+
+$("#viewLogs").on("click", function(){
+
+    var id = $(this).attr('data-service-id');
+    var status = $(this).attr('data-service-status');
+    if(status == "Activated"){
+        window.location.href = "/alllogs?serviceID=" + id;
+    } else {
+        alert("Service is not activated yet");
+    }
 });
