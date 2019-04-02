@@ -174,7 +174,15 @@
                                     <hr />
                                     <div class="stats">
                                         <div class="stats">
-                                            <a href="servicesListWatcher.html"><i class="ti-eye"></i> View All</a>
+                                            <%if (locals.watcherServiceData) { %>
+
+                                                <a href="/customerServiceList"><i class="ti-eye"></i> View All</a>
+    
+                                            <% } else { %>
+                                                
+                                                <p><i class="ti-close"></i> No data to show</p>
+    
+                                            <% } %>
                                         </div>
                                     </div>
                                 </div>
@@ -262,13 +270,16 @@
                         <div class="card">
                             <div class="header">
                                 <div style="float: right" class="text-right">
+                                    <%if (locals.watcherServiceData) { %>
                                     <a href="servicesList.html" class="btn btn-sm btn-primary btn-icon">View all</a>
+                                    <% } %>
                                 </div>
                                 <p class="category">Services as</p>
                                 <h4 class="title">Watcher</h4>
                             </div>
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-striped">
+                                    <%if (locals.watcherServiceData) { %>
                                     <thead>
                                     <th>ID</th>
                                     <th>WOM Number</th>
@@ -276,23 +287,22 @@
                                     <th></th>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>WOMS00000672</td>
-                                        <td>0403778115</td>
-                                        <td>Activated</td>
-                                        <td>
-                                            <a class="btn btn-info" href="serviceLogs.html">Details</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>WOMS00000672</td>
-                                        <td>0403778115</td>
-                                        <td>Activated</td>
-                                        <td>
-                                            <a class="btn btn-info" href="serviceLogs.html">Details</a>
-                                        </td>
-                                    </tr>
+                                    <% for(var wtsd of watcherServiceData) {%>
+                                        <tr>
+                                            <td><%= wtsd.serviceId %></td>
+                                            <td><%= wtsd.womNumber %></td>
+                                            <td><%= wtsd.serviceStatus %></td>
+                                            <td>
+                                                <a class="btn btn-info" href="serviceLogs.html">Details</a>
+                                            </td>
+                                        </tr>
+                                    <% } %>
                                     </tbody>
+                                    <% } else { %>
+                                        <centre>
+                                            <h6 class="text-center info" style="margin-left:20px; color: #F3BB45">User is not the watcher for any service</h6>
+                                        </centre>
+                                    <% } %>
                                 </table>
                             </div>
                         </div>

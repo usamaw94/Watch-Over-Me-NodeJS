@@ -121,12 +121,110 @@ router.get("/userPanel",function(req, res){
                                     console.log('Customer Service data');
                                     console.log(customerServiceResult);
 
-                                    res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, session: req.session});
+                                    //// 
+
+                                    var w = Relation.aggregate([
+                                        {
+                                            $match:
+                                            {
+                                                watcher_id: userId,                
+                                            }
+                                
+                                        },
+                                        {
+                                            $lookup:
+                                            {
+                                                from: 'services',
+                                                localField: 'service_id',
+                                                foreignField: 'service_id',
+                                                as: 'serviceInfo'
+                                            }
+                                        },
+                                        {
+                                            $project:
+                                            {
+                                                serviceId : { "$arrayElemAt": [ "$serviceInfo.service_id",0 ] },
+                                                womNumber : {"$arrayElemAt": [ "$serviceInfo.wom_num", 0 ]},
+                                                serviceStatus : { "$arrayElemAt": [ "$serviceInfo.status", 0 ] },
+                                                watcherType: '$watcher_status',
+                                                priority : "$priority_num",
+                                            }
+                                        }
+                                        ])
+                                
+                                        w.exec(function(err,watcherServiceResult){
+                                            if(err){
+                                                console.log(err);
+                                            }
+                                            else{
+                                                if(watcherServiceResult != ""){
+
+                                                    res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, watcherServiceData : watcherServiceResult , session: req.session});
+
+                                                } else {
+                                                    watcherServiceResult = "";
+                                                    res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, watcherServiceData : watcherServiceResult , session: req.session});
+                                                }
+
+                                            }
+                                        })
+
                                 }
                                 else {
                                     console.log('No Customer Service data');
-                                    customerServiceResult = "" ;    
-                                    res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult , session: req.session});
+                                    customerServiceResult = "" ;
+                                    
+
+                                    var w = Relation.aggregate([
+                                        {
+                                            $match:
+                                            {
+                                                watcher_id: userId,                
+                                            }
+                                
+                                        },
+                                        {
+                                            $lookup:
+                                            {
+                                                from: 'services',
+                                                localField: 'service_id',
+                                                foreignField: 'service_id',
+                                                as: 'serviceInfo'
+                                            }
+                                        },
+                                        {
+                                            $project:
+                                            {
+                                                serviceId : { "$arrayElemAt": [ "$serviceInfo.service_id",0 ] },
+                                                womNumber : {"$arrayElemAt": [ "$serviceInfo.wom_num", 0 ]},
+                                                serviceStatus : { "$arrayElemAt": [ "$serviceInfo.status", 0 ] },
+                                                watcherType: '$watcher_status',
+                                                priority : "$priority_num",
+                                            }
+                                        }
+                                        ])
+                                
+                                        w.exec(function(err,watcherServiceResult){
+                                            console.log('Watcher service data');
+                                            console.log(JSON.stringify(watcherServiceResult));
+
+                                            if(err){
+                                                console.log(err);
+                                            }
+                                            else{
+                                                if(watcherServiceResult != ""){
+
+                                                    res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, watcherServiceData : watcherServiceResult , session: req.session});
+
+                                                } else {
+                                                    watcherServiceResult = "";
+                                                    res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, watcherServiceData : watcherServiceResult , session: req.session});
+                                                }
+
+                                            }
+
+                                        })
+
                                 }
                             }
                         });   
@@ -145,12 +243,110 @@ router.get("/userPanel",function(req, res){
                             if(customerServiceResult != ""){
                                 console.log('Customer Service data');
                                 console.log(customerServiceResult);
-                                res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, session: req.session});
+
+                                var w = Relation.aggregate([
+                                    {
+                                        $match:
+                                        {
+                                            watcher_id: userId,                
+                                        }
+                            
+                                    },
+                                    {
+                                        $lookup:
+                                        {
+                                            from: 'services',
+                                            localField: 'service_id',
+                                            foreignField: 'service_id',
+                                            as: 'serviceInfo'
+                                        }
+                                    },
+                                    {
+                                        $project:
+                                        {
+                                            serviceId : { "$arrayElemAt": [ "$serviceInfo.service_id",0 ] },
+                                            womNumber : {"$arrayElemAt": [ "$serviceInfo.wom_num", 0 ]},
+                                            serviceStatus : { "$arrayElemAt": [ "$serviceInfo.status", 0 ] },
+                                            watcherType: '$watcher_status',
+                                            priority : "$priority_num",
+                                        }
+                                    }
+                                    ])
+                            
+                                    w.exec(function(err,watcherServiceResult){
+                                        console.log('Watcher service data');
+                                        console.log(JSON.stringify(watcherServiceResult));
+
+                                        if(err){
+                                            console.log(err);
+                                        }
+                                        else{
+                                            if(watcherServiceResult != ""){
+
+                                                res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, watcherServiceData : watcherServiceResult , session: req.session});
+
+                                            } else {
+                                                watcherServiceResult = "";
+                                                res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, watcherServiceData : watcherServiceResult , session: req.session});
+                                            }
+
+                                        }
+
+                                    })
                             }
                             else {
                                 console.log('No Customer Service data');
-                                customerServiceResult = "" ;    
-                                res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, session: req.session});
+                                customerServiceResult = "" ;
+                                
+                                var w = Relation.aggregate([
+                                    {
+                                        $match:
+                                        {
+                                            watcher_id: userId,                
+                                        }
+                            
+                                    },
+                                    {
+                                        $lookup:
+                                        {
+                                            from: 'services',
+                                            localField: 'service_id',
+                                            foreignField: 'service_id',
+                                            as: 'serviceInfo'
+                                        }
+                                    },
+                                    {
+                                        $project:
+                                        {
+                                            serviceId : { "$arrayElemAt": [ "$serviceInfo.service_id",0 ] },
+                                            womNumber : {"$arrayElemAt": [ "$serviceInfo.wom_num", 0 ]},
+                                            serviceStatus : { "$arrayElemAt": [ "$serviceInfo.status", 0 ] },
+                                            watcherType: '$watcher_status',
+                                            priority : "$priority_num",
+                                        }
+                                    }
+                                    ])
+                            
+                                    w.exec(function(err,watcherServiceResult){
+                                        console.log('Watcher service data');
+                                        console.log(JSON.stringify(watcherServiceResult));
+
+                                        if(err){
+                                            console.log(err);
+                                        }
+                                        else{
+                                            if(watcherServiceResult != ""){
+
+                                                res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, watcherServiceData : watcherServiceResult , session: req.session});
+
+                                            } else {
+                                                watcherServiceResult = "";
+                                                res.render("userPanel", { title: 'Watch Over Me - UserPanel', wearerServiceData : wearerServiceResult, customerServiceData  : customerServiceResult, watcherServiceData : watcherServiceResult , session: req.session});
+                                            }
+
+                                        }
+
+                                    })
                             }
                         }
                     });
