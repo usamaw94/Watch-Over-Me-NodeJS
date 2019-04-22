@@ -453,13 +453,13 @@ function callingWatchers(i,cycle,regToken,log,tempData){
                 watcherResponses = watcherResponses.filter(function(x){
                     return (x !== (undefined || null || ''));
                 });
+                sendNotification("Wearerfistname,\nYOU SHOULD IMMEDIATELY TAKE STEPS TO GET ATTENTION BY OTHER MEANS.\n\nNone of your watchers have said they can visit you after two cycles of contact attempts from WOM Team.\n\nYour watchers have been informed that there is no Responding Watcher appointed to your HelpMe request and that they should check in on you, if they can.\n\nWe hope you are OK.\n\WOM Team","High",regToken);
                 console.log(JSON.stringify(watcherResponses));
             }
         },30000)
-
     }
     else {
-        sendNotification("Wearerfistname,\nYOU SHOULD IMMEDIATELY TAKE STEPS TO GET ATTENTION BY OTHER MEANS.\n\nNone of your watchers have said they can visit you after two cycles of contact attempts from WOM Team.\n\nYour watchers have been informed that there is no Responding Watcher appointed to your HelpMe request and that they should check in on you, if they can.\n\nWe hope you are OK.\n\WOM Team","High",regToken);
+        sendNotification(tempData.wearer_fname + ",\nYOU SHOULD IMMEDIATELY TAKE STEPS TO GET ATTENTION BY OTHER MEANS.\n\nNone of your watchers have said they can visit you after two cycles of contact attempts from WOM Team.\n\nYour watchers have been informed that there is no Responding Watcher appointed to your HelpMe request and that they should check in on you, if they can.\n\nWe hope you are OK.\n\WOM Team","High",regToken);
     }
 }
 router.get('/helpmeresponse/:serviceNum/:date/:time',function(req,res){
