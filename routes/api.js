@@ -382,7 +382,7 @@ function callingWatchers(i,cycle,regToken,log,tempData){
                 }
     
                 i++;
-                if (nextCall == true && i < tempData.watchers.length){
+                if (nextCall == true){
                     sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
                     if(i == tempData.watchers.length){
                         i = 0;
@@ -398,6 +398,10 @@ function callingWatchers(i,cycle,regToken,log,tempData){
                     if(responseIndex != -1){
                         sendNotification("Connecting watcher","Watcher " + watcherNum + "  responded with YES","High",regToken);
                     }
+                    delete watcherResponses[removeIndex];
+                    watcherResponses = watcherResponses.filter(function(x){
+                        return (x !== (undefined || null || ''));
+                    });
                     console.log(JSON.stringify(watcherResponses));
                 }
             },30000)
