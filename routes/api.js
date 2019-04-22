@@ -292,7 +292,7 @@ router.post('/helpmecheck', function(req,res){
             
                 w.exec(function(err,watchers){
                         
-                        sendNotification("Alert Received",wrData[0].wearerFName +"We’re contacting your watcher list for you!  We will tell you who can visit you","High",regToken);
+                        sendNotification("Alert Received",wrData[0].wearerFName +", We’re contacting your watcher list for you!  We will tell you who can visit you","High",regToken);
                         setTimeout(function(){
                             var temp = new Object();
                             temp["service_id"] = log.service_id;
