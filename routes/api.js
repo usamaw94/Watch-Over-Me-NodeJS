@@ -9,6 +9,8 @@ const Counter = require('../models/counter');
 const personDetail = require('../models/personDetail');
 const Relation = require('../models/relation');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const smsapi = require('../models/clickApi');
+
 // const io = require('../server');
 
 // var socket = io.connect('http://localhost:5000');
@@ -24,6 +26,30 @@ admin.initializeApp({
   databaseURL: "https://womproject-18095.firebaseio.com"
 });
 
+router.get('/helpMeRespond',function(req,res){
+    res.render("helpMeRespond", { title: 'Watch Over Me - Respond', data : 'some text' });
+});
+
+router.get('/checkSms', function(req,res){
+ 
+    var smsMessage = new smsapi.SmsMessage();
+ 
+    smsMessage.from = "+61435533452";
+    smsMessage.to = "+61408360203";
+    smsMessage.body = "test message";
+ 
+    var smsApi = new smsapi.SMSApi("waqax94", "4B9FAA7D-8EA6-4090-4F2A-B311EF7536A3");
+ 
+    var smsCollection = new smsapi.SmsMessageCollection();
+ 
+    smsCollection.messages = [smsMessage];
+ 
+    smsApi.smsSendPost(smsCollection).then(function(response) {
+        console.log(response.body);
+    }).catch(function(err){
+        console.error(err.body);
+    });
+});
 
 function sendNotification(notificationTitle ,notificationBody, notificationPriority,regToken){
     var payload = {
@@ -186,7 +212,7 @@ router.post('/receiveMessage', (req, res) => {
   });
 
 
-  router.post('/helpmecheck', function(req,res){
+router.post('/helpmecheck', function(req,res){
     var log = new Log(req.body);
     var regToken = log['registration_token'];
     var serviceId = log['service_id'];
@@ -278,7 +304,7 @@ router.post('/receiveMessage', (req, res) => {
                             temp["watchers"] = watchers;
                             watcherResponses.push(temp);
                             
-                            callingWatchers(0,regToken,log,temp);
+                            callingWatchers(0,1,regToken,log,temp);
                         },5000)
                             
                         res.send(JSON.stringify("Help Me function activated!"));
@@ -313,7 +339,7 @@ function compareWatcherResponse(senderNum,serviceNum,response){
 
 }
 
-function callingWatchers(i,regToken,log,tempData){
+function callingWatchers(i,cycle,regToken,log,tempData){
 
     var responseIndex = -1;
     var removeIndex = -1;
@@ -323,18 +349,71 @@ function callingWatchers(i,regToken,log,tempData){
     console.log("Watcher "+ wCount + " called");
     var reply = tempData.service_id + " yes";
     reply.link("#");
-    var msg = "Your Wearer, " + tempData.wearer_fname +" "+ tempData.wearer_lname +", has pressed the HelpMe button and needs assistance at their location.\n\nYou are Watcher " + wCount + " of " + tempData.watchers.length + "\n\n Service Number: " + tempData.service_id + "\n\nLocation : https://www.google.com/maps/dir//"+log.location_latitude+","+log.location_longitude+"\n\nIf you will visit "+ tempData.wearer_fname +" and assist then reply with this text: \n\n"+ reply +"\n\nIf you will not visit "+ tempData.wearer_fname +" then ignore this sms. Any other response rather than the above will be consider as No.\n\nNext watcher will be contacted if we don't receive a response from you.\n\nWe will tell you which Watcher is visiting "+tempData.wearer_fname+", or if no Watcher is available to visit.\n\n\nRegards\nWOM Team";
+    var msg = "Attention " + tempData.watchers[i].watcherName + "\nYour Wearer, " + tempData.wearer_fname +" "+ tempData.wearer_lname +", has pressed the HelpMe button and needs assistance at their location.\n\nYou are Watcher " + wCount + " of " + tempData.watchers.length + " for " + tempData.wearer_fname + " on Service ID: \n" + tempData.service_id + "link";
     sendNotification("Connecting watcher","Now contacting watcher " + wCount,"High",regToken);
 
-    twilioClient.messages.create({
-        from: "+61488852471",
-        to: recNum,
-        body: msg
-    }).then(function(){
-        twilioClient.calls.create({
-            url: 'https://handler.twilio.com/twiml/EH188dc109e62c15bb744484fa84b0f08c',
+
+    if(cycle < 2){
+        twilioClient.messages.create({
+            from: "+61488852471",
             to: recNum,
-            from: "+61488852471"
+            body: msg
+        }).then(function(){
+            twilioClient.calls.create({
+                url: 'https://handler.twilio.com/twiml/EH188dc109e62c15bb744484fa84b0f08c',
+                to: recNum,
+                from: "+61488852471"
+            }).then((call) => console.log(JSON.stringify("Call has been sent!")));
+            setTimeout(function(){
+                console.log(JSON.stringify(watcherResponses));
+                for(var c = 0 ; c < watcherResponses.length ; c++){
+                    if(watcherResponses[c].service_id == log.service_id){
+                        removeIndex = c;
+                        for(var j = 0 ; j < watcherResponses[c].watchers.length ; j++){
+                            if(watcherResponses[c].watchers[j].response == 'true'){
+                                console.log("There");
+                                nextCall = false;
+                                responseIndex = j;
+                                break;
+                            }
+                        }
+                    }
+                }
+    
+                i++;
+                if (nextCall == true && i < tempData.watchers.length){
+                    sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
+                    if(i == tempData.watchers.length){
+                        i = 0;
+                        cycle++;
+                    }
+                    setTimeout(function(){
+                        callingWatchers(i,cycle,regToken,log,tempData);
+                    },5000)
+                }
+                else{
+                    var watcherNum = responseIndex+1
+                    if(responseIndex != -1){
+                        sendNotification("Connecting watcher","Watcher " + watcherNum + "  responded with YES","High",regToken);
+                    }
+                    delete watcherResponses[removeIndex];
+                    watcherResponses = watcherResponses.filter(function(x){
+                        return (x !== (undefined || null || ''));
+                    });
+                    console.log(JSON.stringify(watcherResponses));
+                }
+            },30000)
+        });
+    }
+    else if (cycle == 2){
+
+        sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
+
+
+        twilioClient.calls.create({
+        url: 'https://handler.twilio.com/twiml/EH188dc109e62c15bb744484fa84b0f08c',
+        to: recNum,
+        from: "+61488852471"
         }).then((call) => console.log(JSON.stringify("Call has been sent!")));
         setTimeout(function(){
             console.log(JSON.stringify(watcherResponses));
@@ -351,12 +430,13 @@ function callingWatchers(i,regToken,log,tempData){
                     }
                 }
             }
-
+    
             i++;
             if (nextCall == true && i < tempData.watchers.length){
                 sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
                 if(i == tempData.watchers.length){
                     i = 0;
+                    cycle++;
                 }
                 setTimeout(function(){
                     callingWatchers(i,regToken,log,tempData);
@@ -366,19 +446,6 @@ function callingWatchers(i,regToken,log,tempData){
                 var watcherNum = responseIndex+1
                 if(responseIndex != -1){
                     sendNotification("Connecting watcher","Watcher " + watcherNum + "  responded with YES","High",regToken);
-                    for (var l = 0 ; l < watcherResponses[removeIndex].watchers.length ; l++){
-                        if(l != responseIndex){
-                            var senderNum = "+61" + watcherResponses[removeIndex].watchers[l].watcherPhone.substring(1);
-                            var infomsg = "Watcher "+watcherNum+" "+watcherResponses[removeIndex].watchers[responseIndex].watcherName+", responded with yes and he is going to assist "+watcherResponses[removeIndex].wearer_fname+"\n\nRegards\nWOM Team";
-                            twilioClient.messages.create({
-                                from: "+61488852471",
-                                to: senderNum,
-                                body: infomsg
-                            }).then(function(){
-                                console.log("Message Sent");
-                            })
-                        }
-                    }
                 }
                 delete watcherResponses[removeIndex];
                 watcherResponses = watcherResponses.filter(function(x){
@@ -387,8 +454,30 @@ function callingWatchers(i,regToken,log,tempData){
                 console.log(JSON.stringify(watcherResponses));
             }
         },30000)
-    });
+
+    }
+    else {
+        sendNotification("Wearerfistname,\nYOU SHOULD IMMEDIATELY TAKE STEPS TO GET ATTENTION BY OTHER MEANS.\n\nNone of your watchers have said they can visit you after two cycles of contact attempts from WOM Team.\n\nYour watchers have been informed that there is no Responding Watcher appointed to your HelpMe request and that they should check in on you, if they can.\n\nWe hope you are OK.\n\WOM Team","High",regToken);
+    }
 }
+router.get('/helpmeresponse/:serviceNum/:date/:time',function(req,res){
+    console.log(JSON.stringify(req.param.serviceNum + "\n" + req.param.date + "\n" + req.param.time));
+});
+
+
+//for (var l = 0 ; l < watcherResponses[removeIndex].watchers.length ; l++){
+    //     if(l != responseIndex){
+    //         var senderNum = "+61" + watcherResponses[removeIndex].watchers[l].watcherPhone.substring(1);
+    //         var infomsg = "Watcher "+watcherNum+" "+watcherResponses[removeIndex].watchers[responseIndex].watcherName+", responded with yes and he is going to assist "+watcherResponses[removeIndex].wearer_fname+"\n\nRegards\nWOM Team";
+    //         twilioClient.messages.create({
+    //             from: "+61488852471",
+    //             to: senderNum,
+    //             body: infomsg
+    //         }).then(function(){
+    //             console.log("Message Sent");
+    //         })
+    //     }
+    // }
 
 //end
 module.exports = router;
