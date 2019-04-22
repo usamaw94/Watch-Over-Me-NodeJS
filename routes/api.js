@@ -292,7 +292,7 @@ router.post('/helpmecheck', function(req,res){
             
                 w.exec(function(err,watchers){
                         
-                        sendNotification("Alert Received","We're calling your watcher for you!","High",regToken);
+                        sendNotification("Alert Received",wrData[0].wearerFName +"We’re contacting your watcher list for you!  We will tell you who can visit you","High",regToken);
                         setTimeout(function(){
                             var temp = new Object();
                             temp["service_id"] = log.service_id;
@@ -350,11 +350,16 @@ function callingWatchers(i,cycle,regToken,log,tempData){
     var reply = tempData.service_id + " yes";
     reply.link("#");
     var msg = "Attention " + tempData.watchers[i].watcherName + "\nYour Wearer, " + tempData.wearer_fname +" "+ tempData.wearer_lname +", has pressed the HelpMe button and needs assistance at their location.\n\nYou are Watcher " + wCount + " of " + tempData.watchers.length + " for " + tempData.wearer_fname + " on Service ID: \n" + tempData.service_id + "link";
-    sendNotification("Connecting watcher","Now contacting watcher " + wCount,"High",regToken);
 
 
     console.log("Cycle: "+ cycle);
     if(cycle < 2){
+        if(wCount == 1){
+            sendNotification("Connecting watcher",tempData.wearer_fname + ", WOM Team is now contacting "+ tempData.watchers[i].watcherName +" (No. " + wCount + " of "+ tempData.watchers.length +" watchers) by SMS and phone.  We will contact all of your watchers in sequence and keep you informed of progress.","High",regToken);
+        }
+        else{
+            sendNotification("Connecting watcher",tempData.wearer_fname + ", WOM Team is now contacting "+ tempData.watchers[i].watcherName +" (No. " + wCount + " of "+ tempData.watchers.length +" watchers) by SMS and phone.","High",regToken);
+        }
         twilioClient.messages.create({
             from: "+61488852471",
             to: recNum,
@@ -383,7 +388,6 @@ function callingWatchers(i,cycle,regToken,log,tempData){
     
                 i++;
                 if (nextCall == true){
-                    sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
                     if(i == tempData.watchers.length){
                         i = 0;
                         cycle++;
@@ -396,7 +400,8 @@ function callingWatchers(i,cycle,regToken,log,tempData){
                 else{
                     var watcherNum = responseIndex+1
                     if(responseIndex != -1){
-                        sendNotification("Connecting watcher","Watcher " + watcherNum + "  responded with YES","High",regToken);
+                        sendNotification("Connecting watcher",tempData.wearer_fname + ",\nGood News!  Responding Watcher "+tempData.watchers[responseIndex].watcherName+" has said they will attend to you.  WOM Team will let your other watchers know.","High",regToken);
+                        //sendNotification("Connecting watcher","Watcher " + watcherNum + "  responded with YES","High",regToken);
                     }
                     delete watcherResponses[removeIndex];
                     watcherResponses = watcherResponses.filter(function(x){
@@ -408,12 +413,14 @@ function callingWatchers(i,cycle,regToken,log,tempData){
         });
     }
     else if (cycle == 2){
+        if(i == 0){
+            sendNotification("Connecting watcher",tempData.wearer_fname + ",\nNone of your watchers have said they can visit you after the first cycle of contact attempts.  We will contact them all one more time and keep you informed of progress.\n\nYou should start to consider what other ways you can get attention.","High",regToken);
+        }
 
-        sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
-
+        sendNotification("Connecting watcher",tempData.wearer_fname + ",\nWOM Team is now contacting "+ tempData.watchers[i].watcherName +" (No. "+ wCount +" of "+ tempData.watchers.length +" watchers) for the second time by phone.","High",regToken);
 
         twilioClient.calls.create({
-        url: 'https://handler.twilio.com/twiml/EH188dc109e62c15bb744484fa84b0f08c',
+        url: 'https://handler.twilio.com/twiml/EH79b79fd49988ed1748ba019b00808e5d',
         to: recNum,
         from: "+61488852471"
         }).then((call) => console.log(JSON.stringify("Call 2 has been sent!")));
@@ -435,7 +442,6 @@ function callingWatchers(i,cycle,regToken,log,tempData){
     
             i++;
             if (nextCall == true && i < tempData.watchers.length){
-                sendNotification("Connecting watcher","Watcher " +wCount+ " didn't respond","High",regToken);
                 if(i == tempData.watchers.length){
                     i = 0;
                     cycle++;
@@ -447,19 +453,19 @@ function callingWatchers(i,cycle,regToken,log,tempData){
             else{
                 var watcherNum = responseIndex+1
                 if(responseIndex != -1){
-                    sendNotification("Connecting watcher","Watcher " + watcherNum + "  responded with YES","High",regToken);
+                    sendNotification("Connecting watcher",tempData.wearer_fname + ",\nGood News!  Responding Watcher "+tempData.watchers[responseIndex].watcherName+" has said they will attend to you.  WOM Team will let your other watchers know.","High",regToken);
                 }
                 delete watcherResponses[removeIndex];
                 watcherResponses = watcherResponses.filter(function(x){
                     return (x !== (undefined || null || ''));
                 });
-                sendNotification("Wearerfistname,\nYOU SHOULD IMMEDIATELY TAKE STEPS TO GET ATTENTION BY OTHER MEANS.\n\nNone of your watchers have said they can visit you after two cycles of contact attempts from WOM Team.\n\nYour watchers have been informed that there is no Responding Watcher appointed to your HelpMe request and that they should check in on you, if they can.\n\nWe hope you are OK.\n\WOM Team","High",regToken);
+                sendNotification("Connecting watcher",tempData.wearer_fname + ",\nYOU SHOULD IMMEDIATELY TAKE STEPS TO GET ATTENTION BY OTHER MEANS.\n\nNone of your watchers have said they can visit you after two cycles of contact attempts from WOM Team.\n\nYour watchers have been informed that there is no Responding Watcher appointed to your HelpMe request and that they should check in on you, if they can.\n\nWe hope you are OK.\n\WOM Team","High",regToken);
                 console.log(JSON.stringify(watcherResponses));
             }
         },30000)
     }
     else {
-        sendNotification(tempData.wearer_fname + ",\nYOU SHOULD IMMEDIATELY TAKE STEPS TO GET ATTENTION BY OTHER MEANS.\n\nNone of your watchers have said they can visit you after two cycles of contact attempts from WOM Team.\n\nYour watchers have been informed that there is no Responding Watcher appointed to your HelpMe request and that they should check in on you, if they can.\n\nWe hope you are OK.\n\WOM Team","High",regToken);
+        sendNotification("Connecting watcher",tempData.wearer_fname + ",\nYOU SHOULD IMMEDIATELY TAKE STEPS TO GET ATTENTION BY OTHER MEANS.\n\nNone of your watchers have said they can visit you after two cycles of contact attempts from WOM Team.\n\nYour watchers have been informed that there is no Responding Watcher appointed to your HelpMe request and that they should check in on you, if they can.\n\nWe hope you are OK.\n\WOM Team","High",regToken);
     }
 }
 router.get('/helpmeresponse/:serviceNum/:date/:time',function(req,res){
