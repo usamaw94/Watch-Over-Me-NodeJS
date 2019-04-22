@@ -353,6 +353,7 @@ function callingWatchers(i,cycle,regToken,log,tempData){
     sendNotification("Connecting watcher","Now contacting watcher " + wCount,"High",regToken);
 
 
+    console.log("Cycle: "+ cycle);
     if(cycle < 2){
         twilioClient.messages.create({
             from: "+61488852471",
@@ -388,6 +389,7 @@ function callingWatchers(i,cycle,regToken,log,tempData){
                         cycle++;
                     }
                     setTimeout(function(){
+                        console.log("Calling again");
                         callingWatchers(i,cycle,regToken,log,tempData);
                     },5000)
                 }
@@ -396,10 +398,6 @@ function callingWatchers(i,cycle,regToken,log,tempData){
                     if(responseIndex != -1){
                         sendNotification("Connecting watcher","Watcher " + watcherNum + "  responded with YES","High",regToken);
                     }
-                    delete watcherResponses[removeIndex];
-                    watcherResponses = watcherResponses.filter(function(x){
-                        return (x !== (undefined || null || ''));
-                    });
                     console.log(JSON.stringify(watcherResponses));
                 }
             },30000)
@@ -414,7 +412,7 @@ function callingWatchers(i,cycle,regToken,log,tempData){
         url: 'https://handler.twilio.com/twiml/EH188dc109e62c15bb744484fa84b0f08c',
         to: recNum,
         from: "+61488852471"
-        }).then((call) => console.log(JSON.stringify("Call has been sent!")));
+        }).then((call) => console.log(JSON.stringify("Call 2 has been sent!")));
         setTimeout(function(){
             console.log(JSON.stringify(watcherResponses));
             for(var c = 0 ; c < watcherResponses.length ; c++){
