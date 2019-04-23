@@ -1,226 +1,232 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<link rel="apple-touch-icon" sizes="76x76" href="userPanelAssets/img/apple-icon.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="userPanelAssets/img/favicon.png">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Paper Dashboard by Creative Tim</title>
+    <title>Paper Dashboard by Creative Tim</title>
 
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
 
     <!-- Bootstrap core CSS     -->
-    <link href="userPanelAssets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../userPanelAssets/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Animation library for notifications   -->
-    <link href="userPanelAssets/css/animate.min.css" rel="stylesheet"/>
+    <link href="../userPanelAssets/css/animate.min.css" rel="stylesheet"/>
 
     <!--  Paper Dashboard core CSS    -->
-    <link href="userPanelAssets/css/paper-dashboard.css" rel="stylesheet"/>
-
+    <link href="../userPanelAssets/css/paper-dashboard.css" rel="stylesheet"/>
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="userPanelAssets/css/demo.css" rel="stylesheet" />
-
-    <link href="userPanelAssets/css/custom.css" rel="stylesheet" />
+    <link href="../userPanelAssets/css/demo.css" rel="stylesheet" />
 
     <!--  Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-    <link href="userPanelAssets/css/themify-icons.css" rel="stylesheet">
+    <link href="../userPanelAssets/css/themify-icons.css" rel="stylesheet">
 
 </head>
 <body>
 
-        <div class="wrapper ">
-                <div class="sidebar" data-color="white" data-active-color="danger">
-                  <!--
-                    Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
-                -->
-                  <div class="logo">
-                    <a href="#" class="simple-text logo-normal">
-                      Watch Over ME
-                      <!-- <div class="logo-image-big">
-                        <img src="../assets/img/logo-big.png">
-                      </div> -->
-                    </a>
-                  </div>
+<div class="wrapper">
+    <div class="main-panel" style="width: 100%">
+		<nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Watch Over ME - Help ME Request Summary For "Usama Waheed"</a>
                 </div>
-                <div class="main-panel">
-                  <!-- Navbar -->
-                  <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-                    <div class="container-fluid">
-                      <div class="navbar-wrapper">
-                        <div class="navbar-toggle">
-                          <button type="button" class="navbar-toggler">
-                            <span class="navbar-toggler-bar bar1"></span>
-                            <span class="navbar-toggler-bar bar2"></span>
-                            <span class="navbar-toggler-bar bar3"></span>
-                          </button>
-                        </div>
-                        <a class="navbar-brand" href="#pablo">Help Me Respond</a>
-                      </div>
+                <div class="collapse navbar-collapse">
+                    <div class="nav navbar-nav navbar-right">
+                        <a class="btn btn-outline-default btn-sm">
+                            User Panel
+                        </a>
                     </div>
-                  </nav>
-                  <!-- End Navbar -->
-                  <!-- <div class="panel-header panel-header-sm">
-              
-              
-            </div> -->
-                  <div class="content">
-                    <div class="row">
-                      <div class="col-md-12">
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="card">
-                          <div class="card-header">
-                            <h4 class="card-title"> Service Details</h4>
-                          </div>
-                          <div class="card-body">
-                            <div>
-                              <table class="table table-responsive-lg">
-                                <thead class="text-primary">
-                                  <tr>
-                                    <th>Service Id</th>
-                                    <th>WOM Number</th>
-                                    <th>Wearer Name</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>WOM00008</td>
-                                    <td>12343433443323</td>
-                                    <td>Usama Waheed</td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                            <div class="header">
+                                <h4 class="title">Request Details</h4>
+                                <!--<p class="category">Here is a subtitle for this table</p>-->
                             </div>
-                          </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-responsive-lg">
+                                    <thead>
+                                    <tr>
+                                        <th><center><b>Service Id</b></center></th>
+                                        <th><center><b>WOM Number</b></center></th>
+                                        <th><center><b>Date - Time</b></center></th>
+                                    </tr>
+
+                                    </thead>
+                                    <tbody>
+                                    <tr align="center">
+                                        <td>WOM00008</td>
+                                        <td>12343433443323</td>
+                                        <td>09 - Apr - 2109 <br> 10:53:23 AM</td>
+                                    </tr>
+                                    <tr class="text-primary">
+                                        <th colspan="4">
+                                            Can you physically visit the wearer?
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <button class="btn btn-block btn-success">
+                                                <i class="fa fa-check"></i>
+                                                &nbsp;&nbsp; Yes
+                                            </button>
+                                        </td>
+                                        <td colspan="2">
+                                            <button class="btn btn-block btn-danger">
+                                                <i class="fa fa-times"></i>
+                                                &nbsp;&nbsp; No
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
                         </div>
-                      </div>
-                      <div class="col-md-12">
+                    </div>
+
+
+                    <div class="col-md-12">
                         <div class="card card-plain">
-                          <div class="card-header">
-                            <h4 class="card-title"> Wearer Location</h4>
-                          </div>
-                          <div class="card-body">
-                            <div id="map" class="map"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="card">
-                          <div class="card-body">
-                            <div class="container-fluid">
-                              <div class="row">
-                                <div class="col-6">
-                                  <button class="btn btn-block btn-success">
-                                    <i class="fa fa-check"></i>
-                                    &nbsp;&nbsp;Respond with Yes
-                                  </button>
-                                </div>
-                                <div class="col-6">
-                                  <button class="btn btn-block btn-danger">
-                                    <i class="fa fa-times"></i>
-                                    &nbsp;&nbsp;Respond with No
-                                  </button>
-                                </div>
-                              </div>
+                            <div class="header">
+                                <h4 class="title">Initial Wearer Location</h4>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="card">
-                          <div class="card-header">
-                            <h4 class="card-title"> Watchers</h4>
-                          </div>
-                          <div class="card-body">
-                            <div>
-                              <table class="table table-responsive-lg">
-                                <thead class="text-primary">
-                                <tr>
-                                  <th>Watcher Id</th>
-                                  <th>Name</th>
-                                  <th>Response Status</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                  <td>WOMP0000012</td>
-                                  <td>Waqas Waheed</td>
-                                  <td>Responded</td>
-                                </tr>
-                                </tbody>
-                              </table>
+                            <div class="map">
+                                <input type="hidden" id="latitude" value="-24.870193" readonly>
+                                <input type="hidden" id="longitude" value="134.171259" readonly>
+                                <input type="hidden" id="pac-input" class="form-control">
+                                <div id="googleMap" style="width: 100%;  ;height:455px;"></div>
                             </div>
-                          </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                  <footer class="footer footer-black  footer-white ">
-                    <div class="container-fluid">
-                      <div class="row">
-                        <nav class="footer-nav">
-                          <ul>
-                            <li>
-                              <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
-                            </li>
-                            <li>
-                              <a href="http://blog.creative-tim.com/" target="_blank">Blog</a>
-                            </li>
-                            <li>
-                              <a href="https://www.creative-tim.com/license" target="_blank">Licenses</a>
-                            </li>
-                          </ul>
-                        </nav>
-                        <div class="credits ml-auto">
-                          <span class="copyright">
-                            ©
-                            <script>
-                              document.write(new Date().getFullYear())
-                            </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-                          </span>
+
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Watcher Responses</h4>
+                                <!--<p class="category">Here is a subtitle for this table</p>-->
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-responsive-lg">
+                                    <thead>
+                                    <tr>
+                                        <th><center><b>Name</b><center></th>
+                                        <th><center><b>Time Contacted</b><center></th>
+                                        <th><center><b>Time Responded</b><center></th>
+                                        <th><center><b>Response</b><center></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr align="center" style="background: rgba(83,199,95,0.37)">
+                                        <td>Waqas Waheed</td>
+                                        <td>09-Apr-2019/11:47:18AM</td>
+                                        <td>09-Apr-2019/11:50:16AM</td>
+                                        <td><span class="badge badge-success">Yes</span></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>Rad Williams</td>
+                                        <td>09-Apr-2019/11:47:20AM</td>
+                                        <td>09-Apr-2019/11:50:45AM</td>
+                                        <td><span class="badge badge-danger">No</span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </footer>
+
                 </div>
-              </div>
-    
-    <!--   Core JS Files   -->
-    <script src="userPanelAssets/js/jquery.min.js" type="text/javascript"></script>
-	<script src="userPanelAssets/js/bootstrap.min.js" type="text/javascript"></script>
+            </div>
+        </div>
 
-	<!--  Checkbox, Radio & Switch Plugins -->
-	<script src="userPanelAssets/js/bootstrap-checkbox-radio.js"></script>
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
 
-	<!--  Charts Plugin -->
-	<script src="userPanelAssets/js/chartist.min.js"></script>
+                        <li>
+                            <a href="http://www.creative-tim.com">
+                                Creative Tim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://blog.creative-tim.com">
+                               Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.creative-tim.com/license">
+                                Licenses
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+				<div class="copyright pull-right">
+                    &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>
+                </div>
+            </div>
+        </footer>
 
-    <!--  Notifications Plugin    -->
-    <script src="userPanelAssets/js/bootstrap-notify.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    </div>
+</div>
 
-    <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 
-    <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
-	<script src="userPanelAssets/js/paper-dashboard.js"></script>
-
-	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-    <script src="userPanelAssets/js/demo.js"></script>
-    
-    <script src="userPanelAssets/js/custom.js"></script>
-
-    <script>
-            $(document).ready(function() {
-              demo.initGoogleMaps();
-            });
-    </script>
 </body>
+
+<!--   Core JS Files   -->
+<script src="../userPanelAssets/js/jquery.min.js" type="text/javascript"></script>
+<script src="../userPanelAssets/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!--  Checkbox, Radio & Switch Plugins -->
+<script src="../userPanelAssets/js/bootstrap-checkbox-radio.js"></script>
+
+<!--  Charts Plugin -->
+<script src="../userPanelAssets/js/chartist.min.js"></script>
+
+<!--  Notifications Plugin    -->
+<script src="../userPanelAssets/js/bootstrap-notify.js"></script>
+
+<!--  Google Maps Plugin    -->
+
+<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+<script src="../userPanelAssets/js/paper-dashboard.js"></script>
+
+<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+<script src="../userPanelAssets/js/demo.js"></script>
+
+<script src="../userPanelAssets/js/custom.js"></script>
+
+<script>
+    $( document ).ready(function() {
+        initialMap();
+    });
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsaBSLRpDtQYzD5md-bnOYP61GBRN9oac&libraries=places&callback=myMap"></script>
 
 </html>
