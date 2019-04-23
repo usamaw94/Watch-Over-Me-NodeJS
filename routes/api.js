@@ -349,7 +349,7 @@ function callingWatchers(i,cycle,regToken,log,tempData){
     console.log("Watcher "+ wCount + " called");
     var reply = tempData.service_id + " yes";
     reply.link("#");
-    var msg = "Attention " + tempData.watchers[i].watcherName + "\nYour Wearer, " + tempData.wearer_fname +" "+ tempData.wearer_lname +", has pressed the HelpMe button and needs assistance at their location.\n\nYou are Watcher " + wCount + " of " + tempData.watchers.length + " for " + tempData.wearer_fname + " on Service ID: \n" + tempData.service_id + " \nhttp://mighty-falls-73901.herokuapp.com/api/helpMeRespond";
+    var msg = "Attention " + tempData.watchers[i].watcherName + "\nYour Wearer, " + tempData.wearer_fname +" "+ tempData.wearer_lname +", has pressed the HelpMe button and needs assistance at their location.\n\nYou are Watcher " + wCount + " of " + tempData.watchers.length + " for " + tempData.wearer_fname + ".\n\n http://mighty-falls-73901.herokuapp.com/api/helpMeRespond";
 
 
     console.log("Cycle: "+ cycle);
